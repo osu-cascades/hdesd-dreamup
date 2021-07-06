@@ -7,7 +7,7 @@ defmodule DreamUpWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_dream_up_key",
-    signing_salt: "MCWkMAR6"
+    signing_salt: "fCF73NZd"
   ]
 
   socket "/socket", DreamUpWeb.UserSocket,

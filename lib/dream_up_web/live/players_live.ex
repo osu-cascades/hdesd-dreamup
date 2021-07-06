@@ -1,7 +1,6 @@
 defmodule DreamUpWeb.PlayersLive do
 
-
-  use Phoenix.LiveView
+  use DreamUpWeb, :live_view
 
   def mount(_params, _session, socket) do
     socket = assign(socket, :brightness, 10)

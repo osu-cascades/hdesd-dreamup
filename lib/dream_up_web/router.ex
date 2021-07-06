@@ -1,11 +1,11 @@
 defmodule DreamUpWeb.Router do
   use DreamUpWeb, :router
-  import Phoenix.LiveView.Router
 
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
-    plug :fetch_flash
+    plug :fetch_live_flash
+    plug :put_root_layout, {DreamUpWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
   end
@@ -17,7 +17,7 @@ defmodule DreamUpWeb.Router do
   scope "/", DreamUpWeb do
     pipe_through :browser
 
-    # live "/", PageController, :index
+    live "/", PageLive, :index
     live "/players", PlayersLive
   end
 
