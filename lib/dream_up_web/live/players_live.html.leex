@@ -1,1 +1,9 @@
-<h1 class="text-red-500 text-5xl font-bold text-center">This is the Players live</h1>
+<h1 class="text-red-500 text-5xl font-bold text-center">Players</h1>
+<div id="players" phx-update="prepend">
+    <%= for player <- @players do %>
+    <div id="container-0<%= player.id %>">
+        <p><%= player.name %></p>
+
+    </div>
+    <% end %>
+</div>

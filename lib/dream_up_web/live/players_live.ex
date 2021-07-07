@@ -2,8 +2,13 @@ defmodule DreamUpWeb.PlayersLive do
 
   use DreamUpWeb, :live_view
 
+  alias DreamUp.Players
+  alias DreamUp.Players.Player
+
   def mount(_params, _session, socket) do
-    socket = assign(socket, :brightness, 10)
+    players = Players.list_players()
+
+    socket = assign(socket, players: players)
     {:ok, socket}
   end
 
