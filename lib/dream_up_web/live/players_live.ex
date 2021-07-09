@@ -17,11 +17,11 @@ defmodule DreamUpWeb.PlayersLive do
   def handle_event("save", %{"player" => params}, socket) do
     case Players.create_player(params) do
       {:ok, player} ->
+        socket = update(socket, :players, fn players -> [ player | players ] end)
 
-      socket = update(socket, :players, fn players -> [ player | players ] end)
-
-      changeset = Players.change_player(%Player{})
-      {:noreply, socket}
+        changeset = Players.change_player(%Player{})
+        socket = assign(socket, changest: changeset)
+        {:noreply, socket}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         socket = assign(socket, changest: changeset)
