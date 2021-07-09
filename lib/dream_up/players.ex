@@ -8,6 +8,10 @@ defmodule DreamUp.Players do
 
   alias DreamUp.Players.Player
 
+  def subscribe do
+    Phoenix.PubSub.subscribe(DreamUp.PubSub, "players")
+  end
+
   @doc """
   Returns the list of players.
 
@@ -53,6 +57,7 @@ defmodule DreamUp.Players do
     %Player{}
     |> Player.changeset(attrs)
     |> Repo.insert()
+    |> broadcast(:player_created)
   end
 
   @doc """
@@ -71,7 +76,19 @@ defmodule DreamUp.Players do
     player
     |> Player.changeset(attrs)
     |> Repo.update()
+    |> broadcast(:player_updated)
   end
+
+  def broadcast({:ok, player}, event) do
+     Phoenix.PubSub.broadcast(
+       DreamUp.PubSub,
+       "players",
+       {event, player}
+     )
+     {:ok, player}
+  end
+
+  def broadcast({:error, _reason} = error, _event), do: error
 
   @doc """
   Deletes a player.

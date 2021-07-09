@@ -6,6 +6,8 @@ defmodule DreamUpWeb.PlayersLive do
   alias DreamUp.Players.Player
 
   def mount(_params, _session, socket) do
+    if connected?(socket), do: Players.subscribe()
+
     players = Players.list_players()
 
     changeset = Players.change_player(%Player{})
@@ -28,5 +30,41 @@ defmodule DreamUpWeb.PlayersLive do
         {:noreply, socket}
     end
 
+  end
+
+  def handle_event("edit-name", %{"id" => id}, socket) do
+
+    player = Players.get_player!(id)
+
+    {:ok, _player} =
+      Players.update_player(
+        player,
+        %{name: "John Doe"}
+      )
+
+    players = Players.list_players()
+
+    socket = assign(socket, players: players)
+    {:noreply, socket}
+  end
+
+  def handle_info({:player_created, player}, socket) do
+    socket =
+      update(
+        socket,
+        :players,
+        fn players -> [player | players] end
+      )
+    {:noreply, socket}
+  end
+
+  def handle_info({:player_updated, player}, socket) do
+    socket =
+      update(
+        socket,
+        :players,
+        fn players -> [player | players] end
+      )
+    {:noreply, socket}
   end
 end
