@@ -1,0 +1,27 @@
+<div>
+    <h1 class="text-gray-500 text-5xl py-8 font-bold text-center">Players</h1>
+    <%= f = form_for @changeset, "#",
+                    phx_submit: "save" %>
+        <div class="bg-white max-w-lg m-auto">
+            <%= text_input f, :name,
+                            placeholder: "Name",
+                            autocomplete: "off" %>
+        </div>
+        <div class="text-blue-900 pt-4">
+            <div class="m-auto max-w-lg">
+                <%= submit "Join Game", class: "border-2 px-8 text-center", phx_disable_with: "Joining..."  %>
+            </div>
+        </div>
+    </form>
+    <div id="players" phx-update="prepend">
+
+        <%= for player <- @players do %>
+        <div id="container-0<%= player.id %>" class="text-gray-800 text-5xl py-8 font-bold max-w-full text-center">
+            <p><%= player.name %></p>
+            <button phx-click="edit-name" phx-value-id="<%= player.id %>">
+                Edit Name
+            </button>
+        </div>
+        <% end %>
+    </div>
+</div>
