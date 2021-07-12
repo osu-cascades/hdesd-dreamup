@@ -104,6 +104,7 @@ defmodule DreamUp.Players do
   """
   def delete_player(%Player{} = player) do
     Repo.delete(player)
+    |> broadcast(:player_deleted)
   end
 
   @doc """

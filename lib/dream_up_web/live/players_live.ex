@@ -48,6 +48,28 @@ defmodule DreamUpWeb.PlayersLive do
     {:noreply, socket}
   end
 
+  def handle_event("delete-name", %{"id" => id}, socket) do
+
+    player = Players.get_player!(id)
+
+    {:ok, _player} = Players.delete_player(player)
+
+    players = Players.list_players()
+
+    socket = assign(socket, players: players)
+    {:noreply, socket}
+  end
+
+  def handle_info({:player_deleted, player}, socket) do
+    socket =
+      update(
+        socket,
+        :players,
+        fn players -> [player | players] end
+      )
+    {:noreply, socket}
+  end
+
   def handle_info({:player_created, player}, socket) do
     socket =
       update(
