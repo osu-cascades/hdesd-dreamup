@@ -60,6 +60,10 @@ defmodule DreamUpWeb.PlayersLive do
     {:noreply, socket}
   end
 
+  @spec handle_info(
+          {:player_created, any} | {:player_deleted, any} | {:player_updated, any},
+          Phoenix.LiveView.Socket.t()
+        ) :: {:noreply, any}
   def handle_info({:player_deleted, player}, socket) do
     socket =
       update(
