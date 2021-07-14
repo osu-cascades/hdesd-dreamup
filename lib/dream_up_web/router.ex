@@ -17,8 +17,9 @@ defmodule DreamUpWeb.Router do
   scope "/", DreamUpWeb do
     pipe_through :browser
 
-    live "/", PageLive, :index
-    live "/players", PlayersLive
+    # live "/", PageLive, :index
+    live "/", HomeLive, :index
+    live "/lobby", LobbyLive
   end
 
   # Other scopes may use custom stacks.

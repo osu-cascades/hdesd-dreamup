@@ -1,4 +1,4 @@
-defmodule DreamUpWeb.PlayersLive do
+defmodule DreamUpWeb.LobbyLive do
 
   use DreamUpWeb, :live_view
 
