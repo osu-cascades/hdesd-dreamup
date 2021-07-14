@@ -16,7 +16,8 @@ defmodule DreamUpWeb.PlayersLive do
     {:ok, socket, temporary_assigns: [players: []]}
   end
 
-  def handle_event("save", %{"player" => params}, socket) do
+  def handle_event("save", %{"player" => name_param}, socket) do
+    params = %{name: name_param["name"], game_id: 3, team: "blue"}
     case Players.create_player(params) do
       {:ok, player} ->
         socket = update(socket, :players, fn players -> [ player | players ] end)

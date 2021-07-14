@@ -25,6 +25,10 @@ defmodule DreamUp.Players do
     Repo.all(from p in Player, order_by: [desc: p.id])
   end
 
+  def list_players_in_game(game_id) do
+    Repo.all(from p in Player, order_by: [desc: p.id], where: [game_id: ^game_id])
+  end
+
   @doc """
   Gets a single player.
 
