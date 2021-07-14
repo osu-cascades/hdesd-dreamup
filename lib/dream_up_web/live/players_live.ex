@@ -60,6 +60,7 @@ defmodule DreamUpWeb.PlayersLive do
     {:noreply, socket}
   end
 
+  # TODO: Merge into one funciton
   def handle_info({:player_deleted, player}, socket) do
     socket =
       update(
