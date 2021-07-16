@@ -4,6 +4,7 @@ defmodule DreamUpWeb.LobbyLive do
 
   alias DreamUp.Players
   alias DreamUp.Players.Player
+  alias DreamUp.Games
 
   def mount(_params, _session, socket) do
     if connected?(socket), do: Players.subscribe()
@@ -14,6 +15,14 @@ defmodule DreamUpWeb.LobbyLive do
 
     socket = assign(socket, players: players, changeset: changeset, id: false, editing: false)
     {:ok, socket, temporary_assigns: [players: []]}
+  end
+
+  def handle_params(params, _url, socket) do
+    code = params["code"]
+    game_id = Games.get_game_id_from_code(code)
+    players = Players.list_players_in_game(game_id)
+    socket = assign(socket, game_id: game_id, code: code, players: players)
+    {:noreply, socket}
   end
 
   def handle_event("save", %{"player" => name_param}, socket) do

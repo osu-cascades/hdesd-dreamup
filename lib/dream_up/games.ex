@@ -21,6 +21,11 @@ defmodule DreamUp.Games do
     Repo.all(Game)
   end
 
+  def get_game_id_from_code(code) do
+    [head | _tail] = Repo.all(from g in Game, order_by: [desc: g.id], where: [code: ^code])
+    head.id
+  end
+
   @doc """
   Gets a single game.
 
