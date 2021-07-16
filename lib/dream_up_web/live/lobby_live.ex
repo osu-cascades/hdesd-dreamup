@@ -12,7 +12,7 @@ defmodule DreamUpWeb.LobbyLive do
 
     changeset = Players.change_player(%Player{})
 
-    socket = assign(socket, players: players, changeset: changeset)
+    socket = assign(socket, players: players, changeset: changeset, id: false, editing: false)
     {:ok, socket, temporary_assigns: [players: []]}
   end
 
@@ -23,7 +23,7 @@ defmodule DreamUpWeb.LobbyLive do
         socket = update(socket, :players, fn players -> [ player | players ] end)
 
         changeset = Players.change_player(%Player{})
-        socket = assign(socket, changest: changeset)
+        socket = assign(socket, changest: changeset, id: player.id)
         {:noreply, socket}
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -33,19 +33,45 @@ defmodule DreamUpWeb.LobbyLive do
 
   end
 
-  def handle_event("edit-name", %{"id" => id}, socket) do
-
-    player = Players.get_player!(id)
+  def handle_event("edit-name", %{"player" => name}, socket) do
+    player = Players.get_player!(socket.assigns.id)
 
     {:ok, _player} =
       Players.update_player(
         player,
-        %{name: "John Doe"}
+        %{name: name}
       )
 
     players = Players.list_players()
 
     socket = assign(socket, players: players)
+    {:noreply, socket}
+  end
+
+  # def handle_event("edit-name", %{"id" => id}, socket) do
+
+  #   player = Players.get_player!(id)
+
+  #   {:ok, _player} =
+  #     Players.update_player(
+  #       player,
+  #       %{name: "John Doe"}
+  #     )
+
+  #   players = Players.list_players()
+
+  #   socket = assign(socket, players: players)
+  #   {:noreply, socket}
+  # end
+
+  def handle_event("start-edit", _, socket) do
+    IO.puts("edited")
+    socket = assign(socket, editing: true)
+    {:noreply, socket}
+  end
+
+  def handle_event("stop-edit", _, socket) do
+    socket = assign(socket, editing: false)
     {:noreply, socket}
   end
 
