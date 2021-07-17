@@ -26,7 +26,7 @@ defmodule DreamUpWeb.LobbyLive do
   end
 
   def handle_event("save", %{"player" => name_param}, socket) do
-    params = %{name: name_param["name"], game_id: 3, team: "blue"}
+    params = %{name: name_param["name"], game_id: socket.assigns.game_id, team: "blue"}
     case Players.create_player(params) do
       {:ok, player} ->
         socket = update(socket, :players, fn players -> [ player | players ] end)

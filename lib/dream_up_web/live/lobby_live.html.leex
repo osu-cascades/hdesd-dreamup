@@ -1,5 +1,6 @@
 <div>
-    <h1 class="text-blue-900 text-5xl py-8 font-bold text-center">Players</h1>
+    <h1 class="text-blue-900 text-5xl py-8 font-bold text-center">Game Code: <%= @code %></h1>
+    <h1 class="text-blue-900 text-5xl py-8 font-bold text-center">URL: <a>https://www.dreamup-production.herokuapp.com/lobby?code=<%= @code %></a></h1>
     <%= if !@id do %>
         <%= f = form_for @changeset, "#",
                         phx_submit: "save" %>
