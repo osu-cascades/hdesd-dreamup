@@ -1,3 +1,9 @@
+<style>
+input[type=button], input[type=submit], input[type=reset] {
+    color: #1E3A8A;
+    background-color: #818CF8;
+}
+</style>
 <div class="grid grid-cols-2 gap-4">
     <div class="px-8">
         <h1 class="font-bold text-4xl pb-12">
@@ -5,14 +11,14 @@
         </h1>
         <form phx-submit="join-game">
             <input type="text" name="game_code" value="" placeholder="A34B"><br><br>
-            <input type="submit" value="Join">
+            <input class= "text-blue-900 border-2 px-8 text-center" type="submit" value="Join">
         </form>
     </div>
     <div class="px-8">
         <h1 class="font-bold text-4xl">
             Create New Game:
         </h1>
-        <button phx-click="create-game" class="mt-12">
+        <button phx-click="create-game" class="mt-12 text-blue-900 border-2 px-8 text-center">
             New Game
         </button>
     </div>
