@@ -7,6 +7,7 @@ defmodule DreamUp.Games do
   alias DreamUp.Repo
 
   alias DreamUp.Games.Game
+  alias DreamUp.Code
 
   @doc """
   Returns the list of games.
@@ -19,6 +20,27 @@ defmodule DreamUp.Games do
   """
   def list_games do
     Repo.all(Game)
+  end
+
+  def code_exists(code) do
+    Repo.all(from g in Game, order_by: [desc: g.id], where: [code: ^code]) != []
+  end
+
+  def generate_game_code do
+    code = Code.random_code()
+    code_exists = code_exists(code)
+    case code_exists do
+      true ->
+        generate_game_code()
+      false ->
+        create_game(%{code: code, name: "why"})
+    end
+    code
+  end
+
+  def get_game_id_from_code(code) do
+    [head | _tail] = Repo.all(from g in Game, order_by: [desc: g.id], where: [code: ^code])
+    head.id
   end
 
   @doc """

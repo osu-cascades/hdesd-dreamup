@@ -3,16 +3,16 @@
         <h1 class="font-bold text-4xl pb-12">
             Enter Game Code or URL:
         </h1>
-        <form>
-            <input type="text" id="game_code" name="game_code" value=""><br><br>
-            <button class="text-blue-900 border-2 px-8 text-center">
-            Join Game
-            </button>
+        <form phx-submit="join-game">
+            <input type="text" name="game_code" value="" placeholder="A34B"><br><br>
+            <input type="submit" value="Join">
         </form>
     </div>
     <div class="px-8">
-        <h1 class="font-bold text-4xl pb-12">Create New Game:</h1>
-        <button class="text-blue-900 border-2 px-8 text-center">
+        <h1 class="font-bold text-4xl">
+            Create New Game:
+        </h1>
+        <button phx-click="create-game" class="mt-12">
             New Game
         </button>
     </div>
