@@ -9,11 +9,9 @@ defmodule DreamUpWeb.LobbyLive do
   def mount(_params, _session, socket) do
     if connected?(socket), do: Players.subscribe()
 
-    players = Players.list_players()
-
     changeset = Players.change_player(%Player{})
 
-    socket = assign(socket, players: players, changeset: changeset, id: false, editing: false)
+    socket = assign(socket, changeset: changeset, id: false, editing: false)
     {:ok, socket, temporary_assigns: [players: []]}
   end
 
@@ -51,36 +49,14 @@ defmodule DreamUpWeb.LobbyLive do
         %{name: name}
       )
 
-    players = Players.list_players()
+    players = Players.list_players_in_game(socket.assigns.game_id)
 
     socket = assign(socket, players: players)
     {:noreply, socket}
   end
 
-  # def handle_event("edit-name", %{"id" => id}, socket) do
-
-  #   player = Players.get_player!(id)
-
-  #   {:ok, _player} =
-  #     Players.update_player(
-  #       player,
-  #       %{name: "John Doe"}
-  #     )
-
-  #   players = Players.list_players()
-
-  #   socket = assign(socket, players: players)
-  #   {:noreply, socket}
-  # end
-
-  def handle_event("start-edit", _, socket) do
-    IO.puts("edited")
-    socket = assign(socket, editing: true)
-    {:noreply, socket}
-  end
-
-  def handle_event("stop-edit", _, socket) do
-    socket = assign(socket, editing: false)
+  def handle_event("editing", %{"editing" => editing}, socket) do
+    socket = assign(socket, editing: editing)
     {:noreply, socket}
   end
 
@@ -90,14 +66,13 @@ defmodule DreamUpWeb.LobbyLive do
 
     {:ok, _player} = Players.delete_player(player)
 
-    players = Players.list_players()
+    players = Players.list_players_in_game(socket.assigns.game_id)
 
-    socket = assign(socket, players: players)
+    socket = assign(socket, players: players, id: false)
     {:noreply, socket}
   end
 
-  # TODO: Merge into one funciton
-  def handle_info({:player_deleted, player}, socket) do
+  def handle_info({:player_event, player}, socket) do
     socket =
       update(
         socket,
@@ -107,23 +82,8 @@ defmodule DreamUpWeb.LobbyLive do
     {:noreply, socket}
   end
 
-  def handle_info({:player_created, player}, socket) do
-    socket =
-      update(
-        socket,
-        :players,
-        fn players -> [player | players] end
-      )
-    {:noreply, socket}
+  def is_editing(assigns) do
+    assigns.editing
   end
 
-  def handle_info({:player_updated, player}, socket) do
-    socket =
-      update(
-        socket,
-        :players,
-        fn players -> [player | players] end
-      )
-    {:noreply, socket}
-  end
 end

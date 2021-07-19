@@ -12,19 +12,6 @@ defmodule DreamUp.Players do
     Phoenix.PubSub.subscribe(DreamUp.PubSub, "players")
   end
 
-  @doc """
-  Returns the list of players.
-
-  ## Examples
-
-      iex> list_players()
-      [%Player{}, ...]
-
-  """
-  def list_players do
-    Repo.all(from p in Player, order_by: [desc: p.id])
-  end
-
   def list_players_in_game(game_id) do
     Repo.all(from p in Player, order_by: [desc: p.id], where: [game_id: ^game_id])
   end
@@ -61,7 +48,7 @@ defmodule DreamUp.Players do
     %Player{}
     |> Player.changeset(attrs)
     |> Repo.insert()
-    |> broadcast(:player_created)
+    |> broadcast(:player_event)
   end
 
   @doc """
@@ -80,7 +67,7 @@ defmodule DreamUp.Players do
     player
     |> Player.changeset(attrs)
     |> Repo.update()
-    |> broadcast(:player_updated)
+    |> broadcast(:player_event)
   end
 
   def broadcast({:ok, player}, event) do
@@ -108,7 +95,7 @@ defmodule DreamUp.Players do
   """
   def delete_player(%Player{} = player) do
     Repo.delete(player)
-    |> broadcast(:player_deleted)
+    |> broadcast(:player_event)
   end
 
   @doc """
