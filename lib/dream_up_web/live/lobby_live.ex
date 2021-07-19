@@ -23,8 +23,8 @@ defmodule DreamUpWeb.LobbyLive do
     {:noreply, socket}
   end
 
-  def handle_event("save", %{"player" => name_param}, socket) do
-    params = %{name: name_param["name"], game_id: socket.assigns.game_id, team: "blue"}
+  def handle_event("save", %{"player" => player_params}, socket) do
+    params = %{name: player_params["name"], game_id: socket.assigns.game_id, team: player_params["team"]}
     case Players.create_player(params) do
       {:ok, player} ->
         socket = update(socket, :players, fn players -> [ player | players ] end)
@@ -71,6 +71,20 @@ defmodule DreamUpWeb.LobbyLive do
     socket = assign(socket, players: players, id: false)
     {:noreply, socket}
   end
+
+  def handle_event("change-team", %{"id" => id}, socket) do
+
+    player = Players.get_player!(id)
+
+    Players.change_team(player)
+
+    players = Players.list_players_in_game(socket.assigns.game_id)
+
+    socket = assign(socket, players: players)
+    {:noreply, socket}
+  end
+
+
 
   def handle_info({:player_event, player}, socket) do
     socket =

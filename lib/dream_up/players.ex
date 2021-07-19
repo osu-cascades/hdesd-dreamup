@@ -110,4 +110,13 @@ defmodule DreamUp.Players do
   def change_player(%Player{} = player, attrs \\ %{}) do
     Player.changeset(player, attrs)
   end
+
+  def change_team(%Player{} = player) do
+    case player.team do
+      "blue" ->
+        update_player(player, %{team: "red"})
+      "red" ->
+        update_player(player, %{team: "blue"})
+    end
+  end
 end
