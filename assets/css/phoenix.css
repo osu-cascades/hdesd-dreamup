@@ -103,3 +103,24 @@ header nav a {
 body {
   background-color: #B6CBF4;
 }
+
+input[type=button], input[type=submit], input[type=reset] {
+  color: #1E3A8A;
+  background-color: #B6CBF4;
+  border-width: 2px;
+  font-weight: 700;
+  font-size: 1em;
+}
+
+select {
+  background-color: whitesmoke;
+  max-width: full;
+  width: 320px;
+  border-radius: 0.5rem;
+  border-style: dashed;
+  padding: 0 10px;
+}
+
+
+
+
