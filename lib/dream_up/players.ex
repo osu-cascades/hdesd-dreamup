@@ -12,17 +12,8 @@ defmodule DreamUp.Players do
     Phoenix.PubSub.subscribe(DreamUp.PubSub, "players")
   end
 
-  @doc """
-  Returns the list of players.
-
-  ## Examples
-
-      iex> list_players()
-      [%Player{}, ...]
-
-  """
-  def list_players do
-    Repo.all(from p in Player, order_by: [desc: p.id])
+  def list_players_in_game(game_id) do
+    Repo.all(from p in Player, order_by: [desc: p.id], where: [game_id: ^game_id])
   end
 
   @doc """
@@ -57,7 +48,7 @@ defmodule DreamUp.Players do
     %Player{}
     |> Player.changeset(attrs)
     |> Repo.insert()
-    |> broadcast(:player_created)
+    |> broadcast(:player_event)
   end
 
   @doc """
@@ -76,14 +67,14 @@ defmodule DreamUp.Players do
     player
     |> Player.changeset(attrs)
     |> Repo.update()
-    |> broadcast(:player_updated)
+    |> broadcast(:player_event)
   end
 
   def broadcast({:ok, player}, event) do
      Phoenix.PubSub.broadcast(
        DreamUp.PubSub,
        "players",
-       {event, player}
+       {event}
      )
      {:ok, player}
   end
@@ -104,6 +95,7 @@ defmodule DreamUp.Players do
   """
   def delete_player(%Player{} = player) do
     Repo.delete(player)
+    |> broadcast(:player_event)
   end
 
   @doc """
@@ -117,5 +109,14 @@ defmodule DreamUp.Players do
   """
   def change_player(%Player{} = player, attrs \\ %{}) do
     Player.changeset(player, attrs)
+  end
+
+  def change_team(%Player{} = player) do
+    case player.team do
+      "blue" ->
+        update_player(player, %{team: "red"})
+      "red" ->
+        update_player(player, %{team: "blue"})
+    end
   end
 end

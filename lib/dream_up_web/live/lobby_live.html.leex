@@ -1,0 +1,65 @@
+<div>
+    <h1 class="text-blue-900 text-5xl font-bold text-center">Game Code: <%= @code %></h1>
+    <h1 class="text-blue-900 text-5xl font-bold text-center">URL: <a>https://www.dreamup-production.herokuapp.com/lobby?code=<%= @code %></a></h1>
+    <div class=" m-auto max-w-xl p-8">
+        <%= if !@id do %>
+            <%= f = form_for @changeset, "#",
+                            phx_submit: "save" %>
+                <div class="bg-white max-w-lg m-auto my-8">
+                    <%= text_input  f, :name,
+                                    placeholder: "Name",
+                                    autocomplete: "off" %>
+                    <%= select f, :team,
+                                    ["Red": "red", "Blue": "blue"]
+                    %>
+                </div>
+                <div class="text-blue-900 pt-4">
+                    <div class="m-auto max-w-lg">
+                        <%= submit "Join Game", id: "joinGame", class: "text-blue-900 border-2 px-8 text-center bg-indigo-400", phx_disable_with: "Joining..."  %>
+                    </div>
+                </div>
+            </form>
+        <% end %>
+    </div>
+    <h1 class="text-blue-900 text-5xl font-bold text-center">Players</h1>
+    <div id="players" class="border-t-4 border-l-4 border-r-4 border-indigo-400 max-w-4xl ml-auto mr-auto mb-4">
+        <%= for player <- @players do %>
+        <div id="container-0<%= player.id %>" class="<%= if player.__meta__.state == :deleted do %>hidden<% end %>
+            text-4xl py-2 font-bold max-w-full text-center max-w-lg bg-indigo-100 border-b-4 border-indigo-400">
+            <p class="text-blue-900"><%= player.name %></p>
+            <p class="text-blue-900"><%= player.team %></p>
+
+            <%= if player.id == @id do %>
+                <%= if @editing do %>
+                <%= p = form_for @changeset, "#",
+                            phx_submit: "edit-name" %>
+                    <div class="bg-white max-w-lg m-auto">
+                        <%= text_input p, :name,
+                                        placeholder: "Name",
+                                        autocomplete: "off" %>
+                    </div>
+                    <div class="text-blue-900 pt-4">
+                        <div class="m-auto max-w-lg">
+                            <%= submit "Submit Edit", class: "text-blue-900 border-2 px-8 text-center", phx_disable_with: "Joining..."  %>
+                        </div>
+                    </div>
+                </form>
+                <button class="text-blue-900 text-lg px-8 border-2 border-indigo-600" phx-click="editing" phx-value-editing=false>
+                    Cancel Edit
+                </button>
+                <% else %>
+                <button class="text-blue-900 text-lg px-8 border-2 border-indigo-600" phx-click="editing" phx-value-editing=true>
+                    Edit Name
+                </button>
+                <button class="text-blue-900 text-lg px-8 border-2 border-indigo-600" phx-click="change-team" phx-value-id="<%= player.id %>">
+                    Change Team
+                </button>
+                <button class="text-blue-900 text-lg px-8 border-2 border-indigo-600" phx-click="delete-name" phx-value-id="<%= player.id %>">
+                    Delete Name
+                </button>
+                <% end %>
+            <% end %>
+        </div>
+        <% end %>
+    </div>
+</div>

@@ -4,6 +4,8 @@ defmodule DreamUp.Players.Player do
 
   schema "players" do
     field :name, :string
+    field :game_id, :integer
+    field :team, :string
 
     timestamps()
   end
@@ -11,7 +13,7 @@ defmodule DreamUp.Players.Player do
   @doc false
   def changeset(player, attrs) do
     player
-    |> cast(attrs, [:name])
-    |> validate_required([:name])
+    |> cast(attrs, [:name, :game_id, :team])
+    |> validate_required([:name, :game_id, :team])
   end
 end

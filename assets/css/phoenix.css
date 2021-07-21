@@ -99,3 +99,68 @@ header nav a {
     margin: 2rem 1rem;
   }
 }
+
+body {
+  background-color: #B6CBF4;
+}
+
+input[type=button], input[type=submit], input[type=reset] {
+  color: #1E3A8A;
+  background-color: #B6CBF4;
+  border-width: 2px;
+  font-weight: 700;
+  font-size: 1em;
+}
+
+select {
+  background-color: whitesmoke;
+  max-width: full;
+  width: 320px;
+  border-radius: 0.5rem;
+  border-style: dashed;
+  padding: 0 10px;
+}
+
+.footer {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+#players {
+  box-shadow: 10px 10px 5px grey;
+}
+
+#joinGame {
+  box-shadow: 1.5px 1.5px 5px grey; 
+}
+
+#joinGame:active {
+  background-color: rgba(129, 140, 248);
+  box-shadow: 1px 1px 1px; 
+}
+
+#joinGame:hover {
+  background-color: rgba(129, 140, 248); 
+}
+
+#defaultButton {
+  box-shadow: 1.5px 1.5px 5px grey;
+  background-color: rgba(129, 140, 248);
+}
+
+.logo{
+  float: left;
+  display: block;
+  width: 46px;
+  height: 46px;
+  overflow: hidden;
+  margin-top: -6px;
+  margin-bottom: 6px;
+  margin-right: 10px;
+}
+
+
+
+
+
