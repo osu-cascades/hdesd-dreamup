@@ -1,5 +1,7 @@
 # DreamUp
 
+Built by Amber, Andras, Ethan, and Ian
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
