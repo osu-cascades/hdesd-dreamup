@@ -12,7 +12,7 @@ defmodule DreamUpWeb.LobbyLive do
     changeset = Players.change_player(%Player{})
 
     socket = assign(socket, changeset: changeset, id: false, editing: false)
-    {:ok, socket, temporary_assigns: [players: []]}
+    {:ok, socket}
   end
 
   def handle_params(params, _url, socket) do
@@ -40,24 +40,28 @@ defmodule DreamUpWeb.LobbyLive do
 
   end
 
-  def handle_event("edit-name", %{"player" => name}, socket) do
+  def handle_event("edit-name", %{"player" => params}, socket) do
     player = Players.get_player!(socket.assigns.id)
 
     {:ok, _player} =
       Players.update_player(
         player,
-        %{name: name}
+        %{name: params["name"]}
       )
 
     players = Players.list_players_in_game(socket.assigns.game_id)
 
-    socket = assign(socket, players: players)
+    socket = assign(socket, players: players, editing: false)
     {:noreply, socket}
   end
 
   def handle_event("editing", %{"editing" => editing}, socket) do
-    socket = assign(socket, editing: editing)
-    {:noreply, socket}
+    case editing do
+        "true" ->
+          {:noreply, assign(socket, editing: true)}
+        "false" ->
+          {:noreply, assign(socket, editing: false)}
+    end
   end
 
   def handle_event("delete-name", %{"id" => id}, socket) do
@@ -86,18 +90,12 @@ defmodule DreamUpWeb.LobbyLive do
 
 
 
-  def handle_info({:player_event, player}, socket) do
+  def handle_info({:player_event}, socket) do
     socket =
-      update(
+      assign(
         socket,
-        :players,
-        fn players -> [player | players] end
+        players: Players.list_players_in_game(socket.assigns.game_id)
       )
     {:noreply, socket}
   end
-
-  def is_editing(assigns) do
-    assigns.editing
-  end
-
 end

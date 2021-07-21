@@ -74,7 +74,7 @@ defmodule DreamUp.Players do
      Phoenix.PubSub.broadcast(
        DreamUp.PubSub,
        "players",
-       {event, player}
+       {event}
      )
      {:ok, player}
   end
