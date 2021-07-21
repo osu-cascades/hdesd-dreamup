@@ -136,6 +136,7 @@ select {
 }
 
 #joinGame:active {
+  background-color: rgba(129, 140, 248);
   box-shadow: 1px 1px 1px; 
 }
 
@@ -146,6 +147,17 @@ select {
 #defaultButton {
   box-shadow: 1.5px 1.5px 5px grey;
   background-color: rgba(129, 140, 248);
+}
+
+.logo{
+  float: left;
+  display: block;
+  width: 46px;
+  height: 46px;
+  overflow: hidden;
+  margin-top: -6px;
+  margin-bottom: 6px;
+  margin-right: 10px;
 }
 
 
