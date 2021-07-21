@@ -11,7 +11,7 @@ use Mix.Config
 # before starting your production server.
 config :dream_up, DreamUpWeb.Endpoint,
   http: [port: {:system, "PORT"}],
-  url: [scheme: "https", host: "dreamup-staging.herokuapp.com", port: 443],
+  url: [scheme: "https", host: "dreamup-production.herokuapp.com", port: 443],
   force_ssl: [rewrite_on: [:x_forwarded_proto]],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
