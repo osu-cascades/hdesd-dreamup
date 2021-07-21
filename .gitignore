@@ -38,3 +38,5 @@ npm-debug.log
 
 # Ignore config folder with passwords
 config/config.exs
+
+.env

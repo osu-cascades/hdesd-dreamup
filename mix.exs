@@ -47,7 +47,8 @@ defmodule DreamUp.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:random_string_generator, "~> 1.0.0"}
+      {:random_string_generator, "~> 1.0.0"},
+      {:dotenv, "~> 3.0.0", only: [:dev, :test]}
     ]
   end
 
