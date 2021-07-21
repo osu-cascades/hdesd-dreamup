@@ -127,6 +127,28 @@ select {
   width: 100%;
 }
 
+#players {
+  box-shadow: 10px 10px 5px grey;
+}
+
+#joinGame {
+  box-shadow: 1.5px 1.5px 5px grey; 
+}
+
+#joinGame:active {
+  box-shadow: 1px 1px 1px; 
+}
+
+#joinGame:hover {
+  background-color: rgba(129, 140, 248); 
+}
+
+#defaultButton {
+  box-shadow: 1.5px 1.5px 5px grey;
+  background-color: rgba(129, 140, 248);
+}
+
+
 
 
 
