@@ -160,6 +160,23 @@ select {
   margin-right: 10px;
 }
 
+#challengeCard {
+  height: 250px;
+  width: 200px;
+  background-color: #58595B;
+  margin: auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#innerChallengeCard {
+  background-color: white;
+  width: 95%;
+  height: 85%;
+  margin: auto;
+}
+
+
+
 
 
 
