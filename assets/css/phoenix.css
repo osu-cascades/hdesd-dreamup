@@ -160,25 +160,11 @@ select {
   margin-right: 10px;
 }
 
-#challengeCard {
-  height: 250px;
-  width: 200px;
-  background-color: #000;
-  margin: auto;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-#innerChallengeCard {
-  background-color: white;
-  width: 95%;
-  height: 85%;
-  margin: auto;
-}
-
 .flip-card {
-  background-color: #000;
+  margin: auto;
+  background-color: transparent;
   width: 400px;
-  height: 400px;
+  height: 500px;
   perspective: 1000px;
 }
 
@@ -205,12 +191,13 @@ select {
 }
 
 .flip-card-front {
-  background-color: #58595B;;
+  padding-top: 100px;
+  background-color: #bbb;
   color: black;
 }
 
 .flip-card-back {
-  background-color: #58595B;;
+  background-color: #2980b9;
   color: white;
   transform: rotateY(180deg);
 }
