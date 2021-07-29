@@ -161,9 +161,9 @@ select {
 }
 
 .flip-card {
-  background-color: transparent;
-  width: 400px;
-  height: 500px;
+  padding-top: 80px;
+  width: 100%;
+  height: auto;
   perspective: 1000px;
 }
 
@@ -190,13 +190,12 @@ select {
 }
 
 .flip-card-front {
-  padding-top: 100px;
   background-color: #bbb;
   color: black;
 }
 
 .flip-card-back {
-  background-color: #2980b9;
+  background-color: #4D0461;
   color: white;
   transform: rotateY(180deg);
 }
@@ -218,6 +217,47 @@ select {
   width: 100%;
   box-shadow: 1.5px 1.5px 3px grey;
   background-color: rgba(129, 140, 248);
+}
+
+#round-container {
+  width: 100%;
+  box-shadow: 1.5px 1.5px 3px grey;
+  background-color: rgba(129, 140, 248);
+}
+
+.column {
+  float: left;
+  padding: 10px;
+}
+
+/* Left and right column */
+.column.side {
+  width: 25%;
+}
+
+/* Middle column */
+.column.middle {
+  width: 50%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column.side, .column.middle {
+    width: 100%;
+  }
+}
+
+.method-cards {
+  width: 100%;
+  height: 125%;
+  border: 0.2em solid rgba(55, 48, 163);
 }
 
 
