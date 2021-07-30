@@ -101,7 +101,7 @@ header nav a {
 }
 
 body {
-  background-color: #B6CBF4;
+  background-color: whitesmoke;
 }
 
 input[type=button], input[type=submit], input[type=reset] {
@@ -190,13 +190,11 @@ select {
 }
 
 .flip-card-front {
-  background-color: #bbb;
   color: black;
 }
 
 .flip-card-back {
-  background-color: #4D0461;
-  color: white;
+  color: black;
   transform: rotateY(180deg);
 }
 
@@ -247,21 +245,31 @@ select {
   clear: both;
 }
 
+
+
+.method-cards {
+  width: 100%;
+  height: 125%;
+  border-radius: 0.25em;
+}
+
+.big-container {
+  height: 400px;
+  background-color: #5AF2F0;
+}
+
+#challenge-card {
+  height: 400px;
+  background-color: #4D0461;
+}
+
+
 /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 600px) {
   .column.side, .column.middle {
     width: 100%;
   }
 }
-
-.method-cards {
-  width: 100%;
-  height: 125%;
-  border: 0.2em solid rgba(55, 48, 163);
-}
-
-
-
 
 
 
