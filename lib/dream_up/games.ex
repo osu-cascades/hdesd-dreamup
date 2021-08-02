@@ -93,6 +93,9 @@ defmodule DreamUp.Games do
     game
     |> Game.changeset(attrs)
     |> Repo.update()
+    |> broadcast(:game_update)
+    IO.inspect(game)
+    IO.inspect(attrs)
   end
 
   @doc """
@@ -123,4 +126,26 @@ defmodule DreamUp.Games do
   def change_game(%Game{} = game, attrs \\ %{}) do
     Game.changeset(game, attrs)
   end
+
+  def select_challenge(id, card_id, team) do
+    game = get_game!(id)
+    IO.inspect(game)
+    case team do
+      "red" ->
+        update_game(game, %{blue_challenge_id: card_id})
+      "blue" ->
+        update_game(game, %{red_challenge_id: card_id})
+    end
+  end
+
+  def broadcast({:ok, game}, event) do
+    Phoenix.PubSub.broadcast(
+      DreamUp.PubSub,
+      "games",
+      {event}
+    )
+    {:ok, game}
+ end
+
+ def broadcast({:error, _reason} = error, _event), do: error
 end

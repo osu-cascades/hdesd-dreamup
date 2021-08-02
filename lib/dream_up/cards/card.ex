@@ -14,6 +14,6 @@ defmodule DreamUp.Cards.Card do
   def changeset(card, attrs) do
     card
     |> cast(attrs, [:type, :header, :prompt])
-    |> validate_required([:type, :header, :prompt])
+    |> validate_required([:type, :prompt])
   end
 end

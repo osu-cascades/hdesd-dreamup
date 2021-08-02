@@ -1,7 +1,7 @@
 <div class="grid grid-cols-5 gap-4">
     <%= for card <- @cards do %>
         <%= if card.type == "Challenge" do %>
-            <div class="setup-cards">
+            <div class="setup-cards" phx-click="challenge-click" phx-value-card-id="<%= card.id %>">
                 <h1><%= card.type %></h1>
                 <h2><%= card.header %></h2>
                 <p><%= card.prompt %></p>
