@@ -15,8 +15,13 @@ defmodule DreamUpWeb.SetupLive do
     # changeset = Card.change_card(%Card{})
 
     # socket = assign(socket, changeset: changeset, id: false, editing: false)
-    socket = assign(socket, cards: cards, game_id: 11, team: "blue", blue_challenge_id: nil, red_challenge_id: nil)
+    socket = assign(socket, cards: cards, blue_challenge_id: nil, red_challenge_id: nil)
     {:ok, socket}
+  end
+
+  def handle_params(params, _url, socket) do
+    socket = assign(socket, game_id: params["game_id"], player_id: params["player_id"], team: params["team"])
+    {:noreply, socket}
   end
 
   def handle_event("challenge-click", %{"card-id" => card_id}, socket) do
