@@ -9,6 +9,10 @@ defmodule DreamUp.Games do
   alias DreamUp.Games.Game
   alias DreamUp.Code
 
+  def subscribe do
+    Phoenix.PubSub.subscribe(DreamUp.PubSub, "games")
+  end
+
   @doc """
   Returns the list of games.
 
@@ -93,6 +97,7 @@ defmodule DreamUp.Games do
     game
     |> Game.changeset(attrs)
     |> Repo.update()
+    |> broadcast(:game_update)
   end
 
   @doc """
@@ -123,4 +128,25 @@ defmodule DreamUp.Games do
   def change_game(%Game{} = game, attrs \\ %{}) do
     Game.changeset(game, attrs)
   end
+
+  def select_challenge(id, card_id, team) do
+    game = get_game!(id)
+    case team do
+      "red" ->
+        update_game(game, %{blue_challenge_id: card_id})
+      "blue" ->
+        update_game(game, %{red_challenge_id: card_id})
+    end
+  end
+
+  def broadcast({:ok, game}, event) do
+    Phoenix.PubSub.broadcast(
+      DreamUp.PubSub,
+      "games",
+      {event, game}
+    )
+    {:ok, game}
+ end
+
+ def broadcast({:error, _reason} = error, _event), do: error
 end

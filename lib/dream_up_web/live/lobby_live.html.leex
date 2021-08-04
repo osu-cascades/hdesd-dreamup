@@ -62,4 +62,9 @@
         </div>
         <% end %>
     </div>
+    <%= if @id do %>
+    <div class="text-center">
+        <button phx-click="start-game">Start Game</button>
+    </div>
+    <% end %>
 </div>
