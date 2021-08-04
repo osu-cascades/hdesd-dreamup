@@ -5,7 +5,9 @@
                 <h1><%= card.type %></h1>
                 <h2><%= card.header %></h2>
                 <p><%= card.prompt %></p>
-                <button phx-click="challenge-click" phx-value-card-id="<%= card.id %>">Select</button>
+                <div class="button">
+                    <button phx-click="challenge-click" phx-value-card-id="<%= card.id %>">Select</button>
+                </div>
             </div>
         <% end %>
     <% end %>
