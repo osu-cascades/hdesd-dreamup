@@ -20,11 +20,19 @@ defmodule DreamUpWeb.SetupLive do
   end
 
   def handle_params(params, _url, socket) do
+    if params["team"] != "red" and params["team"] != "blue" do
+      IO.puts("ERROR PARAMS")
+      IO.inspect(params)
+    end
     socket = assign(socket, game_id: params["game_id"], player_id: params["player_id"], team: params["team"])
     {:noreply, socket}
   end
 
   def handle_event("challenge-click", %{"card-id" => card_id}, socket) do
+    if socket.assigns.team != "red" and socket.assigns.team != "blue" do
+      IO.puts("ERROR SOCKET")
+      IO.inspect(socket.assigns.team)
+    end
     Games.select_challenge(socket.assigns.game_id, String.to_integer(card_id), socket.assigns.team)
     {:noreply, socket}
   end
