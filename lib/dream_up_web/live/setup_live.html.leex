@@ -1,20 +1,61 @@
-<div class="grid grid-cols-5 gap-4">
+<h1 class="text-blue-900 text-5xl font-bold">Setup</h1>
+<h2 class="text-blue-900 text-4xl font-bold mb-4">Pick a Design Challenge for the other team.</h2>
+
+<div id="selected-cards" class="grid grid-cols-2 gap-4 mb-4">
+    <%= if @red_challenge_id do %>
+        <div>
+            <p>Red Team's Challenge</p>
+            <div class="setup-cards">
+                <h1 class="card-type">Design Challenge</h1>
+                <h2 class="font-medium">
+                    Dream up a better way to
+                    <div class="card-header"> <%= get_card_header(@red_challenge_id) %></div>
+                </h2>
+                <p><%= get_card_prompt(@red_challenge_id) %></p>
+            </div>
+        </div>
+    <% else %>
+        <div class="setup-cards card-back">
+            <h1>challege</h1>
+            <img class="card-logo" src="/images/DreamUpLogo.svg">
+            <h2>dream up!</h2>
+        </div>
+    <% end %>
+    <%= if @blue_challenge_id do %>
+        <div>
+            <p>Blue Team's Challenge</p>
+            <div class="setup-cards">
+                <h1 class="card-type">Design Challenge</h1>
+                <h2 class="font-medium">
+                    Dream up a better way to
+                    <div class="card-header"> <%= get_card_header(@blue_challenge_id) %></div>
+                </h2>
+                <p><%= get_card_prompt(@blue_challenge_id) %></p>
+            </div>
+        </div>
+     <% else %>
+        <div class="setup-cards card-back">
+            <h1>challege</h1>
+            <img class="card-logo" src="/images/DreamUpLogo.svg">
+            <h2>dream up!</h2>
+        </div>
+    <% end %>
+
+</div>
+<div class="grid sm:grid-cols-3 lg:grid-cols-5 gap-4">
     <%= for card <- @cards do %>
         <%= if card.type == "Challenge" do %>
             <div class="setup-cards">
-                <h1><%= card.type %></h1>
-                <h2><%= card.header %></h2>
+                <h1 class="card-type">Design <%= card.type %></h1>
+                <h2 class="font-medium">
+                    Dream up a better way to
+                    <div class="card-header"> <%= card.header %></div>
+                </h2>
                 <p><%= card.prompt %></p>
                 <div class="button">
                     <button phx-click="challenge-click" phx-value-card-id="<%= card.id %>">Select</button>
                 </div>
             </div>
         <% end %>
-    <% end %>
-    <%= if @blue_challenge_id do %>
-        <h3>Blue team's challenge: <%= @blue_challenge_id %></h3>
-    <% end %>
-    <%= if @red_challenge_id do %>
-        <h3>Red team's challenge: <%= @red_challenge_id %></h3>
     <% end %>
 </div>

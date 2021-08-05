@@ -42,4 +42,22 @@ defmodule DreamUpWeb.SetupLive do
     {:noreply, socket}
   end
 
+  def get_card_header(card_id) do
+    if card_id do
+      card = Cards.get_card!(card_id)
+      card.header
+    else
+      ""
+    end
+  end
+
+  def get_card_prompt(card_id) do
+    if card_id do
+      card = Cards.get_card!(card_id)
+      card.prompt
+    else
+      ""
+    end
+  end
+
 end
