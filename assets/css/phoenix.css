@@ -178,6 +178,15 @@ select {
 }
 
 .flip-card {
+  transform: rotateY(180deg);
+  transition: transform 0.7s;
+}
+
+.flipped-card-text {
+  transform: scale(-1, 1);
+}
+
+/* .flip-card {
   padding-top: 80px;
   width: 100%;
   height: auto;
@@ -213,7 +222,7 @@ select {
 .flip-card-back {
   color: black;
   transform: rotateY(180deg);
-}
+} */
 
 .setup-cards {
   text-align: center;

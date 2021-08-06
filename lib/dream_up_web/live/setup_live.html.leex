@@ -1,4 +1,5 @@
 <h1 class="text-blue-900 text-5xl font-bold">Setup</h1>
+<h2 class="text-blue-900 text-4xl font-bold mb-4">You are on <%= @team %> team.</h2>
 <h2 class="text-blue-900 text-4xl font-bold mb-4">Pick a Design Challenge for the other team.</h2>
 
 <div id="selected-cards" class="grid grid-cols-2 gap-4 mb-4">
@@ -61,10 +62,10 @@
                     </div>
                 </div>
             <% else %>
-                <div class="setup-cards card-back">
-                    <h1>challege</h1>
-                    <img class="card-logo" src="/images/DreamUpLogo.svg">
-                    <h2>dream up!</h2>
+                <div class="setup-cards card-back <%= @class %>">
+                    <h1 class="flipped-card-text">challege</h1>
+                    <img class="card-logo flipped-card-text" src="/images/DreamUpLogo.svg">
+                    <h2 class="flipped-card-text">dream up!</h2>
                 </div>
             <% end %>
         <% end %>

@@ -15,7 +15,7 @@ defmodule DreamUpWeb.SetupLive do
     # changeset = Card.change_card(%Card{})
 
     # socket = assign(socket, changeset: changeset, id: false, editing: false)
-    socket = assign(socket, cards: cards, blue_challenge_id: nil, red_challenge_id: nil)
+    socket = assign(socket, cards: cards, blue_challenge_id: nil, red_challenge_id: nil, class: '')
     {:ok, socket}
   end
 
@@ -34,7 +34,7 @@ defmodule DreamUpWeb.SetupLive do
       IO.inspect(socket.assigns.team)
     end
     Games.select_challenge(socket.assigns.game_id, String.to_integer(card_id), socket.assigns.team)
-    {:noreply, socket}
+    {:noreply, assign(socket, class: "flip-card")}
   end
 
   def handle_info({:game_update, game}, socket) do
