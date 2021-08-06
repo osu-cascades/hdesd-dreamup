@@ -105,19 +105,6 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* button {
-  background-color: #4CAF50;
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-} */
-
 .button {
   background-color: #B6CBF4;
   border: none;
@@ -128,6 +115,10 @@ body {
   font-size: 16px;
   margin: 4px 2px;
   cursor: pointer;
+}
+
+.button button {
+  border: none;
 }
 
 input[type=button], input[type=submit], input[type=reset] {
@@ -187,6 +178,15 @@ select {
 }
 
 .flip-card {
+  transform: rotateY(180deg);
+  transition: transform 0.7s;
+}
+
+.flipped-card-text {
+  transform: scale(-1, 1);
+}
+
+/* .flip-card {
   padding-top: 80px;
   width: 100%;
   height: auto;
@@ -222,15 +222,38 @@ select {
 .flip-card-back {
   color: black;
   transform: rotateY(180deg);
-}
+} */
 
 .setup-cards {
   text-align: center;
-  color: white;
-  background-color: #4D0461;
+  color: black;
+  border: solid #58595B 4px;
+  background-color: white;
   width: 200px;
   height: 250px;
   border-radius: 5%;
+}
+
+.card-back {
+  background-color: #58595B;
+  color: white;
+  padding-top: 45px;
+}
+
+.card-logo {
+  width: 100px;
+  height: auto;
+  margin: auto;
+}
+
+.card-type {
+  background-color: #58595B;
+  color: white;
+  padding: 0.75em 0em;;  
+}
+
+.card-header {
+  color: #d9217d;
 }
 
 .setup-button-container {
@@ -297,6 +320,8 @@ select {
   .column.side, .column.middle {
     width: 100%;
   }
+
+
 }
 
 
