@@ -13,7 +13,7 @@
                         Dream up a better way to
                         <div class="card-header"> <%= get_card_header(@red_challenge_id) %></div>
                     </h2>
-                    <p><%= get_card_prompt(@red_challenge_id) %></p>
+                    <p class="text-sm"><%= get_card_prompt(@red_challenge_id) %></p>
                 </div>
             </div>
         <% else %>
@@ -34,7 +34,7 @@
                         Dream up a better way to
                         <div class="card-header"> <%= get_card_header(@blue_challenge_id) %></div>
                     </h2>
-                    <p><%= get_card_prompt(@blue_challenge_id) %></p>
+                    <p class="text-sm"><%= get_card_prompt(@blue_challenge_id) %></p>
                 </div>
             </div>
         <% else %>
@@ -56,7 +56,7 @@
                         Dream up a better way to
                         <div class="card-header"> <%= card.header %></div>
                     </h2>
-                    <p><%= card.prompt %></p>
+                    <p class="text-sm"><%= card.prompt %></p>
                     <div class="button">
                         <button phx-click="challenge-click" phx-value-card-id="<%= card.id %>">Select</button>
                     </div>
