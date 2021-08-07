@@ -105,21 +105,19 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.button {
+.setup-select-button {
   background-color: #B6CBF4;
-  border: none;
   color: white;
+  font-size: 2rem;
   text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
+  padding: 0 2em;
 }
 
-.button button {
-  border: none;
-}
+/* .button button {
+  background-color: #B6CBF4;
+  width: 100%;
+  display: block;
+} */
 
 input[type=button], input[type=submit], input[type=reset] {
   color: #1E3A8A;
