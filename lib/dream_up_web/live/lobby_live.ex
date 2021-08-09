@@ -89,13 +89,10 @@ defmodule DreamUpWeb.LobbyLive do
   end
 
   def handle_event("start-game", _, socket) do
-    game_id = socket.assigns.game_id
-    player_id = socket.assigns.id
-    current_player = get_current_player(socket)
-    {:noreply, redirect(socket, to: Routes.live_path(socket, DreamUpWeb.SetupLive, %{game_id: game_id, player_id: player_id, team: current_player.team}))}
+    Games.start_game(socket.assigns.game_id)
+    {:noreply, socket}
   end
 
-  # TODO - fix this mess
   def get_current_player(socket) do
     id = socket.assigns.id
     Enum.find(socket.assigns.players, fn(player) ->
@@ -111,4 +108,12 @@ defmodule DreamUpWeb.LobbyLive do
       )
     {:noreply, socket}
   end
+
+  def handle_info({:start_game}, socket) do
+    game_id = socket.assigns.game_id
+    player_id = socket.assigns.id
+    current_player = get_current_player(socket)
+    {:noreply, redirect(socket, to: Routes.live_path(socket, DreamUpWeb.SetupLive, %{game_id: game_id, player_id: player_id, team: current_player.team}))}
+  end
+
 end

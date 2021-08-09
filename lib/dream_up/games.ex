@@ -47,6 +47,18 @@ defmodule DreamUp.Games do
     head.id
   end
 
+  def broadcast(event) do
+    Phoenix.PubSub.broadcast(
+      DreamUp.PubSub,
+      "games",
+      {event}
+    )
+ end
+
+  def start_game(game_id) do
+    broadcast(:start_game)
+  end
+
   @doc """
   Gets a single game.
 

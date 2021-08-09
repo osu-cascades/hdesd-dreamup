@@ -56,10 +56,8 @@
                         Dream up a better way to
                         <div class="card-header"> <%= card.header %></div>
                     </h2>
-                    <p><%= card.prompt %></p>
-
-                        <button class="setup-select-button text-sm" phx-click="challenge-click" phx-value-card-id="<%= card.id %>">Select</button>
-
+                    <p class="text-sm"><%= card.prompt %></p>
+                    <button class="setup-select-button" phx-click="challenge-click" phx-value-card-id="<%= card.id %>">Select</button>
                 </div>
             <% else %>
                 <div class="setup-cards card-back <%= @class %>">
