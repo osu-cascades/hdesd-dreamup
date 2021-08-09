@@ -9,8 +9,9 @@ defmodule DreamUp.Games do
   alias DreamUp.Games.Game
   alias DreamUp.Code
 
-  def subscribe do
-    Phoenix.PubSub.subscribe(DreamUp.PubSub, "games")
+  def subscribe(game_id) do
+    IO.inspect(game_id)
+    Phoenix.PubSub.subscribe(DreamUp.PubSub, "games" <> Integer.to_string(game_id))
   end
 
   @doc """
@@ -47,16 +48,16 @@ defmodule DreamUp.Games do
     head.id
   end
 
-  def broadcast(event) do
+  def broadcast(event, game_id) do
     Phoenix.PubSub.broadcast(
       DreamUp.PubSub,
-      "games",
+      "games" <> Integer.to_string(game_id),
       {event}
     )
  end
 
   def start_game(game_id) do
-    broadcast(:start_game)
+    broadcast(:start_game, game_id)
   end
 
   @doc """
@@ -151,14 +152,14 @@ defmodule DreamUp.Games do
     end
   end
 
-  def broadcast({:ok, game}, event) do
-    Phoenix.PubSub.broadcast(
-      DreamUp.PubSub,
-      "games",
-      {event, game}
-    )
-    {:ok, game}
- end
+#   def broadcast({:ok, game}, event) do
+#     Phoenix.PubSub.broadcast(
+#       DreamUp.PubSub,
+#       "games",
+#       {event, game}
+#     )
+#     {:ok, game}
+#  end
 
- def broadcast({:error, _reason} = error, _event), do: error
+#  def broadcast({:error, _reason} = error, _event), do: error
 end
