@@ -18,6 +18,7 @@ defmodule DreamUpWeb.LobbyLive do
   def handle_params(params, _url, socket) do
     code = params["code"]
     game_id = Games.get_game_id_from_code(code)
+    if connected?(socket), do: Games.subscribe(game_id)
     players = Players.list_players_in_game(game_id)
     socket = assign(socket, game_id: game_id, code: code, players: players)
     {:noreply, socket}
@@ -89,20 +90,15 @@ defmodule DreamUpWeb.LobbyLive do
   end
 
   def handle_event("start-game", _, socket) do
-    game_id = socket.assigns.game_id
-    player_id = socket.assigns.id
-    [team | _] = get_current_player_team(socket)
-    IO.inspect(team)
-    {:noreply, redirect(socket, to: Routes.live_path(socket, DreamUpWeb.SetupLive, %{game_id: game_id, player_id: player_id, team: team}))}
+    Games.start_game(socket.assigns.game_id)
+    {:noreply, socket}
   end
 
-  # TODO - fix this mess
-  def get_current_player_team(socket) do
-    for player <- socket.assigns.players do
-      if player.id == socket.assigns.id do
-        player.team
-      end
-    end
+  def get_current_player(socket) do
+    id = socket.assigns.id
+    Enum.find(socket.assigns.players, fn(player) ->
+      match?(%{id: ^id}, player)
+    end)
   end
 
   def handle_info({:player_event}, socket) do
@@ -113,4 +109,12 @@ defmodule DreamUpWeb.LobbyLive do
       )
     {:noreply, socket}
   end
+
+  def handle_info({:start_game}, socket) do
+    game_id = socket.assigns.game_id
+    player_id = socket.assigns.id
+    current_player = get_current_player(socket)
+    {:noreply, redirect(socket, to: Routes.live_path(socket, DreamUpWeb.SetupLive, %{game_id: game_id, player_id: player_id, team: current_player.team}))}
+  end
+
 end
