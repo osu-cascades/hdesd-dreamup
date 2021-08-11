@@ -18,7 +18,7 @@ defmodule DreamUpWeb.Router do
     pipe_through :browser
 
     # live "/", PageLive, :index
-    live "/", HomeLive, :index
+    live "/", HomeLive # I removed the ":index" from here to make a redirect work
     live "/lobby", LobbyLive
     live "/board", BoardLive
     live "/setup", SetupLive

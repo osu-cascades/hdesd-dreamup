@@ -44,8 +44,13 @@ defmodule DreamUp.Games do
   end
 
   def get_game_id_from_code(code) do
-    [head | _tail] = Repo.all(from g in Game, order_by: [desc: g.id], where: [code: ^code])
-    head.id
+    results = Repo.all(from g in Game, order_by: [desc: g.id], where: [code: ^code])
+    if Enum.count(results) === 0 do
+      -1
+    else
+      [head | _tail] = Repo.all(from g in Game, order_by: [desc: g.id], where: [code: ^code])
+      head.id
+    end
   end
 
   def broadcast(event, game_id) do

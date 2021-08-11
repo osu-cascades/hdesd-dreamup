@@ -4,7 +4,13 @@
             Enter Game Code:
         </h1>
         <form phx-submit="join-game">
-            <input type="text" name="game_code" value="" placeholder="Enter Game Code"><br><br>
+            <input type="text" name="game_code" value="" placeholder="Enter Game Code">
+            <%= if @error == "code" do %>
+                <h6 class="text-red-400">Error: code not found</h6>
+                <br>
+            <% else %>
+                <br><br>
+            <% end %>
             <input id="defaultButton" type="submit" value="Join Game">
         </form>
     </div>
