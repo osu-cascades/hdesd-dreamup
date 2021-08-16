@@ -3,7 +3,7 @@
 <h2 class="text-blue-900 text-4xl font-bold mb-4">Pick a Design Challenge for the other team.</h2>
 
 <div id="selected-cards" class="grid grid-cols-2 gap-4 mb-4">
-    <div>
+    <div id="red-team" class="team-setup-cards-container setup-cards-container bg-red-700">
         <p>Red Team's Challenge</p>
         <%= if @red_challenge_id do %>
             <div>
@@ -24,7 +24,7 @@
             </div>
         <% end %>
     </div>
-    <div>
+    <div id="blue-team" class="team-setup-cards-container setup-cards-container">
         <p>Blue Team's Challenge</p>
         <%= if @blue_challenge_id do %>
             <div>
@@ -46,7 +46,7 @@
         <% end %>
     </div>
 </div>
-<div class="grid sm:grid-cols-3 lg:grid-cols-5 gap-4">
+<div class="setup-cards-container grid sm:grid-cols-3 lg:grid-cols-5 gap-4">
     <%= for card <- @cards do %>
         <%= if card.type == "Challenge" do %>
             <%= unless card.id == @red_challenge_id || card.id == @blue_challenge_id do %>
@@ -57,7 +57,9 @@
                         <div class="card-header"> <%= card.header %></div>
                     </h2>
                     <p class="text-sm"><%= card.prompt %></p>
-                    <button class="setup-select-button" phx-click="challenge-click" phx-value-card-id="<%= card.id %>">Select</button>
+
+                        <button class="setup-select-button text-sm" phx-click="challenge-click" phx-value-card-id="<%= card.id %>">Select</button>
+
                 </div>
             <% else %>
                 <div class="setup-cards card-back <%= @class %>">
