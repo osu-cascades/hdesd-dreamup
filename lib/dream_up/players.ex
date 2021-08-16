@@ -45,10 +45,20 @@ defmodule DreamUp.Players do
 
   """
   def create_player(attrs \\ %{}) do
+    final_attrs = add_player_from_lobby(attrs)
     %Player{}
-    |> Player.changeset(attrs)
+    |> Player.changeset(final_attrs)
     |> Repo.insert()
     |> broadcast(:player_event)
+  end
+
+  def add_player_from_lobby(attrs \\ %{}) do
+    if Enum.count(list_players_in_game(attrs.game_id)) === 0 do
+      Map.put(attrs, :permissions, "admin")
+    else
+      attrs
+    end
+
   end
 
   @doc """

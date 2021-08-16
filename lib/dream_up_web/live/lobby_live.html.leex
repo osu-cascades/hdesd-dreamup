@@ -26,9 +26,12 @@
         <%= for player <- @players do %>
         <div id="container-0<%= player.id %>" class="<%= if player.__meta__.state == :deleted do %>hidden<% end %>
             text-4xl py-2 font-bold max-w-full text-center max-w-lg bg-indigo-100 border-b-4 border-indigo-400">
-            <p class="text-blue-900"><%= player.name %></p>
+            <%= if player.permissions == "admin" do %>
+                <p class="text-red-900"><%= player.name %></p>
+            <% else %>
+                <p class="text-blue-900"><%= player.name %></p>
+            <% end %>
             <p class="text-blue-900"><%= player.team %></p>
-
             <%= if player.id == @id do %>
                 <%= if @editing do %>
                 <%= p = form_for @changeset, "#",
