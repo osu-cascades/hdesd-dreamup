@@ -7,14 +7,14 @@ defmodule DreamUpWeb.SetupLive do
 
 
   def mount(_params, _session, socket) do
-    if connected?(socket), do: Games.subscribe()
-
     cards = Cards.list_cards()
     socket = assign(socket, cards: cards, blue_challenge_id: nil, red_challenge_id: nil, class: '')
     {:ok, socket}
   end
 
   def handle_params(params, _url, socket) do
+    if connected?(socket), do: Games.subscribe(String.to_integer(params["game_id"]))
+
     socket = assign(socket, game_id: params["game_id"], player_id: params["player_id"], team: params["team"])
     {:noreply, socket}
   end
