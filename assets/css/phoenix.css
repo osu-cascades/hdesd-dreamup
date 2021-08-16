@@ -183,18 +183,16 @@ select {
 .flipped-card-text {
   transform: scale(-1, 1);
 }
-
-.setup-cards {
-  padding-top: ;
-}
-
 .setup-cards-container {
   
 }
 
 .team-setup-cards-container {
-  margin: auto;
-  width: 90%;
+  
+}
+
+.setup-cards {
+
 }
 
 #red-team {
@@ -209,8 +207,6 @@ select {
   text-align: center;
   font-weight: 800;
 }
-
-
 
 .setup-cards {
   margin: auto;
