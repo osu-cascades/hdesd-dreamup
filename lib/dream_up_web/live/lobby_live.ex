@@ -18,7 +18,7 @@ defmodule DreamUpWeb.LobbyLive do
   def handle_params(params, _url, socket) do
     game_id = Games.get_game_id_from_code(params["code"])
     if game_id === -1 do
-      {:noreply, redirect(socket, to: Routes.live_path(socket, DreamUpWeb.HomeLive, %{error: "code"}))}
+      {:noreply, redirect(socket, to: Routes.home_path(socket, :index, %{error: "code"}))}
     else
       if connected?(socket), do: Games.subscribe(game_id)
       {:noreply, assign(socket,
