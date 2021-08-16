@@ -16,12 +16,17 @@ defmodule DreamUpWeb.LobbyLive do
   end
 
   def handle_params(params, _url, socket) do
-    code = params["code"]
-    game_id = Games.get_game_id_from_code(code)
-    if connected?(socket), do: Games.subscribe(game_id)
-    players = Players.list_players_in_game(game_id)
-    socket = assign(socket, game_id: game_id, code: code, players: players)
-    {:noreply, socket}
+    game_id = Games.get_game_id_from_code(params["code"])
+    if game_id === -1 do
+      {:noreply, redirect(socket, to: Routes.home_path(socket, :index, %{error: "code"}))}
+    else
+      if connected?(socket), do: Games.subscribe(game_id)
+      {:noreply, assign(socket,
+        game_id: game_id,
+        code: params["code"],
+        players: Players.list_players_in_game(game_id)
+      )}
+    end
   end
 
   def handle_event("save", %{"player" => player_params}, socket) do
