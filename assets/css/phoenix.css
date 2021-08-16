@@ -184,45 +184,36 @@ select {
   transform: scale(-1, 1);
 }
 
-/* .flip-card {
-  padding-top: 80px;
-  width: 100%;
-  height: auto;
-  perspective: 1000px;
+.setup-cards {
+  padding-top: ;
 }
 
-.flip-card-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
+.setup-cards-container {
+  
+}
+
+.team-setup-cards-container {
+  margin: auto;
+  width: 90%;
+}
+
+#red-team {
+  background-color: #F1385D;
+}
+
+#blue-team {
+  background-color: #0DB2E7;
+}
+
+#blue-team, #red-team {
   text-align: center;
-  transition: transform 0.6s;
-  transform-style: preserve-3d;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  font-weight: 800;
 }
 
-.flip-card:hover .flip-card-inner {
-  transform: rotateY(180deg);
-}
 
-.flip-card-front, .flip-card-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-}
-
-.flip-card-front {
-  color: black;
-}
-
-.flip-card-back {
-  color: black;
-  transform: rotateY(180deg);
-} */
 
 .setup-cards {
+  margin: auto;
   text-align: center;
   color: black;
   border: solid #58595B 4px;
