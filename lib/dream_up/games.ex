@@ -70,9 +70,6 @@ defmodule DreamUp.Games do
     )
   end
 
-  def begin_setup(game_id) do
-    broadcast(:begin_setup, game_id)
-  end
 
   @doc """
   Gets a single game.

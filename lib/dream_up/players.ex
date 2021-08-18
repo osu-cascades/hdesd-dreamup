@@ -129,4 +129,18 @@ defmodule DreamUp.Players do
         update_player(player, %{team: "blue"})
     end
   end
+
+  def find_first_player_on_team(team, game_id) do
+    players_in_game = list_players_in_game(game_id)
+    players_in_team = Enum.filter(players_in_game, fn player ->
+      match?(%{team: ^team}, player)
+    end)
+    Enum.min_by(players_in_team, fn player -> player.id end)
+    # players_sorted = Enum.sort(players_in_team, fn player1, player2  ->
+    #   player1.id >= player2.id
+    # end)
+    # Enum.min
+    # Enum.at(0)
+    # IO.inspect(players_in_team)
+  end
 end

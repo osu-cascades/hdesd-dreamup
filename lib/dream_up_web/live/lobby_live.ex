@@ -95,7 +95,16 @@ defmodule DreamUpWeb.LobbyLive do
   end
 
   def handle_event("begin-setup", _, socket) do
-    Games.begin_setup(socket.assigns.game_id)
+    Games.broadcast(:begin_setup, socket.assigns.game_id)
+    current_player = get_current_player(socket)
+    case current_player.team do
+      "blue" ->
+        Players.update_player(current_player, %{permissions: "blue_admin"})
+        Players.update_player(Players.find_first_player_on_team("red", socket.assigns.game_id), %{permissions: "red_admin"})
+      "red" ->
+        Players.update_player(current_player, %{permissions: "red_admin"})
+        Players.update_player(Players.find_first_player_on_team("blue", socket.assigns.game_id), %{permissions: "blue_admin"})
+    end
     {:noreply, socket}
   end
 
