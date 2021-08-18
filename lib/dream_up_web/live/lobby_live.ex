@@ -94,8 +94,8 @@ defmodule DreamUpWeb.LobbyLive do
     {:noreply, socket}
   end
 
-  def handle_event("start-game", _, socket) do
-    Games.start_game(socket.assigns.game_id)
+  def handle_event("begin-setup", _, socket) do
+    Games.begin_setup(socket.assigns.game_id)
     {:noreply, socket}
   end
 
@@ -115,7 +115,12 @@ defmodule DreamUpWeb.LobbyLive do
     {:noreply, socket}
   end
 
-  def handle_info({:start_game}, socket) do
+  def handle_info({:update_game}, socket) do
+    # socket = assign(socket, key: value)
+    {:noreply, socket}
+  end
+
+  def handle_info({:begin_setup}, socket) do
     game_id = socket.assigns.game_id
     player_id = socket.assigns.id
     current_player = get_current_player(socket)

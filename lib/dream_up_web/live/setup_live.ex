@@ -20,11 +20,14 @@ defmodule DreamUpWeb.SetupLive do
   end
 
   def handle_event("challenge-click", %{"card-id" => card_id}, socket) do
+    IO.inspect(socket.assigns.game_id)
+    IO.puts("challenge-click event")
     Games.select_challenge(socket.assigns.game_id, String.to_integer(card_id), socket.assigns.team)
     {:noreply, assign(socket, class: "flip-card")}
   end
 
-  def handle_info({:game_update, game}, socket) do
+  def handle_info({:update_game, event}, socket) do
+    {_, game} = event
     socket = assign(socket, red_challenge_id: game.red_challenge_id, blue_challenge_id: game.blue_challenge_id)
     {:noreply, socket}
   end
