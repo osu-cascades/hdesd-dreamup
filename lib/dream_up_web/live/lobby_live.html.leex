@@ -65,7 +65,7 @@
         </div>
         <% end %>
     </div>
-    <%= if @id do %>
+    <%= if own_player_is_admin(@id, @players) do %>
     <div class="text-center">
         <button phx-click="begin-setup">Start Game</button>
     </div>

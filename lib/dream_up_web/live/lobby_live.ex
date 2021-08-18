@@ -127,4 +127,15 @@ defmodule DreamUpWeb.LobbyLive do
     {:noreply, redirect(socket, to: Routes.live_path(socket, DreamUpWeb.SetupLive, %{game_id: game_id, player_id: player_id, team: current_player.team}))}
   end
 
+  def own_player_is_admin(id, players) do
+    player = Enum.find(players, fn(player) ->
+      match?(%{id: ^id}, player)
+    end)
+    if player do
+      player.permissions === "admin"
+    else
+      false
+    end
+  end
+
 end
