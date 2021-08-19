@@ -4,6 +4,7 @@ defmodule DreamUpWeb.SetupLive do
 
   alias DreamUp.Cards
   alias DreamUp.Games
+  alias DreamUp.Players
 
 
   def mount(_params, _session, socket) do
@@ -48,6 +49,11 @@ defmodule DreamUpWeb.SetupLive do
     else
       ""
     end
+  end
+
+  def is_a_team_admin(id) do
+    player = Players.get_player!(id)
+    player.permissions === "red_admin" || player.permissions === "blue_admin"
   end
 
 end
