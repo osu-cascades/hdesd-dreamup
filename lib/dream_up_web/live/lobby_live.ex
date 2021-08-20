@@ -30,7 +30,7 @@ defmodule DreamUpWeb.LobbyLive do
   end
 
   def handle_event("save", %{"player" => player_params}, socket) do
-    params = %{name: player_params["name"], game_id: socket.assigns.game_id, team: player_params["team"]}
+    params = %{name: player_params["name"], game_id: socket.assigns.game_id, team: player_params["team"], character: player_params["character"]}
     case Players.create_player(params) do
       {:ok, player} ->
         socket = update(socket, :players, fn players -> [ player | players ] end)
@@ -138,8 +138,7 @@ defmodule DreamUpWeb.LobbyLive do
   def handle_info({:begin_setup}, socket) do
     game_id = socket.assigns.game_id
     player_id = socket.assigns.id
-    current_player = get_current_player(socket)
-    {:noreply, redirect(socket, to: Routes.live_path(socket, DreamUpWeb.SetupLive, %{game_id: game_id, player_id: player_id, team: current_player.team}))}
+    {:noreply, redirect(socket, to: Routes.live_path(socket, DreamUpWeb.SetupLive, %{game_id: game_id, player_id: player_id}))}
   end
 
   def own_player_is_admin(id, players) do

@@ -16,6 +16,6 @@ defmodule DreamUp.Players.Player do
   def changeset(player, attrs) do
     player
     |> cast(attrs, [:name, :game_id, :team, :permissions, :character])
-    |> validate_required([:name, :game_id, :team])
+    |> validate_required([:name, :game_id, :team, :character])
   end
 end

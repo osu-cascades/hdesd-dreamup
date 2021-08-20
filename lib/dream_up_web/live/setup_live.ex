@@ -9,21 +9,21 @@ defmodule DreamUpWeb.SetupLive do
 
   def mount(_params, _session, socket) do
     cards = Cards.list_cards()
-    socket = assign(socket, cards: cards, blue_challenge_id: nil, red_challenge_id: nil, class: "", permissions: "")
+    socket = assign(socket, cards: cards, blue_challenge_id: nil, red_challenge_id: nil, class: "")
     {:ok, socket}
   end
 
   def handle_params(params, _url, socket) do
     if connected?(socket), do: Games.subscribe(String.to_integer(params["game_id"]))
     player = Players.get_player!(params["player_id"])
-    socket = assign(socket, game_id: params["game_id"], player_id: params["player_id"], team: params["team"], permissions: player.permissions)
+    socket = assign(socket, game_id: params["game_id"], player: player)
     {:noreply, socket}
   end
 
   def handle_event("challenge-click", %{"card-id" => card_id}, socket) do
     IO.inspect(socket.assigns.game_id)
     IO.puts("challenge-click event")
-    Games.select_challenge(socket.assigns.game_id, String.to_integer(card_id), socket.assigns.team)
+    Games.select_challenge(socket.assigns.game_id, String.to_integer(card_id), socket.assigns.player.team)
     {:noreply, assign(socket, class: "flip-card")}
   end
 
@@ -50,6 +50,8 @@ defmodule DreamUpWeb.SetupLive do
       ""
     end
   end
+
+
 
 
 

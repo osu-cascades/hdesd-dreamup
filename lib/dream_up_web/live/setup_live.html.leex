@@ -1,7 +1,11 @@
 <h1 class="text-blue-900 text-5xl font-bold">Setup</h1>
-<h2 class="text-blue-900 text-4xl font-bold mb-4">You are on <%= @team %> team.</h2>
-<h2 class="text-blue-900 text-4xl font-bold mb-4">Pick a Design Challenge for the other team.</h2>
+<h2 class="text-blue-900 text-4xl font-bold mb-4">Hello <%= @player.name %>, you are on <%= @player.team %> team.</h2>
 
+<%= if @player.permissions === "blue_admin" || @player.permissions === "red_admin" do %>
+    <h2 class="text-blue-900 text-4xl font-bold mb-4">You are <%= @player.team %> team's lead. Pick a Design Challenge for the other team.</h2>
+<% else %>
+    <h2 class="text-blue-900 text-4xl font-bold mb-4">Collaborate with your team to pick a design challenge for the other team.</h2>
+<% end %>
 <div id="selected-cards" class="grid grid-cols-2 gap-4 mb-4">
     <div id="red-team" class="team-setup-cards-container setup-cards-container bg-red-700">
         <p>Red Team's Challenge</p>
@@ -57,7 +61,7 @@
                         <div class="card-header"> <%= card.header %></div>
                     </h2>
                     <p class="text-sm"><%= card.prompt %></p>
-                    <%= if @permissions == "red_admin" || @permissions == "blue_admin" do %>
+                    <%= if @player.permissions == "red_admin" || @player.permissions == "blue_admin" do %>
                         <button class="setup-select-button text-sm" phx-click="challenge-click" phx-value-card-id="<%= card.id %>">Select</button>
                     <% end %>
                 </div>
