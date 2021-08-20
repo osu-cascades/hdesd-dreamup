@@ -57,7 +57,7 @@
                         <div class="card-header"> <%= card.header %></div>
                     </h2>
                     <p class="text-sm"><%= card.prompt %></p>
-                    <%= if is_a_team_admin(@player_id) do %>
+                    <%= if @permissions == "red_admin" || @permissions == "blue_admin" do %>
                         <button class="setup-select-button text-sm" phx-click="challenge-click" phx-value-card-id="<%= card.id %>">Select</button>
                     <% end %>
                 </div>

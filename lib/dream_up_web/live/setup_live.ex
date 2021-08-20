@@ -9,14 +9,14 @@ defmodule DreamUpWeb.SetupLive do
 
   def mount(_params, _session, socket) do
     cards = Cards.list_cards()
-    socket = assign(socket, cards: cards, blue_challenge_id: nil, red_challenge_id: nil, class: '')
+    socket = assign(socket, cards: cards, blue_challenge_id: nil, red_challenge_id: nil, class: "", permissions: "")
     {:ok, socket}
   end
 
   def handle_params(params, _url, socket) do
     if connected?(socket), do: Games.subscribe(String.to_integer(params["game_id"]))
-
-    socket = assign(socket, game_id: params["game_id"], player_id: params["player_id"], team: params["team"])
+    player = Players.get_player!(params["player_id"])
+    socket = assign(socket, game_id: params["game_id"], player_id: params["player_id"], team: params["team"], permissions: player.permissions)
     {:noreply, socket}
   end
 
@@ -51,9 +51,6 @@ defmodule DreamUpWeb.SetupLive do
     end
   end
 
-  def is_a_team_admin(id) do
-    player = Players.get_player!(id)
-    player.permissions === "red_admin" || player.permissions === "blue_admin"
-  end
+
 
 end

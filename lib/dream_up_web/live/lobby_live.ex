@@ -100,10 +100,16 @@ defmodule DreamUpWeb.LobbyLive do
     case current_player.team do
       "blue" ->
         Players.update_player(current_player, %{permissions: "blue_admin"})
-        Players.update_player(Players.find_first_player_on_team("red", socket.assigns.game_id), %{permissions: "red_admin"})
+        first_red_player = Players.find_first_player_on_team("red", socket.assigns.game_id)
+        if first_red_player !== -1 do
+          Players.update_player(first_red_player, %{permissions: "red_admin"})
+        end
       "red" ->
         Players.update_player(current_player, %{permissions: "red_admin"})
-        Players.update_player(Players.find_first_player_on_team("blue", socket.assigns.game_id), %{permissions: "blue_admin"})
+        first_blue_player = Players.find_first_player_on_team("blue", socket.assigns.game_id)
+        if first_blue_player !== -1 do
+          Players.update_player(first_blue_player, %{permissions: "blue_admin"})
+        end
     end
     {:noreply, socket}
   end
