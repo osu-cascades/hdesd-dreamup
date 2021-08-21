@@ -11,11 +11,11 @@ defmodule DreamUpWeb.LobbyLive do
 
     changeset = Players.change_player(%Player{})
 
-    socket = assign(socket, changeset: changeset, id: false, editing: false)
+    socket = assign(socket, changeset: changeset, id: false, editing: false, url: nil)
     {:ok, socket}
   end
 
-  def handle_params(params, _url, socket) do
+  def handle_params(params, url, socket) do
     game_id = Games.get_game_id_from_code(params["code"])
     if game_id === -1 do
       {:noreply, redirect(socket, to: Routes.home_path(socket, :index, %{error: "code"}))}
@@ -24,7 +24,8 @@ defmodule DreamUpWeb.LobbyLive do
       {:noreply, assign(socket,
         game_id: game_id,
         code: params["code"],
-        players: Players.list_players_in_game(game_id)
+        players: Players.list_players_in_game(game_id),
+        url: url
       )}
     end
   end
