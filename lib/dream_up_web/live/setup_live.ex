@@ -27,6 +27,19 @@ defmodule DreamUpWeb.SetupLive do
     {:noreply, assign(socket, class: "flip-card")}
   end
 
+  def handle_event("finish-setup", _, socket) do
+    Games.broadcast(:finish_setup, String.to_integer(socket.assigns.game_id))
+    # socket = assign(socket, key: value)
+    {:noreply, socket}
+  end
+
+  def handle_info({:finish_setup}, socket) do
+    {:noreply, redirect(socket, to: Routes.live_path(socket, DreamUpWeb.BoardLive, %{
+      game_id: socket.assigns.game_id,
+      player: socket.assigns.player
+    }))}
+  end
+
   def handle_info({:update_game, event}, socket) do
     {_, game} = event
     socket = assign(socket, red_challenge_id: game.red_challenge_id, blue_challenge_id: game.blue_challenge_id)
@@ -50,9 +63,5 @@ defmodule DreamUpWeb.SetupLive do
       ""
     end
   end
-
-
-
-
 
 end
