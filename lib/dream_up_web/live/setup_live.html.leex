@@ -1,7 +1,7 @@
 <h1 class="text-blue-900 text-5xl font-bold">Setup</h1>
 <h2 class="text-blue-900 text-4xl font-bold mb-4">Hello <%= @player.name %>, you are on <%= @player.team %> team.</h2>
 
-<%= if @player.permissions === "blue_admin" || @player.permissions === "red_admin" do %>
+<%= if @player.team_leader === "blue" || @player.team_leader === "red" do %>
     <h2 class="text-blue-900 text-4xl font-bold mb-4">You are <%= @player.team %> team's lead. Pick a Design Challenge for the other team.</h2>
 <% else %>
     <h2 class="text-blue-900 text-4xl font-bold mb-4">Collaborate with your team to pick a design challenge for the other team.</h2>
@@ -61,7 +61,7 @@
                         <div class="card-header"> <%= card.header %></div>
                     </h2>
                     <p class="text-sm"><%= card.prompt %></p>
-                    <%= if @player.permissions == "red_admin" || @player.permissions == "blue_admin" do %>
+                    <%= if @player.team_leader == "red" || @player.team_leader == "blue" do %>
                         <button class="setup-select-button text-sm" phx-click="challenge-click" phx-value-card-id="<%= card.id %>">Select</button>
                     <% end %>
                 </div>
@@ -76,5 +76,7 @@
     <% end %>
 </div>
 <div class="text-center"> 
-    <button phx-click="finish-setup">Finish Setup</button>
+    <%= if @player.game_admin do %>
+        <button phx-click="finish-setup">Finish Setup</button>
+    <% end %>
 </div>

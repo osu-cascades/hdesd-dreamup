@@ -33,7 +33,7 @@
         <%= for player <- @players do %>
         <div id="container-0<%= player.id %>" class="<%= if player.__meta__.state == :deleted do %>hidden<% end %>
             text-4xl py-2 font-bold max-w-full text-center max-w-lg bg-indigo-100 border-b-4 border-indigo-400">
-            <%= if player.permissions == "admin" do %>
+            <%= if player.game_admin do %>
                 <p class="text-red-900"><%= player.name %></p>
             <% else %>
                 <p class="text-blue-900"><%= player.name %></p>

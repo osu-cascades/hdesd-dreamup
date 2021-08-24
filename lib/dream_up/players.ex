@@ -54,7 +54,7 @@ defmodule DreamUp.Players do
 
   def add_player_from_lobby(attrs \\ %{}) do
     if Enum.count(list_players_in_game(attrs.game_id)) === 0 do
-      Map.put(attrs, :permissions, "admin")
+      Map.put(attrs, :game_admin, true)
     else
       attrs
     end
