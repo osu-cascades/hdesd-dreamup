@@ -9,7 +9,7 @@ defmodule DreamUpWeb.SetupLive do
 
   def mount(_params, _session, socket) do
     cards = Cards.list_cards()
-    socket = assign(socket, cards: cards, blue_challenge_id: nil, red_challenge_id: nil, class: "")
+    socket = assign(socket, cards: cards, blue_challenge_id: nil, red_challenge_id: nil)
     {:ok, socket}
   end
 
@@ -21,10 +21,8 @@ defmodule DreamUpWeb.SetupLive do
   end
 
   def handle_event("challenge-click", %{"card-id" => card_id}, socket) do
-    IO.inspect(socket.assigns.game_id)
-    IO.puts("challenge-click event")
     Games.select_challenge(socket.assigns.game_id, String.to_integer(card_id), socket.assigns.player.team)
-    {:noreply, assign(socket, class: "flip-card")}
+    {:noreply, socket}
   end
 
   def handle_event("finish-setup", _, socket) do

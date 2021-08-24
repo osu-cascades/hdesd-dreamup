@@ -7,18 +7,16 @@
     <h2 class="text-blue-900 text-4xl font-bold mb-4">Collaborate with your team to pick a design challenge for the other team.</h2>
 <% end %>
 <div id="selected-cards" class="grid grid-cols-2 gap-4 mb-4">
-    <div id="red-team" class="team-setup-cards-container setup-cards-container bg-red-700">
+    <div id="red-team">
         <p>Red Team's Challenge</p>
         <%= if @red_challenge_id do %>
-            <div>
-                <div class="setup-cards">
-                    <h1 class="card-type">Design Challenge</h1>
-                    <h2 class="font-medium">
-                        Dream up a better way to
-                        <div class="card-header"> <%= get_card_header(@red_challenge_id) %></div>
-                    </h2>
-                    <p class="text-sm"><%= get_card_prompt(@red_challenge_id) %></p>
-                </div>
+            <div class="setup-cards flip-card">
+                <h1 class="card-type flipped-card-text">Design Challenge</h1>
+                <h2 class="font-medium flipped-card-text">
+                    Dream up a better way to
+                    <div class="card-header flipped-card-text"> <%= get_card_header(@red_challenge_id) %></div>
+                </h2>
+                <p class="text-sm flipped-card-text"><%= get_card_prompt(@red_challenge_id) %></p>
             </div>
         <% else %>
             <div class="setup-cards card-back">
@@ -28,18 +26,16 @@
             </div>
         <% end %>
     </div>
-    <div id="blue-team" class="team-setup-cards-container setup-cards-container">
+    <div id="blue-team">
         <p>Blue Team's Challenge</p>
         <%= if @blue_challenge_id do %>
-            <div>
-                <div class="setup-cards">
-                    <h1 class="card-type">Design Challenge</h1>
-                    <h2 class="font-medium">
-                        Dream up a better way to
-                        <div class="card-header"> <%= get_card_header(@blue_challenge_id) %></div>
-                    </h2>
-                    <p class="text-sm"><%= get_card_prompt(@blue_challenge_id) %></p>
-                </div>
+            <div class="setup-cards flip-card">
+                <h1 class="card-type flipped-card-text">Design Challenge</h1>
+                <h2 class="font-medium flipped-card-text">
+                    Dream up a better way to
+                    <div class="card-header"> <%= get_card_header(@blue_challenge_id) %></div>
+                </h2>
+                <p class="text-sm flipped-card-text"><%= get_card_prompt(@blue_challenge_id) %></p>
             </div>
         <% else %>
             <div class="setup-cards card-back">
@@ -50,7 +46,7 @@
         <% end %>
     </div>
 </div>
-<div class="setup-cards-container grid sm:grid-cols-3 lg:grid-cols-5 gap-4">
+<div class="grid sm:grid-cols-3 lg:grid-cols-5 gap-4">
     <%= for card <- @cards do %>
         <%= if card.type == "Challenge" do %>
             <%= unless card.id == @red_challenge_id || card.id == @blue_challenge_id do %>
@@ -66,7 +62,7 @@
                     <% end %>
                 </div>
             <% else %>
-                <div class="setup-cards card-back <%= @class %>">
+                <div class="setup-cards card-back flip-card">
                     <h1 class="flipped-card-text">challenge</h1>
                     <img class="card-logo flipped-card-text" src="/images/DreamUpLogo.svg">
                     <h2 class="flipped-card-text">dream up!</h2>
