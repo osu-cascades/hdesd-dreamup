@@ -121,7 +121,7 @@ body {
 
 input[type=button], input[type=submit], input[type=reset] {
   color: #1E3A8A;
-  background-color: #B6CBF4;
+  background-color: rgba(129, 140, 248);
   border-width: 2px;
   font-weight: 700;
   font-size: 1em;
@@ -159,7 +159,7 @@ select {
   background-color: rgba(129, 140, 248); 
 }
 
-#defaultButton {
+.defaultButton {
   box-shadow: 1.5px 1.5px 5px grey;
   background-color: rgba(129, 140, 248);
 }
@@ -183,7 +183,8 @@ select {
 .flipped-card-text {
   transform: scale(-1, 1);
 }
-.setup-cards-container {
+
+/* .setup-cards-container {
   
 }
 
@@ -193,7 +194,7 @@ select {
 
 .setup-cards {
 
-}
+} */
 
 #red-team {
   background-color: #F1385D;

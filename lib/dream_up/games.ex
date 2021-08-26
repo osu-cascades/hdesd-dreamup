@@ -53,6 +53,7 @@ defmodule DreamUp.Games do
   end
 
   # Broadcast function with game event attached to it
+  @spec broadcast(any, any, integer) :: :ok | {:error, any}
   def broadcast(event, event_name, game_id) do
     Phoenix.PubSub.broadcast(
       DreamUp.PubSub,
@@ -63,6 +64,7 @@ defmodule DreamUp.Games do
 
   # Broadcast function with no additional arguments
   def broadcast(event_name, game_id) do
+    IO.inspect(event_name)
     Phoenix.PubSub.broadcast(
       DreamUp.PubSub,
       "games" <> Integer.to_string(game_id),
