@@ -9,7 +9,7 @@ defmodule DreamUpWeb.SetupLive do
 
   def mount(_params, _session, socket) do
     cards = Cards.list_cards()
-    socket = assign(socket, cards: cards, blue_challenge_id: nil, red_challenge_id: nil, class: "")
+    socket = assign(socket, cards: cards, blue_challenge_id: nil, red_challenge_id: nil)
     {:ok, socket}
   end
 
@@ -22,7 +22,20 @@ defmodule DreamUpWeb.SetupLive do
 
   def handle_event("challenge-click", %{"card-id" => card_id}, socket) do
     Games.select_challenge(socket.assigns.game_id, String.to_integer(card_id), socket.assigns.player.team)
-    {:noreply, assign(socket, class: "flip-card")}
+    {:noreply, socket}
+  end
+
+  def handle_event("finish-setup", _, socket) do
+    Games.broadcast(:finish_setup, String.to_integer(socket.assigns.game_id))
+    # socket = assign(socket, key: value)
+    {:noreply, socket}
+  end
+
+  def handle_info({:finish_setup}, socket) do
+    {:noreply, redirect(socket, to: Routes.live_path(socket, DreamUpWeb.BoardLive, %{
+      game_id: socket.assigns.game_id,
+      player: socket.assigns.player
+    }))}
   end
 
   def handle_info({:update_game, event}, socket) do
@@ -48,9 +61,5 @@ defmodule DreamUpWeb.SetupLive do
       ""
     end
   end
-
-
-
-
 
 end

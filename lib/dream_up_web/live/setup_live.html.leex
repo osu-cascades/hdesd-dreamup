@@ -1,24 +1,22 @@
 <h1 class="text-blue-900 text-5xl font-bold">Setup</h1>
 <h2 class="text-blue-900 text-4xl font-bold mb-4">Hello <%= @player.name %>, you are on <%= @player.team %> team.</h2>
 
-<%= if @player.permissions === "blue_admin" || @player.permissions === "red_admin" do %>
+<%= if @player.team_leader === "blue" || @player.team_leader === "red" do %>
     <h2 class="text-blue-900 text-4xl font-bold mb-4">You are <%= @player.team %> team's lead. Pick a Design Challenge for the other team.</h2>
 <% else %>
     <h2 class="text-blue-900 text-4xl font-bold mb-4">Collaborate with your team to pick a design challenge for the other team.</h2>
 <% end %>
 <div id="selected-cards" class="grid grid-cols-2 gap-4 mb-4">
-    <div id="red-team" class="team-setup-cards-container setup-cards-container bg-red-700">
+    <div id="red-team">
         <p>Red Team's Challenge</p>
         <%= if @red_challenge_id do %>
-            <div>
-                <div class="setup-cards">
-                    <h1 class="card-type">Design Challenge</h1>
-                    <h2 class="font-medium">
-                        Dream up a better way to
-                        <div class="card-header"> <%= get_card_header(@red_challenge_id) %></div>
-                    </h2>
-                    <p class="text-sm"><%= get_card_prompt(@red_challenge_id) %></p>
-                </div>
+            <div class="setup-cards flip-card">
+                <h1 class="card-type flipped-card-text">Design Challenge</h1>
+                <h2 class="font-medium flipped-card-text">
+                    Dream up a better way to
+                    <div class="card-header flipped-card-text"> <%= get_card_header(@red_challenge_id) %></div>
+                </h2>
+                <p class="text-sm flipped-card-text"><%= get_card_prompt(@red_challenge_id) %></p>
             </div>
         <% else %>
             <div class="setup-cards card-back">
@@ -28,29 +26,27 @@
             </div>
         <% end %>
     </div>
-    <div id="blue-team" class="team-setup-cards-container setup-cards-container">
+    <div id="blue-team">
         <p>Blue Team's Challenge</p>
         <%= if @blue_challenge_id do %>
-            <div>
-                <div class="setup-cards">
-                    <h1 class="card-type">Design Challenge</h1>
-                    <h2 class="font-medium">
-                        Dream up a better way to
-                        <div class="card-header"> <%= get_card_header(@blue_challenge_id) %></div>
-                    </h2>
-                    <p class="text-sm"><%= get_card_prompt(@blue_challenge_id) %></p>
-                </div>
+            <div class="setup-cards flip-card">
+                <h1 class="card-type flipped-card-text">Design Challenge</h1>
+                <h2 class="font-medium flipped-card-text">
+                    Dream up a better way to
+                    <div class="card-header"> <%= get_card_header(@blue_challenge_id) %></div>
+                </h2>
+                <p class="text-sm flipped-card-text"><%= get_card_prompt(@blue_challenge_id) %></p>
             </div>
         <% else %>
             <div class="setup-cards card-back">
-                <h1>challege</h1>
+                <h1>challenge</h1>
                 <img class="card-logo" src="/images/DreamUpLogo.svg">
                 <h2>dream up!</h2>
             </div>
         <% end %>
     </div>
 </div>
-<div class="setup-cards-container grid sm:grid-cols-3 lg:grid-cols-5 gap-4">
+<div class="grid sm:grid-cols-3 lg:grid-cols-5 gap-4">
     <%= for card <- @cards do %>
         <%= if card.type == "Challenge" do %>
             <%= unless card.id == @red_challenge_id || card.id == @blue_challenge_id do %>
@@ -61,17 +57,22 @@
                         <div class="card-header"> <%= card.header %></div>
                     </h2>
                     <p class="text-sm"><%= card.prompt %></p>
-                    <%= if @player.permissions == "red_admin" || @player.permissions == "blue_admin" do %>
+                    <%= if @player.team_leader == "red" || @player.team_leader == "blue" do %>
                         <button class="setup-select-button text-sm" phx-click="challenge-click" phx-value-card-id="<%= card.id %>">Select</button>
                     <% end %>
                 </div>
             <% else %>
-                <div class="setup-cards card-back <%= @class %>">
-                    <h1 class="flipped-card-text">challege</h1>
+                <div class="setup-cards card-back flip-card">
+                    <h1 class="flipped-card-text">challenge</h1>
                     <img class="card-logo flipped-card-text" src="/images/DreamUpLogo.svg">
                     <h2 class="flipped-card-text">dream up!</h2>
                 </div>
             <% end %>
         <% end %>
+    <% end %>
+</div>
+<div class="text-center"> 
+    <%= if @player.game_admin do %>
+        <button phx-click="finish-setup">Finish Setup</button>
     <% end %>
 </div>

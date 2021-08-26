@@ -11,11 +11,11 @@ defmodule DreamUpWeb.LobbyLive do
 
     changeset = Players.change_player(%Player{})
 
-    socket = assign(socket, changeset: changeset, id: false, editing: false)
+    socket = assign(socket, changeset: changeset, id: false, editing: false, url: nil)
     {:ok, socket}
   end
 
-  def handle_params(params, _url, socket) do
+  def handle_params(params, url, socket) do
     game_id = Games.get_game_id_from_code(params["code"])
     if game_id === -1 do
       {:noreply, redirect(socket, to: Routes.home_path(socket, :index, %{error: "code"}))}
@@ -24,7 +24,8 @@ defmodule DreamUpWeb.LobbyLive do
       {:noreply, assign(socket,
         game_id: game_id,
         code: params["code"],
-        players: Players.list_players_in_game(game_id)
+        players: Players.list_players_in_game(game_id),
+        url: url
       )}
     end
   end
@@ -99,16 +100,16 @@ defmodule DreamUpWeb.LobbyLive do
     current_player = get_current_player(socket)
     case current_player.team do
       "blue" ->
-        Players.update_player(current_player, %{permissions: "blue_admin"})
+        Players.update_player(current_player, %{team_leader: "blue"})
         first_red_player = Players.find_first_player_on_team("red", socket.assigns.game_id)
         if first_red_player !== -1 do
-          Players.update_player(first_red_player, %{permissions: "red_admin"})
+          Players.update_player(first_red_player, %{team_leader: "red"})
         end
       "red" ->
-        Players.update_player(current_player, %{permissions: "red_admin"})
+        Players.update_player(current_player, %{team_leader: "red"})
         first_blue_player = Players.find_first_player_on_team("blue", socket.assigns.game_id)
         if first_blue_player !== -1 do
-          Players.update_player(first_blue_player, %{permissions: "blue_admin"})
+          Players.update_player(first_blue_player, %{team_leader: "blue"})
         end
     end
     {:noreply, socket}
@@ -146,7 +147,7 @@ defmodule DreamUpWeb.LobbyLive do
       match?(%{id: ^id}, player)
     end)
     if player do
-      player.permissions === "admin"
+      player.game_admin
     else
       false
     end
