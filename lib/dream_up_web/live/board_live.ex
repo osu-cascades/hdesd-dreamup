@@ -3,6 +3,7 @@ defmodule DreamUpWeb.BoardLive do
   use DreamUpWeb, :live_view
 
   alias DreamUp.Games
+  alias DreamUp.Players
 
   def mount(_params, _session, socket) do
 
@@ -10,16 +11,22 @@ defmodule DreamUpWeb.BoardLive do
     {:ok, socket}
   end
 
+  def handle_params(params, _url, socket) do
+    if connected?(socket), do: Games.subscribe(String.to_integer(params["game_id"]))
+    player = Players.get_player!(params["player_id"])
+    socket = assign(socket, game_id: String.to_integer(params["game_id"]), player: player)
+    {:noreply, socket}
+  end
+
   def handle_event("start-round", _, socket) do
-    IO.inspect("starting round")
-    Games.broadcast(:start_round, 1)
-    # Games.select_challenge(socket.assigns.game_id, String.to_integer(card_id), socket.assigns.player.team)
+    Games.broadcast(:start_round, socket.assigns.game_id)
     {:noreply, assign(socket, round_active: true)}
   end
 
   def handle_info({:start_round}, socket) do
-    IO.inspect("assigning to socket")
     {:noreply, assign(socket, round_active: true)}
   end
+
+
 
 end

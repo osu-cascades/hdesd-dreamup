@@ -64,7 +64,6 @@ defmodule DreamUp.Games do
 
   # Broadcast function with no additional arguments
   def broadcast(event_name, game_id) do
-    IO.inspect(event_name)
     Phoenix.PubSub.broadcast(
       DreamUp.PubSub,
       "games" <> Integer.to_string(game_id),

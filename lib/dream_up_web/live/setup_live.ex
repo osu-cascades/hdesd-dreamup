@@ -34,7 +34,7 @@ defmodule DreamUpWeb.SetupLive do
   def handle_info({:finish_setup}, socket) do
     {:noreply, redirect(socket, to: Routes.live_path(socket, DreamUpWeb.BoardLive, %{
       game_id: socket.assigns.game_id,
-      player: socket.assigns.player
+      player_id: socket.assigns.player.id
     }))}
   end
 
