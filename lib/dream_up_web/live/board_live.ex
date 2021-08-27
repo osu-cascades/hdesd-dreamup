@@ -6,8 +6,7 @@ defmodule DreamUpWeb.BoardLive do
   alias DreamUp.Players
 
   def mount(_params, _session, socket) do
-
-    socket = assign(socket, round_active: false)
+    socket = assign(socket, round_active: false, time_left: Time.new(0, 5, 0, 0))
     {:ok, socket}
   end
 

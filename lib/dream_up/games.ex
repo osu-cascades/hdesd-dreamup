@@ -37,7 +37,7 @@ defmodule DreamUp.Games do
       true ->
         generate_game_code()
       false ->
-        create_game(%{code: code, name: "why"})
+        create_game(%{code: code, name: "why", time_left: ~T[00:05:00]})
     end
     code
   end
