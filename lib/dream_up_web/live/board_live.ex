@@ -24,7 +24,7 @@ defmodule DreamUpWeb.BoardLive do
   end
 
   def countdown() do
-    :timer.send_interval(2000, self(), :tick)
+    :timer.send_interval(1000, self(), :tick)
   end
 
   def handle_info(:tick, socket) do
