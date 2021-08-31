@@ -164,4 +164,8 @@ defmodule DreamUp.Games do
     end
   end
 
+  def decrease_time(game) do
+    update_game(game, %{time_left: Time.add(game.time_left, -1)})
+  end
+
 end
