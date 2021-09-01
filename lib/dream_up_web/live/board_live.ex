@@ -20,7 +20,8 @@ defmodule DreamUpWeb.BoardLive do
   def handle_event("start-round", _, socket) do
     new_socket = countdown(socket)
     Games.broadcast(:start_round, socket.assigns.game.id)
-    {:noreply, assign(new_socket, round_active: true)}
+    IO.inspect("start round event")
+    {:noreply, new_socket}
   end
 
   def countdown(socket) do
@@ -32,12 +33,13 @@ defmodule DreamUpWeb.BoardLive do
   end
 
   def handle_info(:tick, socket) do
-    Games.decrease_time(socket.assigns.game)
+    Games.decrease_time(socket.assigns.game, socket.assigns.round_active)
     {:noreply, socket}
   end
 
   def handle_info({:start_round}, socket) do
-    Games.update_game(socket.assigns.game, %{time_left: ~T[00:05:00]} )
+    # change back to 5 minutes
+    Games.update_game(socket.assigns.game, %{time_left: ~T[00:00:05]} )
     {:noreply, assign(socket, round_active: true)}
   end
 
@@ -47,13 +49,13 @@ defmodule DreamUpWeb.BoardLive do
   end
 
   def handle_info({:time_up}, socket) do
-    IO.puts("Time's up")
-    IO.inspect(socket.assigns.timer)
-    if socket.assigns.timer do
-      {_, {_, timer}} = socket.assigns.timer
-      Process.cancel_timer(timer)
-    end
-    {:noreply, socket}
+    # IO.puts("Time's up")
+    # IO.inspect(socket.assigns.timer)
+    # if socket.assigns.timer do
+    #   {_, {_, timer}} = socket.assigns.timer
+    #   Process.cancel_timer(timer)
+    # end
+    {:noreply, assign(socket, round_active: false)}
   end
 
 end
