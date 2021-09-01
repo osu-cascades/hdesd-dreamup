@@ -6,7 +6,7 @@ defmodule DreamUpWeb.BoardLive do
   alias DreamUp.Players
 
   def mount(_params, _session, socket) do
-    socket = assign(socket, round_active: false)
+    socket = assign(socket, round_active: false, timer: nil)
     {:ok, socket}
   end
 
@@ -18,13 +18,13 @@ defmodule DreamUpWeb.BoardLive do
   end
 
   def handle_event("start-round", _, socket) do
-    countdown()
+    new_socket = countdown(socket)
     Games.broadcast(:start_round, socket.assigns.game.id)
-    {:noreply, assign(socket, round_active: true)}
+    {:noreply, assign(new_socket, round_active: true)}
   end
 
-  def countdown() do
-    :timer.send_interval(1000, self(), :tick)
+  def countdown(socket) do
+    assign(socket, timer: :timer.send_interval(1000, self(), :tick))
   end
 
   def handle_info(:tick, socket) do
@@ -39,6 +39,16 @@ defmodule DreamUpWeb.BoardLive do
   def handle_info({:update_game, event}, socket) do
     {_, game} = event
     {:noreply, assign(socket, game: game)}
+  end
+
+  def handle_info({:time_up}, socket) do
+    IO.puts("Time's up")
+    IO.inspect(socket.assigns.timer)
+    if socket.assigns.timer do
+      {_, {_, timer}} = socket.assigns.timer
+      Process.cancel_timer(timer)
+    end
+    {:noreply, socket}
   end
 
 end

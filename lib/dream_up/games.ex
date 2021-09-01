@@ -166,6 +166,9 @@ defmodule DreamUp.Games do
 
   def decrease_time(game) do
     update_game(game, %{time_left: Time.add(game.time_left, -1)})
+    if Time.compare(game.time_left, ~T[00:00:00]) === :eq do
+      broadcast(:time_up, game.id)
+    end
   end
 
 end
