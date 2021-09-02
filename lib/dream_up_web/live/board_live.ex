@@ -44,7 +44,7 @@ defmodule DreamUpWeb.BoardLive do
 
   def handle_info({:start_round}, socket) do
     # change back to 5 minutes
-    Games.update_game(socket.assigns.game, %{time_left: ~T[00:05:00]} )
+    Games.update_game(socket.assigns.game, %{time_left: ~T[00:00:05]} )
     {:noreply, assign(socket, round_active: true)}
   end
 
