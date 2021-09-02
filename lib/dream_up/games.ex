@@ -37,7 +37,7 @@ defmodule DreamUp.Games do
       true ->
         generate_game_code()
       false ->
-        create_game(%{code: code, name: "why", time_left: ~T[00:05:00]})
+        create_game(%{code: code, name: "why", time_left: ~T[00:05:00], red_add_time_token: true, blue_add_time_token: true})
     end
     code
   end
@@ -161,6 +161,15 @@ defmodule DreamUp.Games do
         update_game(game, %{blue_challenge_id: card_id})
       "blue" ->
         update_game(game, %{red_challenge_id: card_id})
+    end
+  end
+
+  def add_time(game, team) do
+    case team do
+       "blue" ->
+          update_game(game, %{time_left: Time.add(game.time_left, 300), blue_add_time_token: false})
+        "red" ->
+          update_game(game, %{time_left: Time.add(game.time_left, 300), red_add_time_token: false})
     end
   end
 

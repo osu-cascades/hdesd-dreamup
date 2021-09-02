@@ -24,6 +24,11 @@ defmodule DreamUpWeb.BoardLive do
     {:noreply, new_socket}
   end
 
+  def handle_event("add-time", _, socket) do
+    Games.add_time(socket.assigns.game, socket.assigns.player.team_leader)
+    {:noreply, socket}
+  end
+
   def countdown(socket) do
     unless socket.assigns.timer do
       assign(socket, timer: :timer.send_interval(1000, self(), :tick))
@@ -39,7 +44,7 @@ defmodule DreamUpWeb.BoardLive do
 
   def handle_info({:start_round}, socket) do
     # change back to 5 minutes
-    Games.update_game(socket.assigns.game, %{time_left: ~T[00:00:05]} )
+    Games.update_game(socket.assigns.game, %{time_left: ~T[00:05:00]} )
     {:noreply, assign(socket, round_active: true)}
   end
 
