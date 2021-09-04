@@ -104,7 +104,9 @@ defmodule DreamUp.Cards do
 
   def get_random_card_from_method(method_type) do
     card_list = list_cards()
-    matched_cards = Enum.filter(card_list, fn card -> card === method_type end)
+    matched_cards = Enum.filter(card_list, fn card ->
+      match?(%{type: ^method_type}, card)
+    end)
     IO.inspect(matched_cards)
     # matched cards is empty
     # need to select random card from matched cards
