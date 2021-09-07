@@ -302,6 +302,40 @@ select {
 
 
 }
+/* Spinner classes, to be applied based on picked method card category */
 
+.spinner-Ideate {
+  transform: rotate(1800deg);
+  transition-duration: 3s;
+  transition-timing-function: ease-out;
+}
 
+.spinner-Test {
+  transform: rotate(1860deg);
+  transition-duration: 3s;
+  transition-timing-function: ease-out;
+}
 
+.spinner-Empathize {
+  transform: rotate(1920deg);
+  transition-duration: 3s;
+  transition-timing-function: ease-out;
+}
+
+.spinner-Define {
+  transform: rotate(1980deg);
+  transition-duration: 3s;
+  transition-timing-function: ease-out;
+}
+
+.spinner-Prototype {
+  transform: rotate(2040deg);
+  transition-duration: 3s;
+  transition-timing-function: ease-out;
+}
+
+.spinner-Mindset {
+  transform: rotate(2100deg);
+  transition-duration: 3s;
+  transition-timing-function: ease-out;
+}
