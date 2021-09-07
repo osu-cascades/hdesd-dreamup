@@ -11,7 +11,28 @@
             </div>
 
             <div id="challenge-card" class="py-2 mb-2 text-center rounded">
-                <h1 class="text-white">Challenge Card</h1>
+                <h1 class="text-white">Your Challenge for this game:</h1>
+
+                <div class="setup-cards flip-card">
+                    <h1 class="card-type flipped-card-text">Design Challenge</h1>
+                    <h2 class="font-medium flipped-card-text">
+                        Dream up a better way to
+                        <div class="card-header"> 
+                            <%= if @player.team === "red" do %>
+                                <%= DreamUpWeb.SetupLive.get_card_header(@game.red_challenge_id) %>
+                            <% else %>
+                                <%= DreamUpWeb.SetupLive.get_card_header(@game.blue_challenge_id) %>
+                            <% end %>
+                        </div>
+                    </h2>
+                    <p class="text-sm flipped-card-text">
+                        <%= if @player.team === "red" do %>
+                            <%= DreamUpWeb.SetupLive.get_card_prompt(@game.red_challenge_id) %>
+                        <% else %>
+                            <%= DreamUpWeb.SetupLive.get_card_prompt(@game.blue_challenge_id) %>
+                        <% end %>
+                    </p>
+                </div>
             </div>
 
 
