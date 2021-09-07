@@ -4,9 +4,8 @@
 	 viewBox="0 0 612 792" style="enable-background:new 0 0 612 792;" xml:space="preserve">
 <style type="text/css">
 	.st0{fill:#0EB1E7;stroke:#000000;stroke-width:6;stroke-miterlimit:10;}
-	.st1{fill:none;}
-	.st2{font-family:'MyriadPro-Regular';}
-	.st3{font-size:27px;}
+	.st1{font-family:'MyriadPro-Regular';}
+	.st2{font-size:27.4068px;}
 </style>
 <g>
 	<circle class="st0" cx="312.1" cy="418.9" r="244.2"/>
@@ -21,6 +20,10 @@
 	<path class="st0" d="M417.8,357.8c58.4-33.7,105.7-61,105.7-61S476.2,324.1,417.8,357.8s-105.7,61-105.7,61
 		S359.4,391.5,417.8,357.8z"/>
 </g>
-<rect x="167" y="267" class="st1" width="134" height="74"/>
-<text transform="matrix(1 0 0 1 167 286.1699)" class="st2 st3">Empathize</text>
+<text transform="matrix(1 0 0 1 171.001 296.8)" class="st1 st2">Empathize</text>
+<text transform="matrix(1 0 0 1 90.1833 401.0441)" class="st1 st2">Define</text>
+<text transform="matrix(1 0 0 1 370.1833 296.7999)" class="st1 st2">Test</text>
+<text transform="matrix(1 0 0 1 448.1833 401.0447)" class="st1 st2">Ideate</text>
+<text transform="matrix(1 0 0 1 158.1833 562.0441)" class="st1 st2">Prototype</text>
+<text transform="matrix(1 0 0 1 334.1833 562.0443)" class="st1 st2">Mindest</text>
 </svg>
