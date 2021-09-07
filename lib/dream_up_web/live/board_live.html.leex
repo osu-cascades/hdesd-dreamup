@@ -1,8 +1,13 @@
 <div id="board">
     <div class="row">
-        <div class="column side">
-            <div>
-                <img src="/images/PieChart.svg">
+        <div class="column side"> 
+            <div class="spinner-stack">
+                <img
+                <%= if @current_method do %>
+                    class="spinner-<%= @current_method %>"
+                <% end %>
+                src="/images/PieChart.svg">
+                <div class="arrow-left"></div>
             </div>
 
             <div id="challenge-card" class="py-2 mb-2 text-center rounded">

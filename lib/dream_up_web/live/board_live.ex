@@ -9,7 +9,7 @@ defmodule DreamUpWeb.BoardLive do
   @method_card_map %{1 => "Empathize", 2 => "Define", 3 => "Ideate", 4 => "Prototype", 5 => "Test", 6 => "Mindset"}
 
   def mount(_params, _session, socket) do
-    socket = assign(socket, round_active: false, timer: nil, method: nil)
+    socket = assign(socket, round_active: false, timer: nil, method: nil, current_method: nil)
     {:ok, socket}
   end
 
@@ -25,7 +25,7 @@ defmodule DreamUpWeb.BoardLive do
     Cards.get_random_card_from_method(@method_card_map[random_number])
     new_socket = countdown(socket)
     Games.broadcast(:start_round, socket.assigns.game.id)
-    {:noreply, new_socket}
+    {:noreply, assign(new_socket, %{current_method: @method_card_map[random_number]})}
   end
 
   def handle_event("add-time", _, socket) do
