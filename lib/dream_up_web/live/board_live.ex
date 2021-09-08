@@ -9,7 +9,7 @@ defmodule DreamUpWeb.BoardLive do
   @method_card_map %{1 => "Empathize", 2 => "Define", 3 => "Ideate", 4 => "Prototype", 5 => "Test", 6 => "Mindset"}
 
   def mount(_params, _session, socket) do
-    socket = assign(socket, round_active: false, timer: nil, method: nil, current_method: nil)
+    socket = assign(socket, timer: nil, method: nil, current_method: nil, game: %{round_state: "GAME_START"})
     {:ok, socket}
   end
 
@@ -24,7 +24,8 @@ defmodule DreamUpWeb.BoardLive do
     random_number = :rand.uniform(6)
     Cards.get_random_card_from_method(@method_card_map[random_number])
     new_socket = countdown(socket)
-    Games.broadcast(:start_round, socket.assigns.game.id)
+    # change time_left back to 5 minutes
+    Games.update_game(socket.assigns.game, %{time_left: ~T[00:00:10], round_state: "SPINNER"})
     {:noreply, assign(new_socket, %{current_method: @method_card_map[random_number]})}
   end
 
@@ -42,29 +43,13 @@ defmodule DreamUpWeb.BoardLive do
   end
 
   def handle_info(:tick, socket) do
-    Games.decrease_time(socket.assigns.game, socket.assigns.round_active)
+    Games.decrease_time(socket.assigns.game)
     {:noreply, socket}
-  end
-
-  def handle_info({:start_round}, socket) do
-    # change back to 5 minutes
-    Games.update_game(socket.assigns.game, %{time_left: ~T[00:00:05]} )
-    {:noreply, assign(socket, round_active: true)}
   end
 
   def handle_info({:update_game, event}, socket) do
     {_, game} = event
     {:noreply, assign(socket, game: game)}
-  end
-
-  def handle_info({:time_up}, socket) do
-    # IO.puts("Time's up")
-    # IO.inspect(socket.assigns.timer)
-    # if socket.assigns.timer do
-    #   {_, {_, timer}} = socket.assigns.timer
-    #   Process.cancel_timer(timer)
-    # end
-    {:noreply, assign(socket, round_active: false)}
   end
 
 end
