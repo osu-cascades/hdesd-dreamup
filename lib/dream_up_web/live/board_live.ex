@@ -21,17 +21,32 @@ defmodule DreamUpWeb.BoardLive do
   end
 
   def handle_event("start-round", _, socket) do
-    random_number = :rand.uniform(6)
-    Cards.get_random_card_from_method(@method_card_map[random_number])
-    new_socket = countdown(socket)
-    # change time_left back to 5 minutes
-    Games.update_game(socket.assigns.game, %{time_left: ~T[00:00:10], round_state: "SPINNER"})
-    {:noreply, assign(new_socket, %{current_method: @method_card_map[random_number]})}
+    set_method_card(socket)
+    {:noreply, countdown(socket)}
+  end
+
+  def handle_event("pivot", _, socket) do
+    set_method_card(socket, socket.assigns.player.team)
+    {:noreply, socket}
   end
 
   def handle_event("add-time", _, socket) do
     Games.add_time(socket.assigns.game, socket.assigns.player.team_leader)
     {:noreply, socket}
+  end
+
+  def set_method_card(socket, pivot_to_remove \\ nil) do
+    # TODO - Document better
+    random_number = :rand.uniform(6)
+    Cards.get_random_card_from_method(@method_card_map[random_number])
+    case pivot_to_remove do
+      "red" ->
+        Games.update_game(socket.assigns.game, %{time_left: ~T[00:00:10], round_state: "SPINNER", red_pivot_token: false})
+      "blue" ->
+        Games.update_game(socket.assigns.game, %{time_left: ~T[00:00:10], round_state: "SPINNER", blue_pivot_token: false})
+      nil ->
+        Games.update_game(socket.assigns.game, %{time_left: ~T[00:00:10], round_state: "SPINNER"})
+    end
   end
 
   def countdown(socket) do

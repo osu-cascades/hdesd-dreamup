@@ -37,7 +37,8 @@ defmodule DreamUp.Games do
       true ->
         generate_game_code()
       false ->
-        create_game(%{code: code, name: "why", time_left: ~T[00:05:00], red_add_time_token: true, blue_add_time_token: true, round_state: "GAME_START"})
+        create_game(%{code: code, name: "why", time_left: ~T[00:05:00], red_add_time_token: true, blue_add_time_token: true, round_state: "GAME_START",
+          red_pivot_token: true, blue_pivot_token: true})
     end
     code
   end
@@ -182,6 +183,8 @@ defmodule DreamUp.Games do
           update_game(game, %{round_state: "GAMEPLAY", time_left: ~T[00:00:15]})
         "GAMEPLAY" ->
           update_game(game, %{round_state: "DISCUSSION"})
+        "DISCUSSION" ->
+          nil
       end
     end
   end
