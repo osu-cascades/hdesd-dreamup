@@ -214,12 +214,6 @@ select {
   padding-top: 45px;
 }
 
-.card-logo {
-  width: 100px;
-  height: auto;
-  margin: auto;
-}
-
 .card-type {
   background-color: #58595B;
   color: white;
@@ -271,10 +265,130 @@ select {
 }
 
 .method-cards {
-  width: 100%;
-  height: 125%;
-  border-radius: 0.25em;
+  position: relative;
+  border-radius: 5px;
 }
+
+@media (max-width: 768px) {
+
+  .method-card-content div {
+    font-size: 0.8em;
+  }
+
+  .method-cards {
+    border-radius: 8px;
+  }
+}
+
+.method-card-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%, -50%);
+}
+
+
+.card-logo {
+  width: 50px;
+  height: auto;
+  margin: auto;
+}
+
+.method-card-container  {
+  height: 120px;
+}
+
+
+@media (min-width: 768px) {
+  .card-logo {
+    width: 30px;
+    height: auto;
+    margin: auto;
+  }
+
+  .method-card-container  {
+    height: 80px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .card-logo {
+    width: 50px;
+    height: auto;
+    margin: auto;
+  }
+
+  .method-card-container  {
+    height: 120px;
+  }
+
+  .method-cards {
+    border-radius: 8px;
+  }
+
+}
+
+@media (min-width: 1280px) {
+  .method-card-content div {
+    padding: 5px;
+  }
+
+  .card-logo {
+    width: 70px;
+    height: auto;
+    margin: auto;
+  }
+
+  .method-card-container  {
+    height: 160px;
+  }
+
+  .method-cards {
+    border-radius: 10px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .method-card-content div {
+    padding: 5px;
+  }
+
+  .card-logo {
+    width: 80px;
+    height: auto;
+    margin: auto;
+  }
+
+  .method-card-container  {
+    height: 190px;
+  }
+}
+
+/* .card-logo {
+  width: 70%;
+  margin: auto;
+}
+
+.method-card-content {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%, -50%);
+}
+
+.method-card-content > div {
+  font-size: 1.6vw;
+}
+
+.method-cards {
+  height: 16vh;
+  max-height: 16vw;
+  width: 10vw;
+  max-width: 10vh;
+  transform: translate(-50%, -50%);
+} */
 
 .game-prompt {
   border: 2px solid black;
