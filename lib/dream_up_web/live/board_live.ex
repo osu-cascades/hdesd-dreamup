@@ -9,7 +9,7 @@ defmodule DreamUpWeb.BoardLive do
   @method_card_map %{1 => "Empathize", 2 => "Define", 3 => "Ideate", 4 => "Prototype", 5 => "Test", 6 => "Mindset"}
 
   def mount(_params, _session, socket) do
-    socket = assign(socket, round_active: false, timer: nil, method: nil, current_method: nil)
+    socket = assign(socket, timer: nil, method: nil, current_method: nil, game: %{round_state: "GAME_START"})
     {:ok, socket}
   end
 
@@ -21,16 +21,40 @@ defmodule DreamUpWeb.BoardLive do
   end
 
   def handle_event("start-round", _, socket) do
+<<<<<<< HEAD
     random_number = :rand.uniform(6)
     Cards.get_random_card_from_method(@method_card_map[random_number], socket.assigns.game)
     new_socket = countdown(socket)
     Games.broadcast(:start_round, socket.assigns.game.id)
     {:noreply, assign(new_socket, %{current_method: @method_card_map[random_number]})}
+=======
+    set_method_card(socket)
+    {:noreply, countdown(socket)}
+  end
+
+  def handle_event("pivot", _, socket) do
+    set_method_card(socket, socket.assigns.player.team)
+    {:noreply, socket}
+>>>>>>> 892005c71bbfc8daa9cc5ac2075be5c1cbdc23c9
   end
 
   def handle_event("add-time", _, socket) do
     Games.add_time(socket.assigns.game, socket.assigns.player.team_leader)
     {:noreply, socket}
+  end
+
+  def set_method_card(socket, pivot_to_remove \\ nil) do
+    # TODO - Document better
+    random_number = :rand.uniform(6)
+    Cards.get_random_card_from_method(@method_card_map[random_number])
+    case pivot_to_remove do
+      "red" ->
+        Games.update_game(socket.assigns.game, %{time_left: ~T[00:00:10], round_state: "SPINNER", red_pivot_token: false})
+      "blue" ->
+        Games.update_game(socket.assigns.game, %{time_left: ~T[00:00:10], round_state: "SPINNER", blue_pivot_token: false})
+      nil ->
+        Games.update_game(socket.assigns.game, %{time_left: ~T[00:00:10], round_state: "SPINNER"})
+    end
   end
 
   def countdown(socket) do
@@ -42,29 +66,13 @@ defmodule DreamUpWeb.BoardLive do
   end
 
   def handle_info(:tick, socket) do
-    Games.decrease_time(socket.assigns.game, socket.assigns.round_active)
+    Games.decrease_time(socket.assigns.game)
     {:noreply, socket}
-  end
-
-  def handle_info({:start_round}, socket) do
-    # change back to 5 minutes
-    Games.update_game(socket.assigns.game, %{time_left: ~T[00:00:05]} )
-    {:noreply, assign(socket, round_active: true)}
   end
 
   def handle_info({:update_game, event}, socket) do
     {_, game} = event
     {:noreply, assign(socket, game: game)}
-  end
-
-  def handle_info({:time_up}, socket) do
-    # IO.puts("Time's up")
-    # IO.inspect(socket.assigns.timer)
-    # if socket.assigns.timer do
-    #   {_, {_, timer}} = socket.assigns.timer
-    #   Process.cancel_timer(timer)
-    # end
-    {:noreply, assign(socket, round_active: false)}
   end
 
 end

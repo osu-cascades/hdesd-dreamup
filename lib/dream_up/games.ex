@@ -37,7 +37,8 @@ defmodule DreamUp.Games do
       true ->
         generate_game_code()
       false ->
-        create_game(%{code: code, name: "why", time_left: ~T[00:05:00], red_add_time_token: true, blue_add_time_token: true})
+        create_game(%{code: code, name: "why", time_left: ~T[00:05:00], red_add_time_token: true, blue_add_time_token: true, round_state: "GAME_START",
+          red_pivot_token: true, blue_pivot_token: true})
     end
     code
   end
@@ -173,14 +174,21 @@ defmodule DreamUp.Games do
     end
   end
 
-  def decrease_time(game, round_active) do
+  def decrease_time(game) do
     if Time.compare(game.time_left, ~T[00:00:00]) === :gt do
       update_game(game, %{time_left: Time.add(game.time_left, -1)})
     else
-      if round_active do
-        broadcast(:time_up, game.id)
+      case game.round_state do
+        "SPINNER" ->
+          update_game(game, %{round_state: "GAMEPLAY", time_left: ~T[00:00:15]})
+        "GAMEPLAY" ->
+          update_game(game, %{round_state: "DISCUSSION"})
+        "DISCUSSION" ->
+          nil
       end
     end
   end
 
 end
+
+# 1. GAME_START 2. SPINNER 3. GAMEPLAY 4. DISCUSSION 5.

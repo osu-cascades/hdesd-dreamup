@@ -1,6 +1,11 @@
 <div id="board">
+<<<<<<< HEAD
     <div class="row">
         <div class="column side">
+=======
+    <div class="grid md:grid-cols-3 gap-4">
+        <div class="md:col-start-1"> 
+>>>>>>> 892005c71bbfc8daa9cc5ac2075be5c1cbdc23c9
             <div class="spinner-stack">
                 <img
                 <%= if @game.current_method do %>
@@ -38,46 +43,60 @@
 
         </div>
 
-        <div class="column middle">
-            <div class="grid grid-cols-6 gap-4 mb-2">
-                <div class="method-cards" style="height: 125px; background-color: #FFCE49;">
-                    <h1 class="text-center text-lg text-white">empathize</h1>
-                    <img class="card-logo " src="/images/DreamUpLogo.svg">
-                    <h2 class="text-center text-lg text-white">dream up!</h2>
+        <div class="md:col-start-2 md:col-span-4">
+            <div class="method-card-container grid grid-cols-6 gap-2 lg:gap-4 mb-2">
+                <div class="method-cards" style="background-color: #FFCE49;">
+                    <div class="method-card-content">
+                        <div class="text-center text-base lg:text-xl xl:text-2xl 2xl:text-3xl font-semibold text-white">empathize</div>
+                        <img class="card-logo " src="/images/DreamUpLogo.svg">
+                        <div class="text-center text-base lg:text-xl xl:text-2xl 2xl:text-3xl font-semibold text-white">dream up!</div>
+                    </div>
                 </div>
-                <div class="method-cards" style="height: 125px; background-color: #4D0461;">
-                    <h1 class="text-center text-lg text-white">define</h1>
-                    <img class="card-logo " src="/images/DreamUpLogo.svg">
-                    <h2 class="text-center text-lg text-white">dream up!</h2>
+                <div class="method-cards" style="background-color: #4D0461;">
+                    <div class="method-card-content">
+                        <div class="text-center text-base lg:text-xl xl:text-2xl 2xl:text-3xl font-semibold text-white">define</div>
+                        <img class="card-logo " src="/images/DreamUpLogo.svg">
+                        <div class="text-center text-base lg:text-xl xl:text-2xl 2xl:text-3xl font-semibold text-white">dream up!</div>
+                    </div>
                 </div>
-                <div class="method-cards" style="height: 125px; background-color: #DA207E;">
-                    <h1 class="text-center text-lg text-white">ideate</h1>
-                    <img class="card-logo " src="/images/DreamUpLogo.svg">
-                    <h2 class="text-center text-lg text-white">dream up!</h2>
+                <div class="method-cards" style="background-color: #DA207E;">
+                    <div class="method-card-content">
+                        <div class="text-center text-base lg:text-xl xl:text-2xl 2xl:text-3xl font-semibold text-white">ideate</div>
+                        <img class="card-logo " src="/images/DreamUpLogo.svg">
+                        <div class="text-center text-base lg:text-xl xl:text-2xl 2xl:text-3xl font-semibold text-white">dream up!</div>
+                    </div>
                 </div>
-                <div class="method-cards" style="height: 125px; background-color: #00A461;">
-                    <h1 class="text-center text-lg text-white">prototype</h1>
-                    <img class="card-logo " src="/images/DreamUpLogo.svg">
-                    <h2 class="text-center text-lg text-white">dream up!</h2>
+                <div class="method-cards" style="background-color: #00A461;">
+                    <div class="method-card-content">
+                        <div class="text-center text-base lg:text-xl xl:text-2xl 2xl:text-3xl font-semibold text-white">prototype</div>
+                        <img class="card-logo " src="/images/DreamUpLogo.svg">
+                        <div class="text-center text-base lg:text-xl xl:text-2xl 2xl:text-3xl font-semibold text-white">dream up!</div>
+                    </div>
                 </div>
-                <div class="method-cards" style="height: 125px; background-color: #FB8050;">
-                    <h1 class="text-center text-lg text-white">test</h1>
-                    <img class="card-logo " src="/images/DreamUpLogo.svg">
-                    <h2 class="text-center text-lg text-white">dream up!</h2>
+                <div class="method-cards" style="background-color: #FB8050;">
+                    <div class="method-card-content">
+                        <div class="text-center text-base lg:text-xl xl:text-2xl 2xl:text-3xl font-semibold text-white">test</div>
+                        <img class="card-logo " src="/images/DreamUpLogo.svg">
+                        <div class="text-center text-base lg:text-xl xl:text-2xl 2xl:text-3xl font-semibold text-white">dream up!</div>
+                    </div>
                 </div>
-                <div class="method-cards" style="height: 125px; background-color: #F1385D;">
-                    <h1 class="text-center text-lg text-white">mindset</h1>
-                    <img class="card-logo " src="/images/DreamUpLogo.svg">
-                    <h2 class="text-center text-lg text-white">dream up!</h2>
+                <div class="method-cards" style="background-color: #F1385D;">
+                    <div class="method-card-content">
+                        <div class="text-center text-base lg:text-xl xl:text-2xl 2xl:text-3xl font-semibold text-white">mindset</div>
+                        <img class="card-logo " src="/images/DreamUpLogo.svg">
+                        <div class="text-center text-base lg:text-xl xl:text-2xl 2xl:text-3xl font-semibold text-white">dream up!</div>
+                    </div>
                 </div>
             </div>
             <div class="game-prompt border-indigo-600 py-2 pl-2">
-                <%= cond do %>
-                    <%= Time.compare(@game.time_left, ~T[00:00:01]) === :lt -> %>
+                <%= case @game.round_state do %>
+                    <%= "DISCUSSION" -> %>
                         <h1>The round has ended, discuss the ideas you've dreamed up with the other team.</h1>
-                    <% Time.compare(@game.time_left, ~T[00:05:00]) === :eq && @round_active === false -> %>
+                    <% "SPINNER" -> %>
+                        <h1>Round start in... <%= Time.to_string(@game.time_left) |> String.slice(6, String.length(Time.to_string(@game.time_left))) %></h1>
+                    <% "GAME_START" -> %>
                         <h1>Get ready for the game to start.</h1>
-                    <% @round_active -> %>
+                    <% "GAMEPLAY" -> %>
                         <h1>Solve the challenge your method card has given you with your team.</h1>
                 <% end %>
             </div>
@@ -95,20 +114,24 @@
 
         </div>
 
-        <div class="column side">
+        <div class="md:col-start-6">
             <div class="py-2 mb-2 text-center border-2 border-indigo-600 rounded">
                 <h2>Round: 1</h2>
             </div>
             <div class="py-2 mb-2 text-center border-2 border-indigo-600 rounded">
-                <h2>Timer: <%= Time.to_string(@game.time_left) |> String.slice(4, String.length(Time.to_string(@game.time_left))) %></h2>
+                <%= if @game.round_state === "SPINNER" do %>
+                    <h2>Timer: 5:00</h2>
+                <% else %>
+                    <h2>Timer: <%= Time.to_string(@game.time_left) |> String.slice(4, String.length(Time.to_string(@game.time_left))) %></h2>
+                <% end %>
             </div>
-            <div class="py-2 mb-2 text-center border-2 border-indigo-600 rounded">
-                <h2>? Pivot</h2>
-            </div>
-            <%= if ((@player.team_leader === "red" && @game.red_add_time_token) || (@player.team_leader === "blue" && @game.blue_add_time_token)) && @round_active do %>
-                <button class="defaultButton mt-12 text-blue-900 border-2 px-8 text-center" phx-click="add-time">+ Add Time (1/1)</button>
+            <%= if ((@player.team_leader === "red" && @game.red_pivot_token) || (@player.team_leader === "blue" && @game.blue_pivot_token)) && @game.round_state === "SPINNER" do %>
+                <button class="defaultButton mt-12 text-blue-900 border-2 px-8 text-center" phx-click="pivot">Pivot (1/1)</button>
             <% end %>
-            <%= if @player.game_admin && !@round_active do %>
+            <%= if ((@player.team_leader === "red" && @game.red_add_time_token) || (@player.team_leader === "blue" && @game.blue_add_time_token)) && @game.round_state === "GAMEPLAY" do %>
+                <button class="defaultButton mt-12 text-blue-900 border-2 px-8 text-center" phx-click="add-time">Add Time (1/1)</button>
+            <% end %>
+            <%= if @player.game_admin && (@game.round_state === "GAME_START" || @game.round_state === "DISCUSSION") do %>
                 <button class="defaultButton mt-12 text-blue-900 border-2 px-8 text-center" phx-click="start-round">Start Round</button>
             <% end %>
         </div>
