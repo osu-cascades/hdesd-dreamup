@@ -1,15 +1,10 @@
 <div id="board">
-<<<<<<< HEAD
-    <div class="row">
-        <div class="column side">
-=======
     <div class="grid md:grid-cols-3 gap-4">
-        <div class="md:col-start-1"> 
->>>>>>> 892005c71bbfc8daa9cc5ac2075be5c1cbdc23c9
+        <div class="md:col-start-1">
             <div class="spinner-stack">
                 <img
-                <%= if @game.current_method do %>
-                    class="spinner-<%= @game.current_method %>"
+                <%= if @game.round_state !== "GAME_START" do %>
+                    class="spinner-<%= @method_card.type %>"
                 <% end %>
                 src="/images/PieChart.svg">
                 <div class="arrow-left"></div>
@@ -105,7 +100,9 @@
             <div class="setup-cards flip-card">
                 <h1 class="card-type flipped-card-text">Current Method Card</h1>
                 <p class="text-sm flipped-card-text">
-                        <%= DreamUpWeb.SetupLive.get_card_prompt(@game.picked_method_id) %>
+                    <%= if @method_card do %>
+                        <%= @method_card.prompt %>
+                    <% end %>
                 </p>
             </div>
 

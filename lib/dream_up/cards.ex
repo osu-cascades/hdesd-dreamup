@@ -109,6 +109,7 @@ defmodule DreamUp.Cards do
       match?(%{type: ^method_type}, card)
     end)
     picked_card = Enum.random(matched_cards)
-    Games.update_game(game, %{current_method: method_type, picked_method_id: picked_card.id})
+    Games.update_game(game, %{("method_" <> Integer.to_string(game.round_number) <> "_id") => picked_card.id})
+    Games.broadcast({:ok, picked_card}, :select_card, game.id)
   end
 end

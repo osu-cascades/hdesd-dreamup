@@ -38,7 +38,7 @@ defmodule DreamUp.Games do
         generate_game_code()
       false ->
         create_game(%{code: code, name: "why", time_left: ~T[00:05:00], red_add_time_token: true, blue_add_time_token: true, round_state: "GAME_START",
-          red_pivot_token: true, blue_pivot_token: true})
+          red_pivot_token: true, blue_pivot_token: true, round_number: 1})
     end
     code
   end
@@ -55,11 +55,11 @@ defmodule DreamUp.Games do
 
   # Broadcast function with game event attached to it
   @spec broadcast(any, any, integer) :: :ok | {:error, any}
-  def broadcast(event, event_name, game_id) do
+  def broadcast(data, event_name, game_id) do
     Phoenix.PubSub.broadcast(
       DreamUp.PubSub,
       "games" <> Integer.to_string(game_id),
-      {event_name, event}
+      {event_name, data}
     )
   end
 

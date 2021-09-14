@@ -9,27 +9,46 @@ defmodule DreamUp.Games.Game do
     field :time_left, :time
     field :red_add_time_token, :boolean
     field :blue_add_time_token, :boolean
-<<<<<<< HEAD
-    field :current_method, :string
-    field :picked_method_id, :integer
-=======
     field :round_state, :string
     field :red_pivot_token, :boolean
     field :blue_pivot_token, :boolean
->>>>>>> 892005c71bbfc8daa9cc5ac2075be5c1cbdc23c9
+    field :method_1_id, :integer
+    field :method_2_id, :integer
+    field :method_3_id, :integer
+    field :method_4_id, :integer
+    field :method_5_id, :integer
+    field :method_6_id, :integer
+    field :method_7_id, :integer
+    field :method_8_id, :integer
+    field :method_9_id, :integer
+    field :round_number, :integer
     timestamps()
   end
 
   @doc false
   def changeset(game, attrs) do
     game
-<<<<<<< HEAD
-    |> cast(attrs, [:code, :blue_challenge_id, :red_challenge_id, :time_left, :red_add_time_token,
-     :blue_add_time_token, :current_method, :picked_method_id])
-    |> validate_required([:code, :time_left, :red_add_time_token, :blue_add_time_token])
-=======
-    |> cast(attrs, [:code, :blue_challenge_id, :red_challenge_id, :time_left, :red_add_time_token, :blue_add_time_token, :round_state, :red_pivot_token, :blue_pivot_token])
-    |> validate_required([:code, :time_left, :red_add_time_token, :blue_add_time_token, :round_state, :red_pivot_token, :blue_pivot_token])
->>>>>>> 892005c71bbfc8daa9cc5ac2075be5c1cbdc23c9
+    |> cast(attrs, [
+      :code,
+      :blue_challenge_id,
+      :red_challenge_id,
+      :time_left,
+      :red_add_time_token,
+      :blue_add_time_token,
+      :round_state,
+      :red_pivot_token,
+      :blue_pivot_token,
+      :method_1_id,
+      :method_2_id,
+      :method_3_id,
+      :method_4_id,
+      :method_5_id,
+      :method_6_id,
+      :method_7_id,
+      :method_8_id,
+      :method_9_id,
+      :round_number
+    ])
+    |> validate_required([:code, :time_left, :red_add_time_token, :blue_add_time_token, :round_state, :red_pivot_token, :blue_pivot_token, :round_number])
   end
 end
