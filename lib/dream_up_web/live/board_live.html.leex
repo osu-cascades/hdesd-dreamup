@@ -1,10 +1,10 @@
 <div id="board">
     <div class="row">
-        <div class="column side"> 
+        <div class="column side">
             <div class="spinner-stack">
                 <img
-                <%= if @current_method do %>
-                    class="spinner-<%= @current_method %>"
+                <%= if @game.current_method do %>
+                    class="spinner-<%= @game.current_method %>"
                 <% end %>
                 src="/images/PieChart.svg">
                 <div class="arrow-left"></div>
@@ -17,7 +17,7 @@
                     <h1 class="card-type flipped-card-text">Design Challenge</h1>
                     <h2 class="font-medium flipped-card-text">
                         Dream up a better way to
-                        <div class="card-header"> 
+                        <div class="card-header">
                             <%= if @player.team === "red" do %>
                                 <%= DreamUpWeb.SetupLive.get_card_header(@game.red_challenge_id) %>
                             <% else %>
@@ -83,6 +83,13 @@
             </div>
             <div class="big-container py-2 mb-2 text-center border-2 border-indigo-600 rounded">
             <h1>Current Method Card in Play</h1>
+            <div class="setup-cards flip-card">
+                <h1 class="card-type flipped-card-text">Current Method Card</h1>
+                <p class="text-sm flipped-card-text">
+                        <%= DreamUpWeb.SetupLive.get_card_prompt(@game.picked_method_id) %>
+                </p>
+            </div>
+
             </div>
 
 

@@ -7,6 +7,7 @@ defmodule DreamUp.Cards do
   alias DreamUp.Repo
 
   alias DreamUp.Cards.Card
+  alias DreamUp.Games
 
   @doc """
   Returns the list of cards.
@@ -102,13 +103,12 @@ defmodule DreamUp.Cards do
     Card.changeset(card, attrs)
   end
 
-  def get_random_card_from_method(method_type) do
+  def get_random_card_from_method(method_type, game) do
     card_list = list_cards()
     matched_cards = Enum.filter(card_list, fn card ->
       match?(%{type: ^method_type}, card)
     end)
-    IO.inspect(matched_cards)
-    # matched cards is empty
-    # need to select random card from matched cards
+    picked_card = Enum.random(matched_cards)
+    Games.update_game(game, %{current_method: method_type, picked_method_id: picked_card.id})
   end
 end

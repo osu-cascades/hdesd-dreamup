@@ -22,7 +22,7 @@ defmodule DreamUpWeb.BoardLive do
 
   def handle_event("start-round", _, socket) do
     random_number = :rand.uniform(6)
-    Cards.get_random_card_from_method(@method_card_map[random_number])
+    Cards.get_random_card_from_method(@method_card_map[random_number], socket.assigns.game)
     new_socket = countdown(socket)
     Games.broadcast(:start_round, socket.assigns.game.id)
     {:noreply, assign(new_socket, %{current_method: @method_card_map[random_number]})}
