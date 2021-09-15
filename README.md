@@ -2,6 +2,10 @@
 
 Built by Amber, Andras, Ethan, and Ian
 
+## Setup
+
+You will need a `.env` file in the root directory. View `.env.example` for an example configuration.
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
