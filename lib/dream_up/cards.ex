@@ -108,8 +108,19 @@ defmodule DreamUp.Cards do
     matched_cards = Enum.filter(card_list, fn card ->
       match?(%{type: ^method_type}, card)
     end)
-    picked_card = Enum.random(matched_cards)
+    picked_card = pick_card(matched_cards, game)
     Games.update_game(game, %{("method_" <> Integer.to_string(game.round_number) <> "_id") => picked_card.id})
     Games.broadcast({:ok, picked_card}, :select_card, game.id)
+  end
+
+  #Fix 119
+  def pick_card(card_list, game) do
+    picked_card = Enum.random(card_list)
+    used_card_ids = Enum.map(1..9, fn n -> game["method_" <> Integer.to_string(n) <> "_id"] end)
+    if Enum.member?(used_card_ids, picked_card.id) do
+      pick_card(card_list, game)
+    else
+      picked_card
+    end
   end
 end

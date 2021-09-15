@@ -17,8 +17,14 @@ defmodule DreamUpWeb.BoardLive do
     if connected?(socket), do: Games.subscribe(String.to_integer(params["game_id"]))
     player = Players.get_player!(params["player_id"])
     game = Games.get_game!(String.to_integer(params["game_id"]))
-    socket = assign(socket, player: player, game: game, method_card: Cards.get_card!(game.round_number) )
-    {:noreply, socket}
+    if game.round_number === 0 do
+      socket = assign(socket, player: player, game: game, method_card: nil )
+      {:noreply, socket}
+    else
+      method_card_id = game["method_" <> Integer.to_string(game.round_number) <> "_id"]
+      socket = assign(socket, player: player, game: game, method_card: Cards.get_card!(method_card_id) )
+      {:noreply, socket}
+    end
   end
 
   def handle_event("start-round", _, socket) do
@@ -46,7 +52,7 @@ defmodule DreamUpWeb.BoardLive do
       "blue" ->
         Games.update_game(socket.assigns.game, %{time_left: ~T[00:00:10], round_state: "SPINNER", blue_pivot_token: false})
       nil ->
-        Games.update_game(socket.assigns.game, %{time_left: ~T[00:00:10], round_state: "SPINNER"})
+        Games.update_game(socket.assigns.game, %{time_left: ~T[00:00:10], round_state: "SPINNER", round_number: socket.assigns.game.round_number + 1})
     end
   end
 

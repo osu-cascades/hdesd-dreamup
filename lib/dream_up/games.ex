@@ -38,7 +38,7 @@ defmodule DreamUp.Games do
         generate_game_code()
       false ->
         create_game(%{code: code, name: "why", time_left: ~T[00:05:00], red_add_time_token: true, blue_add_time_token: true, round_state: "GAME_START",
-          red_pivot_token: true, blue_pivot_token: true, round_number: 1})
+          red_pivot_token: true, blue_pivot_token: true, round_number: 0})
     end
     code
   end
