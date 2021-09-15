@@ -2,8 +2,6 @@ use Mix.Config
 
 # Configure your database
 config :dream_up, DreamUp.Repo,
-  # username: "postgres",
-  # password: "postgres",
   database: "dream_up_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,

@@ -13,7 +13,6 @@ config :dream_up,
 # Configures the endpoint
 config :dream_up, DreamUpWeb.Endpoint,
   url: [host: "localhost"],
-  # secret_key_base: "wEIMjcPMrtZXjSiOJUjc6/xqnVB9EBMKi8tVSkCA1QUfsOJG52Ez6QN5mC2d6Y+n",
   render_errors: [view: DreamUpWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: DreamUp.PubSub,
   live_view: [signing_salt: "4kxFWBWI"]

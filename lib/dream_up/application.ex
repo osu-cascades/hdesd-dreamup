@@ -19,7 +19,7 @@ defmodule DreamUp.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: DreamUp.PubSub},
       # Start the Endpoint (http/https)
-      {DreamUpWeb.Endpoint, secret_key_base: config.secret_key_base}
+      {DreamUpWeb.Endpoint, secret_key_base: config.secret_key_base, url: [scheme: "https", host: config.url, port: 443],}
       # Start a worker by calling: DreamUp.Worker.start_link(arg)
       # {DreamUp.Worker, arg}
     ]
@@ -35,6 +35,7 @@ defmodule DreamUp.Application do
       {:secret_key_base, "CONFIG_SECRET_KEY"},
       {:username, "DATABASE_USERNAME_DEV"},
       {:password, "DATABASE_PASSWORD_DEV"},
+      {:url, "SITE_URL"}
     ]}
 
     {_, config} = Vapor.Provider.load(providers)
