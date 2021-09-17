@@ -8,8 +8,6 @@ defmodule DreamUp.Application do
   def start(_type, _args) do
     Vapor.load!([%Vapor.Provider.Dotenv{}])
     config = load_system_env()
-    IO.puts("----ENVIRONMENT VARIABLES----")
-    IO.inspect(config)
 
     children = [
       # Start the Ecto repository

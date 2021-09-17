@@ -6,8 +6,6 @@ defmodule DreamUpWeb.BoardLive do
   alias DreamUp.Players
   alias DreamUp.Cards
 
-  @method_card_map %{1 => "Empathize", 2 => "Define", 3 => "Ideate", 4 => "Prototype", 5 => "Test", 6 => "Mindset"}
-
   def mount(_params, _session, socket) do
     socket = assign(socket, timer: nil, method: nil, method_card: nil, game: %{round_state: "GAME_START"})
     {:ok, socket}
@@ -21,39 +19,45 @@ defmodule DreamUpWeb.BoardLive do
       socket = assign(socket, player: player, game: game, method_card: nil )
       {:noreply, socket}
     else
-      method_card_id = game["method_" <> Integer.to_string(game.round_number) <> "_id"]
-      socket = assign(socket, player: player, game: game, method_card: Cards.get_card!(method_card_id) )
-      {:noreply, socket}
+      # method_card_id = game["method_" <> Integer.to_string(game.round_number) <> "_id"]
+      # IO.inspect(Cards.get_card!(game.method_1_id))
+      case game.round_number do
+        1 ->
+          # IO.inspect(Cards.get_card!(game.method_1_id))
+          {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_1_id))}
+        2 ->
+          {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_2_id))}
+        3 ->
+          {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_3_id))}
+        4 ->
+          {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_4_id))}
+        5 ->
+          {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_5_id))}
+        6 ->
+          {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_6_id))}
+        7 ->
+          {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_7_id))}
+        8 ->
+          {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_8_id))}
+        9 ->
+          {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_9_id))}
+      end
     end
   end
 
   def handle_event("start-round", _, socket) do
-    set_method_card(socket)
+    Cards.start_spinner_state(socket.assigns.game)
     {:noreply, countdown(socket)}
   end
 
   def handle_event("pivot", _, socket) do
-    set_method_card(socket, socket.assigns.player.team)
+    Cards.start_spinner_state(socket.assigns.game, socket.assigns.player.team)
     {:noreply, socket}
   end
 
   def handle_event("add-time", _, socket) do
     Games.add_time(socket.assigns.game, socket.assigns.player.team_leader)
     {:noreply, socket}
-  end
-
-  def set_method_card(socket, pivot_to_remove \\ nil) do
-    # TODO - Document better
-    random_number = :rand.uniform(6)
-    Cards.get_random_card_from_method(@method_card_map[random_number], socket.assigns.game)
-    case pivot_to_remove do
-      "red" ->
-        Games.update_game(socket.assigns.game, %{time_left: ~T[00:00:10], round_state: "SPINNER", red_pivot_token: false})
-      "blue" ->
-        Games.update_game(socket.assigns.game, %{time_left: ~T[00:00:10], round_state: "SPINNER", blue_pivot_token: false})
-      nil ->
-        Games.update_game(socket.assigns.game, %{time_left: ~T[00:00:10], round_state: "SPINNER", round_number: socket.assigns.game.round_number + 1})
-    end
   end
 
   def countdown(socket) do

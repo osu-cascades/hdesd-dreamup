@@ -140,11 +140,5 @@ defmodule DreamUp.Players do
     else
       -1
     end
-    # players_sorted = Enum.sort(players_in_team, fn player1, player2  ->
-    #   player1.id >= player2.id
-    # end)
-    # Enum.min
-    # Enum.at(0)
-    # IO.inspect(players_in_team)
   end
 end

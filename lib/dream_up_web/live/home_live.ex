@@ -9,7 +9,6 @@ defmodule DreamUpWeb.HomeLive do
   end
 
   def handle_params(params, _url, socket) do
-    IO.inspect(params)
     if params["error"] !== nil do
       {:noreply, assign(socket, error: params["error"])}
     else

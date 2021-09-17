@@ -9,6 +9,8 @@ defmodule DreamUp.Cards do
   alias DreamUp.Cards.Card
   alias DreamUp.Games
 
+  @method_card_map %{1 => "Empathize", 2 => "Define", 3 => "Ideate", 4 => "Prototype", 5 => "Test", 6 => "Mindset"}
+
   @doc """
   Returns the list of cards.
 
@@ -103,21 +105,41 @@ defmodule DreamUp.Cards do
     Card.changeset(card, attrs)
   end
 
-  def get_random_card_from_method(method_type, game) do
+  def start_spinner_state(game, pivot_to_remove \\ nil) do
+    method_type = @method_card_map[:rand.uniform(6)]
     card_list = list_cards()
     matched_cards = Enum.filter(card_list, fn card ->
       match?(%{type: ^method_type}, card)
     end)
     picked_card = pick_card(matched_cards, game)
-    Games.update_game(game, %{("method_" <> Integer.to_string(game.round_number) <> "_id") => picked_card.id})
+    case pivot_to_remove do
+      "red" ->
+        Games.update_game(game, %{"time_left" => ~T[00:00:10], "round_state" => "SPINNER", "red_pivot_token" => false, ("method_" <> Integer.to_string(game.round_number) <> "_id") => picked_card.id})
+      "blue" ->
+        Games.update_game(game, %{"time_left" => ~T[00:00:10], "round_state" => "SPINNER", "blue_pivot_token" => false, ("method_" <> Integer.to_string(game.round_number) <> "_id") => picked_card.id})
+      nil ->
+        IO.inspect(game.round_number + 1)
+        Games.update_game(game, %{"time_left" => ~T[00:00:10], "round_state" => "SPINNER", "round_number" => game.round_number + 1, ("method_" <> Integer.to_string(game.round_number + 1) <> "_id") => picked_card.id})
+    end
     Games.broadcast({:ok, picked_card}, :select_card, game.id)
   end
 
   #Fix 119
   def pick_card(card_list, game) do
     picked_card = Enum.random(card_list)
-    used_card_ids = Enum.map(1..9, fn n -> game["method_" <> Integer.to_string(n) <> "_id"] end)
-    if Enum.member?(used_card_ids, picked_card.id) do
+    # used_card_ids = Enum.map(1..9, fn n -> game["method_" <> Integer.to_string(n) <> "_id"] end)
+    used_card_ids = [game.method_1_id,
+                     game.method_2_id,
+                     game.method_3_id,
+                     game.method_4_id,
+                     game.method_5_id,
+                     game.method_6_id,
+                     game.method_7_id,
+                     game.method_8_id,
+                     game.method_9_id,
+                    ]
+    card_list_ids = Enum.map(card_list, fn card -> card.id end)
+    if !Enum.any?(card_list_ids, fn x -> x in used_card_ids end) && Enum.member?(used_card_ids, picked_card.id) do
       pick_card(card_list, game)
     else
       picked_card
