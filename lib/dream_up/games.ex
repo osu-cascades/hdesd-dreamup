@@ -180,7 +180,7 @@ defmodule DreamUp.Games do
     else
       case game.round_state do
         "SPINNER" ->
-          update_game(game, %{round_state: "GAMEPLAY", time_left: ~T[00:00:15]})
+          update_game(game, %{round_state: "GAMEPLAY", time_left: ~T[00:00:03]})
         "GAMEPLAY" ->
           update_game(game, %{round_state: "DISCUSSION"})
         "DISCUSSION" ->

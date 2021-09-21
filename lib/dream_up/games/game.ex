@@ -22,6 +22,8 @@ defmodule DreamUp.Games.Game do
     field :method_8_id, :integer
     field :method_9_id, :integer
     field :round_number, :integer
+    field :red_pivoted_method_id, :integer
+    field :blue_pivoted_method_id, :integer
     timestamps()
   end
 
@@ -47,7 +49,9 @@ defmodule DreamUp.Games.Game do
       :method_7_id,
       :method_8_id,
       :method_9_id,
-      :round_number
+      :round_number,
+      :blue_pivoted_method_id,
+      :red_pivoted_method_id
     ])
     |> validate_required([:code, :time_left, :red_add_time_token, :blue_add_time_token, :round_state, :red_pivot_token, :blue_pivot_token, :round_number])
   end

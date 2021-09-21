@@ -51,7 +51,7 @@ defmodule DreamUpWeb.BoardLive do
   end
 
   def handle_event("pivot", _, socket) do
-    Cards.start_spinner_state(socket.assigns.game, socket.assigns.player.team)
+    Cards.start_spinner_state(socket.assigns.game, socket.assigns.player.team, socket.assigns.method_card)
     {:noreply, socket}
   end
 
