@@ -7,7 +7,7 @@ defmodule DreamUp.Application do
 
   def start(_type, _args) do
     Vapor.load!([%Vapor.Provider.Dotenv{}])
-    config = load_system_env |> Enum.map(
+    config = load_system_env() |> Enum.map(
       fn x ->
         {atom, str} = x
         {atom, String.replace(str, "\r", "")}
