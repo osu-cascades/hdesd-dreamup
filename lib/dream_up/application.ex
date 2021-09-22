@@ -7,17 +7,22 @@ defmodule DreamUp.Application do
 
   def start(_type, _args) do
     Vapor.load!([%Vapor.Provider.Dotenv{}])
-    config = load_system_env()
+    config = load_system_env |> Enum.map(
+      fn x ->
+        {atom, str} = x
+        {atom, String.replace(str, "\r", "")}
+      end
+    )
 
     children = [
       # Start the Ecto repository
-      {DreamUp.Repo, [username: config.username, password: config.password]},
+      {DreamUp.Repo, [username: config[:username], password: config[:password]]},
       # Start the Telemetry supervisor
       DreamUpWeb.Telemetry,
       # Start the PubSub system
       {Phoenix.PubSub, name: DreamUp.PubSub},
       # Start the Endpoint (http/https)
-      {DreamUpWeb.Endpoint, [secret_key_base: config.secret_key_base, url: [scheme: "https", host: config.url, port: 443]]}
+      {DreamUpWeb.Endpoint, [secret_key_base: config[:secret_key_base], url: [scheme: "https", host: config[:url], port: 443]]}
       # Start a worker by calling: DreamUp.Worker.start_link(arg)
       # {DreamUp.Worker, arg}
     ]
@@ -31,8 +36,8 @@ defmodule DreamUp.Application do
   defp load_system_env() do
     providers = %Vapor.Provider.Env{bindings: [
       {:secret_key_base, "SECRET_KEY_BASE"},
-      {:username, "DATABASE_USERNAME_DEV"},
-      {:password, "DATABASE_PASSWORD_DEV"},
+      {:username, "DATABASE_USERNAME"},
+      {:password, "DATABASE_PASSWORD"},
       {:url, "SITE_URL"}
     ]}
 
