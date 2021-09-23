@@ -10,7 +10,7 @@
     <div id="red-team">
         <p>Red Team's Challenge</p>
         <%= if @red_challenge_id do %>
-            <div class="setup-cards flip-card">
+            <div class="card flip-card">
                 <h1 class="card-type flipped-card-text">Design Challenge</h1>
                 <h2 class="font-medium flipped-card-text">
                     Dream up a better way to
@@ -19,7 +19,7 @@
                 <p class="text-sm flipped-card-text"><%= get_card_prompt(@red_challenge_id) %></p>
             </div>
         <% else %>
-            <div class="setup-cards card-back">
+            <div class="card card-back">
                 <h1>challenge</h1>
                 <img class="card-logo" src="/images/DreamUpLogo.svg">
                 <h2>dream up!</h2>
@@ -29,7 +29,7 @@
     <div id="blue-team">
         <p>Blue Team's Challenge</p>
         <%= if @blue_challenge_id do %>
-            <div class="setup-cards flip-card">
+            <div class="card flip-card">
                 <h1 class="card-type flipped-card-text">Design Challenge</h1>
                 <h2 class="font-medium flipped-card-text">
                     Dream up a better way to
@@ -38,7 +38,7 @@
                 <p class="text-sm flipped-card-text"><%= get_card_prompt(@blue_challenge_id) %></p>
             </div>
         <% else %>
-            <div class="setup-cards card-back">
+            <div class="card card-back">
                 <h1>challenge</h1>
                 <img class="card-logo" src="/images/DreamUpLogo.svg">
                 <h2>dream up!</h2>
@@ -50,7 +50,7 @@
     <%= for card <- @cards do %>
         <%= if card.type == "Challenge" do %>
             <%= unless card.id == @red_challenge_id || card.id == @blue_challenge_id do %>
-                <div class="setup-cards">
+                <div class="card">
                     <h1 class="card-type">Design <%= card.type %></h1>
                     <h2 class="font-medium">
                         Dream up a better way to
@@ -62,7 +62,7 @@
                     <% end %>
                 </div>
             <% else %>
-                <div class="setup-cards card-back flip-card">
+                <div class="card card-back flip-card">
                     <h1 class="flipped-card-text">challenge</h1>
                     <img class="card-logo flipped-card-text" src="/images/DreamUpLogo.svg">
                     <h2 class="flipped-card-text">dream up!</h2>

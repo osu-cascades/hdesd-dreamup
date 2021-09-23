@@ -147,16 +147,16 @@ select {
 }
 
 #joinGame {
-  box-shadow: 1.5px 1.5px 5px grey; 
+  box-shadow: 1.5px 1.5px 5px grey;
 }
 
 #joinGame:active {
   background-color: rgba(129, 140, 248);
-  box-shadow: 1px 1px 1px; 
+  box-shadow: 1px 1px 1px;
 }
 
 #joinGame:hover {
-  background-color: rgba(129, 140, 248); 
+  background-color: rgba(129, 140, 248);
 }
 
 .defaultButton {
@@ -201,7 +201,7 @@ select {
   font-weight: 800;
 }
 
-.setup-cards {
+.card {
   margin: auto;
   text-align: center;
   color: black;
@@ -210,6 +210,12 @@ select {
   width: 200px;
   height: 250px;
   border-radius: 5%;
+} .card-type {
+  background-color: #58595B;
+  color: white;
+  font-weight: 650;
+  letter-spacing: 0.08rem;
+  padding: 0.75em 0em;;
 }
 
 .card-back {
@@ -218,10 +224,46 @@ select {
   padding-top: 45px;
 }
 
-.card-type {
-  background-color: #58595B;
-  color: white;
-  padding: 0.75em 0em;;  
+.empathize {
+  border-color: #FFCE49;
+} .empathize h1 {
+  background-color: #FFCE49;
+}
+
+.define {
+  border-color: #4D0461;
+} .define h1 {
+  background-color: #4D0461;
+}
+
+.ideate {
+  border-color: #DA207E;
+} .ideate h1 {
+  background-color: #DA207E;
+}
+
+.prototype {
+  border-color: #00A461;
+} .prototype h1 {
+  background-color: #00A461;
+}
+
+.test {
+  border-color: #FB8050;
+} .test h1 {
+  background-color: #FB8050;
+}
+
+.mindset {
+  border-color: #F1385D;
+} .mindset h1 {
+  background-color: #F1385D;
+}
+
+.tell {
+  border-color: #8ECB70;
+} .tell h1 {
+  background-color: #8ECB70;
 }
 
 .card-header {
@@ -464,12 +506,12 @@ select {
 
 .arrow-left {
   position: absolute; top: 50%; right: 0;
-  width: 0; 
-  height: 0; 
+  width: 0;
+  height: 0;
   border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent; 
-  
-  border-right:10px solid black; 
+  border-bottom: 10px solid transparent;
+
+  border-right:10px solid black;
 }
 
 .right-board-column {
