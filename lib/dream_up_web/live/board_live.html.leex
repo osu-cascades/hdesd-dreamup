@@ -2,12 +2,18 @@
     <div class="grid md:grid-cols-3 gap-4">
         <div class="md:col-start-1">
             <div class="spinner-stack">
-                <img
+                <img id="spinner"
                 <%= if @game.round_state !== "GAME_START" && @method_card do %>
                     class="spinner-<%= @method_card.type %>"
                 <% end %>
                 src="/images/PieChart.svg">
                 <div class="arrow-left"></div>
+            </div>
+
+            <div phx-hook="Spinner"
+            <%= if @game.round_state !== "GAME_START" && @method_card do %>
+                class="spinner-<%= @method_card.type %>"
+            <% end %>>
             </div>
 
             <div id="challenge-card" class="py-2 mb-2 text-center rounded">
@@ -137,3 +143,14 @@
     </div>
 
 </div>
+
+<script>
+    window.addEventListener("phx:page-loading-stop", info => topbar.hide())
+    animate_spinner(class_to_add) {
+        var spinner = document.getElementById("spinner");
+        spinner.style.animation = 'none';
+        spinner.offsetHeight;
+        spinner.style.animation = null; 
+        spinner.className = class_to_add;
+    }
+</script>
