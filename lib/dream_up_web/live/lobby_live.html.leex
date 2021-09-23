@@ -25,7 +25,7 @@
                 </div>
                 <div class="text-blue-900 pt-4">
                     <div class="m-auto max-w-lg">
-                        <%= submit "Join Game", id: "joinGame", class: "text-blue-900 border-2 px-8 text-center bg-indigo-400", phx_disable_with: "Joining..."  %>
+                        <%= submit "JOIN GAME", id: "joinGame", class: "text-blue-900 border-2 px-8 text-center bg-indigo-400", phx_disable_with: "JOINING..."  %>
                     </div>
                 </div>
             </form>
@@ -78,7 +78,7 @@
     </div>
     <%= if own_player_is_admin(@id, @players) do %>
     <div class="text-center">
-        <button phx-click="begin-setup">Start Game</button>
+        <button class="defaultButton mt-12 text-blue-900 border-2 px-8 text-center" phx-click="begin-setup">Start Game</button>
     </div>
     <% end %>
 </div>

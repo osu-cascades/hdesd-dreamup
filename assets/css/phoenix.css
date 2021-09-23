@@ -161,8 +161,11 @@ select {
 
 .defaultButton {
   box-shadow: 1.5px 1.5px 5px grey;
-  width: 100%;
   background-color: rgba(129, 140, 248);
+}
+
+.fill-width {
+  width: 100%;
 }
 
 .logo{
