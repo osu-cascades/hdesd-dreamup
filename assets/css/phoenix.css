@@ -161,6 +161,7 @@ select {
 
 .defaultButton {
   box-shadow: 1.5px 1.5px 5px grey;
+  width: 100%;
   background-color: rgba(129, 140, 248);
 }
 
@@ -466,4 +467,8 @@ select {
   border-bottom: 10px solid transparent; 
   
   border-right:10px solid black; 
+}
+
+.right-board-column {
+  min-width: 169px;
 }
