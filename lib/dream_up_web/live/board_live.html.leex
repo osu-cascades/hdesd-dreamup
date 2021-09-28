@@ -1,6 +1,6 @@
 <div id="board">
   <div class="grid md:grid-cols-3 gap-4">
-    <div class="md:col-start-1">
+    <div>
       <div class="py-2 mb-2 text-center border-2 border-indigo-600 rounded">
         <h2>Round: <%= @game.round_number %></h2>
       </div>
@@ -11,6 +11,16 @@
           <h2>Timer: <%= Time.to_string(@game.time_left) |> String.slice(4, String.length(Time.to_string(@game.time_left))) %></h2>
         <% end %>
       </div>
+
+      <%= if ((@player.team_leader === "red" && @game.red_pivot_token) || (@player.team_leader === "blue" && @game.blue_pivot_token)) && @game.round_state === "SPINNER" do %>
+        <button class="defaultButton fill-width mb-3 text-blue-900 border-2 px-8 text-center" phx-click="pivot">Pivot (1/1)</button>
+      <% end %>
+      <%= if ((@player.team_leader === "red" && @game.red_add_time_token) || (@player.team_leader === "blue" && @game.blue_add_time_token)) && @game.round_state === "GAMEPLAY" do %>
+        <button class="defaultButton fill-width mb-3 text-blue-900 border-2 px-8 text-center" phx-click="add-time">Add Time (1/1)</button>
+      <% end %>
+      <%= if @player.game_admin && (@game.round_state === "GAME_START" || @game.round_state === "DISCUSSION") do %>
+        <button class="defaultButton fill-width mb-3 text-blue-900 border-2 px-8 text-center" phx-click="start-round">Start Round</button>
+      <% end %>
 
       <div id="challenge-card" class="py-2 mb-2 text-center rounded">
         <h1 class="text-white">Your Challenge for this game:</h1>
@@ -36,11 +46,9 @@
           </p>
         </div>
       </div>
-
-
     </div>
 
-    <div class="md:col-start-2 md:col-span-4">
+    <div class="md:col-span-2">
       <div class="method-card-container grid grid-cols-6 gap-2 lg:gap-4 mb-2">
         <div class="method-cards" style="background-color: #FFCE49;">
           <div class="method-card-content">
@@ -97,64 +105,58 @@
             <h1>Solve the challenge your method card has given you with your team.</h1>
         <% end %>
       </div>
+
       <div class="big-container py-2 mb-2 text-center border-2 border-indigo-600 rounded">
-      <h1>Current Method Card in Play</h1>
-      <%= if @method_card do %>
-        <%= case @method_card.type do %>
-          <%= "Empathize" -> %>
-            <div class="card empathize flip-card">
-          <%= "Define" -> %>
-            <div class="card define flip-card">
-          <%= "Ideate" -> %>
-            <div class="card ideate flip-card">
-          <%= "Prototype" -> %>
-            <div class="card prototype flip-card">
-          <%= "Test" -> %>
-            <div class="card test flip-card">
-          <%= "Mindset" -> %>
-            <div class="card mindset flip-card">
-          <%= "Tell" -> %>
-            <div class="card tell flip-card">
-        <% end %>
-          <h1 class="card-type flipped-card-text"><%= @method_card.type %></h1>
-          <p class="text-sm flipped-card-text">
-            <%= if @method_card do %>
-              <%= @method_card.prompt %>
+        <h1>Current Method Card in Play</h1>
+
+        <%= if @game.round_state === "SPINNER" && Time.compare(@game.time_left, ~T[00:00:05]) === :gt && @game.round_number < 9 do %>
+          <div class="spinner-stack">
+            <img id="spinner"
+            <%= if @game.round_state !== "GAME_START" && @method_card do %>
+              class="spinner-<%= @method_card.type %>"
             <% end %>
-          </p>
-        </div>
-      <% end %>
-      </div>
-    </div>
+            src="/images/PieChart.svg">
+            <div class="arrow-left"></div>
+          </div>
 
-    <div class="md:col-start-6 right-board-column">
-      <div class="spinner-stack">
-        <img id="spinner"
-        <%= if @game.round_state !== "GAME_START" && @method_card do %>
-          class="spinner-<%= @method_card.type %>"
+          <div phx-hook="Spinner"
+            <%= if @game.round_state !== "GAME_START" && @method_card do %>
+              class="spinner-<%= @method_card.type %>"
+            <% end %>>
+          </div>
+
+        <% else %>
+          <%= if @method_card do %>
+            <div class=
+              <%= case @method_card.type do %>
+                <%= "Empathize" -> %>
+                  "card empathize flip-card"
+                <%= "Define" -> %>
+                  "card define flip-card"
+                <%= "Ideate" -> %>
+                  "card ideate flip-card"
+                <%= "Prototype" -> %>
+                  "card prototype flip-card"
+                <%= "Test" -> %>
+                  "card test flip-card"
+                <%= "Mindset" -> %>
+                  "card mindset flip-card"
+                <%= "Tell" -> %>
+                  "card tell flip-card"
+              <% end %>
+            >
+              <h1 class="card-type flipped-card-text"><%= @method_card.type %></h1>
+              <p class="text-sm flipped-card-text">
+                <%= if @method_card do %>
+                  <%= @method_card.prompt %>
+                <% end %>
+              </p>
+            </div>
+          <% end %>
         <% end %>
-        src="/images/PieChart.svg">
-        <div class="arrow-left"></div>
       </div>
-
-      <div phx-hook="Spinner"
-        <%= if @game.round_state !== "GAME_START" && @method_card do %>
-          class="spinner-<%= @method_card.type %>"
-        <% end %>>
-      </div>
-
-      <%= if ((@player.team_leader === "red" && @game.red_pivot_token) || (@player.team_leader === "blue" && @game.blue_pivot_token)) && @game.round_state === "SPINNER" do %>
-        <button class="defaultButton fill-width mt-12 text-blue-900 border-2 px-8 text-center" phx-click="pivot">Pivot (1/1)</button>
-      <% end %>
-      <%= if ((@player.team_leader === "red" && @game.red_add_time_token) || (@player.team_leader === "blue" && @game.blue_add_time_token)) && @game.round_state === "GAMEPLAY" do %>
-        <button class="defaultButton fill-width mt-12 text-blue-900 border-2 px-8 text-center" phx-click="add-time">Add Time (1/1)</button>
-      <% end %>
-      <%= if @player.game_admin && (@game.round_state === "GAME_START" || @game.round_state === "DISCUSSION") do %>
-        <button class="defaultButton fill-width mt-12 text-blue-900 border-2 px-8 text-center" phx-click="start-round">Start Round</button>
-      <% end %>
     </div>
   </div>
-
 </div>
 
 <script>
