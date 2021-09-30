@@ -54,7 +54,6 @@ defmodule DreamUp.Games do
   end
 
   # Broadcast function with game event attached to it
-  @spec broadcast(any, any, integer) :: :ok | {:error, any}
   def broadcast(data, event_name, game_id) do
     Phoenix.PubSub.broadcast(
       DreamUp.PubSub,
@@ -182,6 +181,7 @@ defmodule DreamUp.Games do
         "SPINNER" ->
           update_game(game, %{round_state: "GAMEPLAY", time_left: ~T[00:00:03]})
         "GAMEPLAY" ->
+          broadcast(:round_over, game.id)
           update_game(game, %{round_state: "DISCUSSION"})
         "DISCUSSION" ->
           nil

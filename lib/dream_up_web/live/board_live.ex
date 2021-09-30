@@ -16,11 +16,13 @@ defmodule DreamUpWeb.BoardLive do
     player = Players.get_player!(params["player_id"])
     game = Games.get_game!(String.to_integer(params["game_id"]))
     game_values = Map.to_list(game)
-    Enum.each( game_values, fn {k, v} ->
-      if String.slice(Atom.to_string(k), 0..6) === "method_" do
-        # TODO: lookup v and then append result to list of method cards
+    method_cards = Enum.filter(Enum.map( game_values, fn {k, v} ->
+      if String.slice(Atom.to_string(k), 0..6) === "method_" && v do
+        Cards.get_card!(v)
       end
-    end)
+    end), & !is_nil(&1))
+    IO.inspect(method_cards)
+
     if game.round_number === 0 do
       socket = assign(socket, player: player, game: game, method_card: nil )
       {:noreply, socket}
@@ -30,23 +32,23 @@ defmodule DreamUpWeb.BoardLive do
       case game.round_number do
         1 ->
           # IO.inspect(Cards.get_card!(game.method_1_id))
-          {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_1_id))}
+          {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_1_id), method_cards: method_cards)}
         2 ->
-          {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_2_id))}
+          {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_2_id), method_cards: method_cards)}
         3 ->
-          {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_3_id))}
+          {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_3_id), method_cards: method_cards)}
         4 ->
-          {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_4_id))}
+          {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_4_id), method_cards: method_cards)}
         5 ->
-          {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_5_id))}
+          {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_5_id), method_cards: method_cards)}
         6 ->
-          {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_6_id))}
+          {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_6_id), method_cards: method_cards)}
         7 ->
-          {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_7_id))}
+          {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_7_id), method_cards: method_cards)}
         8 ->
-          {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_8_id))}
+          {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_8_id), method_cards: method_cards)}
         9 ->
-          {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_9_id))}
+          {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_9_id), method_cards: method_cards)}
       end
     end
   end
@@ -87,6 +89,11 @@ defmodule DreamUpWeb.BoardLive do
   def handle_info({:select_card, data}, socket) do
     {_, card} = data
     {:noreply, assign(socket, method_card: card)}
+  end
+
+  def handle_info({:round_over}, socket) do
+    IO.inspect(socket.assigns.method_card)
+    {:noreply, update(socket, :method_cards, fn method_cards -> [socket.assigns.method_card | method_cards] end)}
   end
 
 end
