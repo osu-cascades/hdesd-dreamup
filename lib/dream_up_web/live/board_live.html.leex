@@ -131,17 +131,17 @@
               <%= case @method_card.type do %>
                 <%= "Empathize" -> %>
                   "card empathize flip-card"
-                <%= "Define" -> %>
+                <% "Define" -> %>
                   "card define flip-card"
-                <%= "Ideate" -> %>
+                <% "Ideate" -> %>
                   "card ideate flip-card"
-                <%= "Prototype" -> %>
+                <% "Prototype" -> %>
                   "card prototype flip-card"
-                <%= "Test" -> %>
+                <% "Test" -> %>
                   "card test flip-card"
-                <%= "Mindset" -> %>
+                <% "Mindset" -> %>
                   "card mindset flip-card"
-                <%= "Tell" -> %>
+                <% "Tell" -> %>
                   "card tell flip-card"
               <% end %>
             >
@@ -154,37 +154,38 @@
             </div>
           <% end %>
         <% end %>
-          </div>
-          <div class="method-card-container grid grid-cols-6 gap-2 lg:gap-4 mb-2">
-            <%= for method_card <- @method_cards do %>
-            <div class=
-              <%= case method_card.type do %>
-                <%= "Empathize" -> %>
-                  "card empathize flip-card"
-                <%= "Define" -> %>
-                  "card define flip-card"
-                <%= "Ideate" -> %>
-                  "card ideate flip-card"
-                <%= "Prototype" -> %>
-                  "card prototype flip-card"
-                <%= "Test" -> %>
-                  "card test flip-card"
-                <%= "Mindset" -> %>
-                  "card mindset flip-card"
-                <%= "Tell" -> %>
-                  "card tell flip-card"
-              <% end %>
-            >
-            <h1 class="card-type flipped-card-text"><%= method_card.type %></h1>
-            <p class="text-sm flipped-card-text">
-              <%= if method_card do %>
-                <%= method_card.prompt %>
-              <% end %>
-            </p>
-          </div>
-        <% end %>
       </div>
     </div>
+  </div>
+  <!-- TODO: Move inline styling and fix relative top gap -->
+  <div class="method-card-container grid grid-cols-6 gap-2 lg:gap-4 mb-2" style="position: relative; top: 60px;">
+    <%= for method_card <- @method_cards do %>
+      <div class=
+        <%= case method_card.type do %>
+          <%= "Empathize" -> %>
+            "card empathize flip-card"
+          <% "Define" -> %>
+            "card define flip-card"
+          <% "Ideate" -> %>
+            "card ideate flip-card"
+          <% "Prototype" -> %>
+            "card prototype flip-card"
+          <% "Test" -> %>
+            "card test flip-card"
+          <% "Mindset" -> %>
+            "card mindset flip-card"
+          <% "Tell" -> %>
+            "card tell flip-card"
+        <% end %>
+      >
+        <h1 class="card-type flipped-card-text"><%= method_card.type %></h1>
+        <p class="text-sm flipped-card-text">
+          <%= if method_card do %>
+            <%= method_card.prompt %>
+          <% end %>
+        </p>
+      </div>
+    <% end %>
   </div>
 </div>
 
