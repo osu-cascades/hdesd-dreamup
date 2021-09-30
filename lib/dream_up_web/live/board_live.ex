@@ -7,7 +7,7 @@ defmodule DreamUpWeb.BoardLive do
   alias DreamUp.Cards
 
   def mount(_params, _session, socket) do
-    socket = assign(socket, timer: nil, method: nil, method_card: nil, game: %{round_state: "GAME_START"})
+    socket = assign(socket, timer: nil, method: nil, method_card: nil, method_cards: [], game: %{round_state: "GAME_START"})
     {:ok, socket}
   end
 
@@ -15,6 +15,12 @@ defmodule DreamUpWeb.BoardLive do
     if connected?(socket), do: Games.subscribe(String.to_integer(params["game_id"]))
     player = Players.get_player!(params["player_id"])
     game = Games.get_game!(String.to_integer(params["game_id"]))
+    game_values = Map.to_list(game)
+    Enum.each( game_values, fn {k, v} ->
+      if String.slice(Atom.to_string(k), 0..6) === "method_" do
+        # TODO: lookup v and then append result to list of method cards
+      end
+    end)
     if game.round_number === 0 do
       socket = assign(socket, player: player, game: game, method_card: nil )
       {:noreply, socket}
