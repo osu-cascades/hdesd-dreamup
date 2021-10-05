@@ -7,6 +7,7 @@ defmodule DreamUp.Games do
   alias DreamUp.Repo
 
   alias DreamUp.Games.Game
+  alias DreamUp.Cards
   alias DreamUp.Code
 
   def subscribe(game_id) do
@@ -37,7 +38,7 @@ defmodule DreamUp.Games do
       true ->
         generate_game_code()
       false ->
-        create_game(%{code: code, name: "why", time_left: ~T[00:05:00], red_add_time_token: true, blue_add_time_token: true, round_state: "GAME_START",
+        create_game(%{code: code, name: "why", time_left: ~T[00:00:00], red_add_time_token: true, blue_add_time_token: true, round_state: "GAME_START",
           red_pivot_token: true, blue_pivot_token: true, round_number: 0})
     end
     code
@@ -181,10 +182,12 @@ defmodule DreamUp.Games do
         "SPINNER" ->
           update_game(game, %{round_state: "GAMEPLAY", time_left: ~T[00:00:03]})
         "GAMEPLAY" ->
-          broadcast(:round_over, game.id)
-          update_game(game, %{round_state: "DISCUSSION"})
+          update_game(game, %{round_state: "DISCUSSION", time_left: ~T[00:00:03]})
         "DISCUSSION" ->
-          nil
+          broadcast(:round_over, game.id)
+          Cards.start_spinner_state(game)
+        "GAME_START" ->
+          Cards.start_spinner_state(game)
       end
     end
   end
