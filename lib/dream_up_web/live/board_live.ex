@@ -16,22 +16,19 @@ defmodule DreamUpWeb.BoardLive do
     player = Players.get_player!(params["player_id"])
     game = Games.get_game!(String.to_integer(params["game_id"]))
     game_values = Map.to_list(game)
-    method_cards = Enum.filter(Enum.map( game_values, fn {k, v} ->
+    all_method_cards = Enum.filter(Enum.map( game_values, fn {k, v} ->
       if String.slice(Atom.to_string(k), 0..6) === "method_" && v do
         Cards.get_card!(v)
       end
     end), & !is_nil(&1))
-    IO.inspect(method_cards)
+    method_cards = List.delete_at(all_method_cards, length(all_method_cards) - 1)
 
     if game.round_number === 0 do
       socket = assign(socket, player: player, game: game, method_card: nil )
       {:noreply, socket}
     else
-      # method_card_id = game["method_" <> Integer.to_string(game.round_number) <> "_id"]
-      # IO.inspect(Cards.get_card!(game.method_1_id))
       case game.round_number do
         1 ->
-          # IO.inspect(Cards.get_card!(game.method_1_id))
           {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_1_id), method_cards: method_cards)}
         2 ->
           {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_2_id), method_cards: method_cards)}
@@ -92,8 +89,7 @@ defmodule DreamUpWeb.BoardLive do
   end
 
   def handle_info({:round_over}, socket) do
-    IO.inspect(socket.assigns.method_card)
-    {:noreply, update(socket, :method_cards, fn method_cards -> [socket.assigns.method_card | method_cards] end)}
+    {:noreply, update(socket, :method_cards, fn method_cards -> method_cards ++ [socket.assigns.method_card] end)}
   end
 
 end
