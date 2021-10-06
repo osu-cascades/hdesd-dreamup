@@ -130,11 +130,14 @@ defmodule DreamUp.Players do
     end
   end
 
-  def find_first_player_on_team(team, game_id) do
-    players_in_game = list_players_in_game(game_id)
-    players_in_team = Enum.filter(players_in_game, fn player ->
+  def list_players_in_team(team, game_id) do
+    Enum.filter(list_players_in_game(game_id), fn player ->
       match?(%{team: ^team}, player)
     end)
+  end
+
+  def find_first_player_on_team(team, game_id) do
+    players_in_team = list_players_in_team(team, game_id)
     if Enum.count(players_in_team) > 0 do
       Enum.min_by(players_in_team, fn player -> player.id end)
     else

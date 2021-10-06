@@ -16,12 +16,22 @@ defmodule DreamUpWeb.SetupLive do
   def handle_params(params, _url, socket) do
     if connected?(socket), do: Games.subscribe(String.to_integer(params["game_id"]))
     player = Players.get_player!(params["player_id"])
-    socket = assign(socket, game_id: params["game_id"], player: player)
+    socket = assign(socket, game_id: params["game_id"], player: player,
+     is_single_team_game: length(
+       Players.list_players_in_team(
+         "red", params["game_id"]
+        )
+      ) === 0 || length(
+        Players.list_players_in_team(
+          "blue", params["game_id"]
+        )
+      ) === 0
+    )
     {:noreply, socket}
   end
 
   def handle_event("challenge-click", %{"card-id" => card_id}, socket) do
-    Games.select_challenge(socket.assigns.game_id, String.to_integer(card_id), socket.assigns.player.team)
+    Games.select_challenge(socket.assigns.game_id, String.to_integer(card_id), socket.assigns.player.team, socket.assigns.is_single_team_game)
     {:noreply, socket}
   end
 

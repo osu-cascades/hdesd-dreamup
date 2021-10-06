@@ -155,13 +155,22 @@ defmodule DreamUp.Games do
     Game.changeset(game, attrs)
   end
 
-  def select_challenge(id, card_id, team) do
+  def select_challenge(id, card_id, team, is_single_team_game) do
     game = get_game!(id)
-    case team do
-      "red" ->
-        update_game(game, %{blue_challenge_id: card_id})
-      "blue" ->
-        update_game(game, %{red_challenge_id: card_id})
+    if is_single_team_game do
+      case team do
+        "red" ->
+          update_game(game, %{red_challenge_id: card_id})
+        "blue" ->
+          update_game(game, %{blue_challenge_id: card_id})
+      end
+    else
+      case team do
+        "red" ->
+          update_game(game, %{blue_challenge_id: card_id})
+        "blue" ->
+          update_game(game, %{red_challenge_id: card_id})
+      end
     end
   end
 

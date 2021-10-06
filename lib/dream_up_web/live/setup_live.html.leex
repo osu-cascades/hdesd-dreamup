@@ -1,11 +1,26 @@
 <h1 class="text-blue-900 text-5xl font-bold">Setup</h1>
-<h2 class="text-blue-900 text-4xl font-bold mb-4">Hello <%= @player.name %>, you are on <%= @player.team %> team.</h2>
-
-<%= if @player.team_leader === "blue" || @player.team_leader === "red" do %>
-  <h2 class="text-blue-900 text-4xl font-bold mb-4">You are <%= @player.team %> team's lead. Pick a Design Challenge for the other team.</h2>
-<% else %>
-  <h2 class="text-blue-900 text-4xl font-bold mb-4">Collaborate with your team to pick a design challenge for the other team.</h2>
-<% end %>
+<h2 class="text-blue-900 text-4xl font-bold mb-4">Hello <%= @player.name %>, 
+  <%= if @is_single_team_game do %>
+    you are on the only team.
+  <% else %>
+    you are on <%= @player.team %> team.
+  <% end %>
+</h2>
+<h2 class="text-blue-900 text-4xl font-bold mb-4">
+  <%= if @player.team_leader === "blue" || @player.team_leader === "red" do %>
+    <%= if @is_single_team_game do %>
+      You are the team lead. Pick a Design Challenge for your team.
+    <% else %>
+      You are <%= @player.team %> team's lead. Pick a Design Challenge for the other team.
+    <% end %>
+  <% else %>
+    <%= if @is_single_team_game do %>
+      Collaborate with your team to pick a design challenge.
+    <% else %>
+      Collaborate with your team to pick a design challenge for the other team.
+    <% end %>
+  <% end %>
+</h2>
 <div id="selected-cards" class="grid grid-cols-2 gap-4 mb-4">
   <div id="red-team">
     <p>Red Team's Challenge</p>
@@ -46,6 +61,7 @@
     <% end %>
   </div>
 </div>
+
 <div class="grid sm:grid-cols-3 lg:grid-cols-5 gap-4">
   <%= for card <- @cards do %>
     <%= if card.type == "Challenge" do %>
