@@ -18,11 +18,11 @@
       <%= if ((@player.team_leader === "red" && @game.red_add_time_token) || (@player.team_leader === "blue" && @game.blue_add_time_token)) && @game.round_state === "GAMEPLAY" do %>
         <button class="defaultButton fill-width mb-3 text-blue-900 border-2 px-8 text-center" phx-click="add-time">Add Time (1/1)</button>
       <% end %>
-      <!-- Start round button, no longer used due to discussions being timed -->
-      <%= if false do %>
-        <%= if @player.game_admin && (@game.round_state === "GAME_START" || @game.round_state === "DISCUSSION") do %>
-          <button class="defaultButton fill-width mb-3 text-blue-900 border-2 px-8 text-center" phx-click="start-round">Start Round</button>
-        <% end %>
+      <%= if @player.game_admin && @game.round_state === "GAMEPLAY" do %>
+        <button class="defaultButton fill-width mb-3 text-blue-900 border-2 px-8 text-center" phx-click="skip-gameplay">Skip Gameplay</button>
+      <% end %>
+      <%= if @player.game_admin && @game.round_state === "DISCUSSION" do %>
+        <button class="defaultButton fill-width mb-3 text-blue-900 border-2 px-8 text-center" phx-click="skip-discussion">Skip Discussion</button>
       <% end %>
 
       <div id="challenge-card" class="py-2 mb-2 text-center rounded">

@@ -78,10 +78,15 @@ defmodule DreamUpWeb.BoardLive do
     end
   end
 
-  # No longer being used since the start round button is gone
-  def handle_event("start-round", _, socket) do
+  def handle_event("skip-gameplay", _, socket) do
+    Games.update_game(socket.assigns.game, %{round_state: "DISCUSSION", time_left: socket.assigns.method_card.discussion_time})
+    {:noreply, socket}
+  end
+
+  def handle_event("skip-discussion", _, socket) do
+    Games.broadcast(:round_over, socket.assigns.game.id)
     Cards.start_spinner_state(socket.assigns.game)
-    {:noreply, countdown(socket)}
+    {:noreply, socket}
   end
 
   def handle_event("pivot", _, socket) do
