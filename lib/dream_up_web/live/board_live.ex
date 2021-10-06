@@ -95,7 +95,6 @@ defmodule DreamUpWeb.BoardLive do
   end
 
   def countdown(socket) do
-    IO.inspect("---------Beginning countdown---------")
     unless socket.assigns.timer do
       assign(socket, timer: :timer.send_interval(1000, self(), :tick))
     else
@@ -104,7 +103,7 @@ defmodule DreamUpWeb.BoardLive do
   end
 
   def handle_info(:tick, socket) do
-    Games.decrease_time(socket.assigns.game)
+    Games.decrease_time(socket.assigns.game, socket.assigns.method_card)
     {:noreply, socket}
   end
 

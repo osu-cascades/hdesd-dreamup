@@ -174,15 +174,15 @@ defmodule DreamUp.Games do
     end
   end
 
-  def decrease_time(game) do
+  def decrease_time(game, method_card) do
     if Time.compare(game.time_left, ~T[00:00:00]) === :gt do
       update_game(game, %{time_left: Time.add(game.time_left, -1)})
     else
       case game.round_state do
         "SPINNER" ->
-          update_game(game, %{round_state: "GAMEPLAY", time_left: ~T[00:00:03]})
+          update_game(game, %{round_state: "GAMEPLAY", time_left: method_card.gameplay_time})
         "GAMEPLAY" ->
-          update_game(game, %{round_state: "DISCUSSION", time_left: ~T[00:00:03]})
+          update_game(game, %{round_state: "DISCUSSION", time_left: method_card.discussion_time})
         "DISCUSSION" ->
           broadcast(:round_over, game.id)
           Cards.start_spinner_state(game)

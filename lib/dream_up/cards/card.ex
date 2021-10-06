@@ -6,6 +6,8 @@ defmodule DreamUp.Cards.Card do
     field :prompt, :string
     field :header, :string
     field :type, :string
+    field :gameplay_time, :time
+    field :discussion_time, :time
 
     timestamps()
   end
@@ -13,7 +15,7 @@ defmodule DreamUp.Cards.Card do
   @doc false
   def changeset(card, attrs) do
     card
-    |> cast(attrs, [:type, :header, :prompt])
+    |> cast(attrs, [:type, :header, :promp, :gameplay_time, :discussion_time])
     |> validate_required([:type, :prompt])
   end
 end
