@@ -130,7 +130,6 @@ defmodule DreamUp.Cards do
       "blue" ->
         Games.update_game(game, %{"time_left" => ~T[00:00:15], "round_state" => "SPINNER", "blue_pivot_token" => false, "blue_pivoted_method_id" => last_card.id, ("method_" <> Integer.to_string(game.round_number) <> "_id") => picked_card.id})
       nil ->
-        IO.inspect(game.round_number + 1)
         Games.update_game(game, %{"time_left" => ~T[00:00:15], "round_state" => "SPINNER", "round_number" => game.round_number + 1, ("method_" <> Integer.to_string(game.round_number + 1) <> "_id") => picked_card.id})
     end
     Games.broadcast({:ok, picked_card}, :select_card, game.id)
@@ -146,7 +145,6 @@ defmodule DreamUp.Cards do
         confirmed_last_round_method_type = if last_round_method_type do
           last_round_method_type
         else
-          IO.inspect(used_card_ids)
           get_card!(Enum.at(used_card_ids, round_number - 1)).type
         end
         new_method_type = @method_card_map[:rand.uniform(6)]

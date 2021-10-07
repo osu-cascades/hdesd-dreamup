@@ -12,6 +12,9 @@
         <% end %>
       </div>
 
+      <%= if @player.game_admin do %>
+        <button class="defaultButton fill-width mb-3 text-blue-900 border-2 px-8 text-center" phx-click="change-to-round-9">Change To Round 8</button>
+      <% end %>
       <%= if (((@player.team_leader === "red" && @game.red_pivot_token) || (@player.team_leader === "blue" && @game.blue_pivot_token)) && @game.round_state === "SPINNER") && Time.compare(@game.time_left, ~T[00:00:11]) === :lt do %>
         <button class="defaultButton fill-width mb-3 text-blue-900 border-2 px-8 text-center" phx-click="pivot">Pivot (1/1)</button>
       <% end %>

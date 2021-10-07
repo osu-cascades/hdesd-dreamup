@@ -78,6 +78,16 @@ defmodule DreamUpWeb.BoardLive do
     end
   end
 
+  def handle_event("change-to-round-9", _, socket) do
+    game = Map.delete(socket.assigns.game, :round_number)
+      |> Map.delete(:method_7_id)
+      |> Map.put(:round_number, 8)
+      |> Map.put(:method_7_id, socket.assigns.method_card.id)
+    Games.broadcast(:round_over, game.id)
+    Cards.start_spinner_state(game)
+    {:noreply, socket}
+  end
+
   def handle_event("skip-gameplay", _, socket) do
     Games.update_game(socket.assigns.game, %{round_state: "DISCUSSION", time_left: socket.assigns.method_card.discussion_time})
     {:noreply, socket}
@@ -102,11 +112,6 @@ defmodule DreamUpWeb.BoardLive do
     Games.add_time(socket.assigns.game, socket.assigns.player.team_leader)
     {:noreply, socket}
   end
-
-  # def handle_event("finish-game", _, socket) do
-  #   Games.broadcast(:finish_game, String.to_integer(socket.assigns.game_id))
-  #   {:noreply, socket}
-  # end
 
   def countdown(socket) do
     unless socket.assigns.timer do
@@ -137,7 +142,7 @@ defmodule DreamUpWeb.BoardLive do
 
   def handle_info({:finish_game}, socket) do
     {:noreply, redirect(socket, to: Routes.live_path(socket, DreamUpWeb.AwardsLive, %{
-      game_id: socket.assigns.game_id,
+      game_id: socket.assigns.game.id,
       player_id: socket.assigns.player.id
     }))}
   end
