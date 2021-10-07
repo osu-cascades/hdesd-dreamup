@@ -37,7 +37,6 @@ defmodule DreamUpWeb.SetupLive do
 
   def handle_event("finish-setup", _, socket) do
     Games.broadcast(:finish_setup, String.to_integer(socket.assigns.game_id))
-    # socket = assign(socket, key: value)
     {:noreply, socket}
   end
 

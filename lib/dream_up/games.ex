@@ -193,8 +193,12 @@ defmodule DreamUp.Games do
         "GAMEPLAY" ->
           update_game(game, %{round_state: "DISCUSSION", time_left: method_card.discussion_time})
         "DISCUSSION" ->
-          broadcast(:round_over, game.id)
-          Cards.start_spinner_state(game)
+          if game.round_number === 9 do
+            broadcast(:finish_game, game.id)
+          else
+            broadcast(:round_over, game.id)
+            Cards.start_spinner_state(game)
+          end
         "GAME_START" ->
           Cards.start_spinner_state(game)
       end
