@@ -1,5 +1,5 @@
 <h1 class="text-blue-900 text-5xl font-bold">Setup</h1>
-<h2 class="text-blue-900 text-4xl font-bold mb-4">Hello <%= @player.name %>, 
+<h2 class="text-blue-900 text-4xl font-bold mb-4">Hello <%= @player.name %>,
   <%= if @is_single_team_game do %>
     you are on the only team.
   <% else %>
@@ -21,45 +21,69 @@
     <% end %>
   <% end %>
 </h2>
-<div id="selected-cards" class="grid grid-cols-2 gap-4 mb-4">
-  <div id="red-team">
-    <p>Red Team's Challenge</p>
-    <%= if @red_challenge_id do %>
-      <div class="card flip-card">
-        <h1 class="card-type flipped-card-text">Design Challenge</h1>
-        <h2 class="font-medium flipped-card-text">
-          Dream up a better way to
-          <div class="card-header flipped-card-text"> <%= get_card_header(@red_challenge_id) %></div>
-        </h2>
-        <p class="text-sm flipped-card-text"><%= get_card_prompt(@red_challenge_id) %></p>
-      </div>
-    <% else %>
-      <div class="card card-back">
-        <h1>challenge</h1>
-        <img class="card-logo" src="/images/DreamUpLogo.svg">
-        <h2>dream up!</h2>
-      </div>
-    <% end %>
-  </div>
-  <div id="blue-team">
-    <p>Blue Team's Challenge</p>
-    <%= if @blue_challenge_id do %>
-      <div class="card flip-card">
-        <h1 class="card-type flipped-card-text">Design Challenge</h1>
-        <h2 class="font-medium flipped-card-text">
-          Dream up a better way to
-          <div class="card-header"> <%= get_card_header(@blue_challenge_id) %></div>
-        </h2>
-        <p class="text-sm flipped-card-text"><%= get_card_prompt(@blue_challenge_id) %></p>
-      </div>
-    <% else %>
-      <div class="card card-back">
-        <h1>challenge</h1>
-        <img class="card-logo" src="/images/DreamUpLogo.svg">
-        <h2>dream up!</h2>
-      </div>
-    <% end %>
-  </div>
+<div id="selected-cards" class=
+  <%= if @is_single_team_game do %>
+    "mb-4"
+  <% else %>
+    "grid grid-cols-2 gap-4 mb-4"
+  <% end %>
+>
+  <%= if !@is_single_team_game || @player.team === "red" do %>
+    <div id="red-team">
+      <p>
+        <%= if @is_single_team_game do %>
+          Your
+        <% else %>
+          Red Team's
+        <% end %>
+        Challenge
+      </p>
+      <%= if @red_challenge_id do %>
+        <div class="card flip-card">
+          <h1 class="card-type flipped-card-text">Design Challenge</h1>
+          <h2 class="font-medium flipped-card-text">
+            Dream up a better way to
+            <div class="card-header"><%= get_card_header(@red_challenge_id) %></div>
+          </h2>
+          <p class="text-sm flipped-card-text"><%= get_card_prompt(@red_challenge_id) %></p>
+        </div>
+      <% else %>
+        <div class="card card-back">
+          <h1>challenge</h1>
+          <img class="card-logo" src="/images/DreamUpLogo.svg">
+          <h2>dream up!</h2>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+  <%= if !@is_single_team_game || @player.team === "blue" do %>
+    <div id="blue-team">
+      <p>
+        <%= if @is_single_team_game do %>
+          Your
+        <% else %>
+          Blue Team's
+        <% end %>
+        Challenge
+      </p>
+      <%= if @blue_challenge_id do %>
+        <div class="card flip-card">
+          <h1 class="card-type flipped-card-text">Design Challenge</h1>
+          <h2 class="font-medium flipped-card-text">
+            Dream up a better way to
+            <div class="card-header"><%= get_card_header(@blue_challenge_id) %></div>
+          </h2>
+          <p class="text-sm flipped-card-text"><%= get_card_prompt(@blue_challenge_id) %></p>
+        </div>
+      <% else %>
+        <div class="card card-back">
+          <h1>challenge</h1>
+          <img class="card-logo" src="/images/DreamUpLogo.svg">
+          <h2>dream up!</h2>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
 </div>
 
 <div class="grid sm:grid-cols-3 lg:grid-cols-5 gap-4">

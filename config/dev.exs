@@ -4,7 +4,7 @@ use Mix.Config
 config :dream_up, DreamUp.Repo,
   database: "dream_up_dev",
   hostname: "localhost",
-  # Put temporary usernames and passwords to override the .env here.
+  # Put temporary usernames and passwords to override the environment variables here.
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
