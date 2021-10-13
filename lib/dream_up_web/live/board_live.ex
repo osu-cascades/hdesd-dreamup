@@ -31,49 +31,10 @@ defmodule DreamUpWeb.BoardLive do
         {:noreply, socket}
       end
     else
-      # TODO: Refactor to remove repitition
       if player.game_admin do
-        case game.round_number do
-          1 ->
-            {:noreply, countdown(assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_1_id), method_cards: method_cards))}
-          2 ->
-            {:noreply, countdown(assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_2_id), method_cards: method_cards))}
-          3 ->
-            {:noreply, countdown(assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_3_id), method_cards: method_cards))}
-          4 ->
-            {:noreply, countdown(assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_4_id), method_cards: method_cards))}
-          5 ->
-            {:noreply, countdown(assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_5_id), method_cards: method_cards))}
-          6 ->
-            {:noreply, countdown(assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_6_id), method_cards: method_cards))}
-          7 ->
-            {:noreply, countdown(assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_7_id), method_cards: method_cards))}
-          8 ->
-            {:noreply, countdown(assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_8_id), method_cards: method_cards))}
-          9 ->
-            {:noreply, countdown(assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_9_id), method_cards: method_cards))}
-        end
+        {:noreply, countdown(assign(socket, player: player, game: game, method_card: Cards.get_card!(Enum.at(Games.get_method_card_list(game), game.round_number - 1)), method_cards: method_cards))}
       else
-        case game.round_number do
-          1 ->
-            {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_1_id), method_cards: method_cards)}
-          2 ->
-            {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_2_id), method_cards: method_cards)}
-          3 ->
-            {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_3_id), method_cards: method_cards)}
-          4 ->
-            {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_4_id), method_cards: method_cards)}
-          5 ->
-            {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_5_id), method_cards: method_cards)}
-          6 ->
-            {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_6_id), method_cards: method_cards)}
-          7 ->
-            {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_7_id), method_cards: method_cards)}
-          8 ->
-            {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_8_id), method_cards: method_cards)}
-          9 ->
-            {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(game.method_9_id), method_cards: method_cards)}
-        end
+        {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(Enum.at(Games.get_method_card_list(game), game.round_number - 1)), method_cards: method_cards)}
       end
     end
   end

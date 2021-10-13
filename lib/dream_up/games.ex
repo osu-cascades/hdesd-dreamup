@@ -205,6 +205,11 @@ defmodule DreamUp.Games do
     end
   end
 
+  def get_method_card_list(game) do
+    [game.method_1_id, game.method_2_id, game.method_3_id, game.method_4_id, game.method_5_id,
+     game.method_6_id, game.method_7_id, game.method_8_id, game.method_9_id]
+  end
+
 end
 
 # 1. GAME_START 2. SPINNER 3. GAMEPLAY 4. DISCUSSION 5.
