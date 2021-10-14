@@ -1,3 +1,21 @@
-<h1>
-Hello World
-</h1>
+<div class="grid sm:grid-cols-3 lg:grid-cols-5 gap-4">
+  <%= for card <- @cards do %>
+    <%= if card.type == "Award" do %>
+			<div class="card">
+				<h1 class="card-type">Design <%= card.type %></h1>
+				<div class="card-header"><%= card.header %></div>
+				<p class="text-sm"><%= card.prompt %></p>
+				<%= if @player.team_leader == "red" || @player.team_leader == "blue" do %>
+					<button class="setup-select-button text-sm" phx-click="challenge-click" phx-value-card-id="<%= card.id %>">Select</button>
+				<% end %>
+			</div>
+      <%= if false do %>
+        <div class="card card-back flip-card">
+          <h1 class="flipped-card-text">challenge</h1>
+          <img class="card-logo flipped-card-text" src="/images/DreamUpLogo.svg">
+          <h2 class="flipped-card-text">dream up!</h2>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
