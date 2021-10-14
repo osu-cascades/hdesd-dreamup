@@ -276,6 +276,20 @@ select {
   background-color: #8ECB70;
 }
 
+.award {
+  position: relative;
+  border-color: #E33557;
+} .award h1 {
+  background-color: #E33557;
+}
+
+.award-icon {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  height: 36px;
+}
+
 .card-header {
   color: #d9217d;
 }

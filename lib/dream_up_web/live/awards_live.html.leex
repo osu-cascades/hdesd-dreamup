@@ -1,9 +1,10 @@
 <div class="grid sm:grid-cols-3 lg:grid-cols-5 gap-4">
   <%= for card <- @cards do %>
     <%= if card.type == "Award" do %>
-			<div class="card">
+			<div class="card award">
+        <img class="award-icon" src="/images/award_icon.png">
 				<h1 class="card-type">Design <%= card.type %></h1>
-				<div class="card-header"><%= card.header %></div>
+				<div class="font-bold"><%= card.header %></div>
 				<p class="text-sm"><%= card.prompt %></p>
 				<%= if @player.team_leader == "red" || @player.team_leader == "blue" do %>
 					<button class="setup-select-button text-sm" phx-click="challenge-click" phx-value-card-id="<%= card.id %>">Select</button>
