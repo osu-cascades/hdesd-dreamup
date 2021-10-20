@@ -2,19 +2,13 @@
 
 <h3>Red Team's Awards</h3>
 <div class="grid sm:grid-cols-3 lg:grid-cols-5 gap-4">
-  <%= for award <- @awards do %>
-    <%= if award.game_id === @game.id && award.team === "red" do %>
-      <%= for card <- @cards do %>
-        <%= if award.card_id === card.id do %>
-          <div class="card award">
-            <img class="award-icon" src="/images/award_icon.png">
-            <h1 class="card-type">Design <%= card.type %></h1>
-            <div class="font-bold"><%= card.header %></div>
-            <p class="text-sm"><%= card.prompt %></p>
-          </div>
-        <% end %>
-      <% end %>
-    <% end %>
+  <%= for card <- get_award_cards(@awards, @game.id, @player.team) do %>
+    <div class="card award">
+      <img class="award-icon" src="/images/award_icon.png">
+      <h1 class="card-type">Design <%= card.type %></h1>
+      <div class="font-bold"><%= card.header %></div>
+      <p class="text-sm"><%= card.prompt %></p>
+    </div>
   <% end %>
 </div>
 
