@@ -211,5 +211,3 @@ defmodule DreamUp.Games do
   end
 
 end
-
-# 1. GAME_START 2. SPINNER 3. GAMEPLAY 4. DISCUSSION

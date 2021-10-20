@@ -22,9 +22,10 @@ defmodule DreamUp.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: DreamUp.PubSub},
       # Start the Endpoint (http/https)
-      {DreamUpWeb.Endpoint, [secret_key_base: config[:secret_key_base], url: [scheme: "https", host: config[:url], port: 443]]}
+      {DreamUpWeb.Endpoint, [secret_key_base: config[:secret_key_base], url: [scheme: "https", host: config[:url], port: 443]]},
       # Start a worker by calling: DreamUp.Worker.start_link(arg)
       # {DreamUp.Worker, arg}
+      {DreamUp.Pruner, %{}}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
