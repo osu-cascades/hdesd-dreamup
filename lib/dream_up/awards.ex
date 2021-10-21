@@ -8,6 +8,18 @@ defmodule DreamUp.Awards do
 
   alias DreamUp.Awards.Award
 
+  def subscribe do
+    Phoenix.PubSub.subscribe(DreamUp.PubSub, "awards")
+  end
+
+  def broadcast(data, event_name) do
+    Phoenix.PubSub.broadcast(
+      DreamUp.PubSub,
+      "awards",
+      {event_name, data}
+    )
+  end
+
   @doc """
   Returns the list of awards.
 
@@ -53,6 +65,7 @@ defmodule DreamUp.Awards do
     %Award{}
     |> Award.changeset(attrs)
     |> Repo.insert()
+    |> broadcast(:create_award)
   end
 
   @doc """

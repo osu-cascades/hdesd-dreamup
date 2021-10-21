@@ -13,6 +13,7 @@ defmodule DreamUpWeb.AwardsLive do
   end
 
   def handle_params(params, _url, socket) do
+    if connected?(socket), do: Awards.subscribe()
     {:noreply, assign(socket, game: Games.get_game!(params["game_id"]), player: Players.get_player!(params["player_id"]))}
   end
 
@@ -24,6 +25,11 @@ defmodule DreamUpWeb.AwardsLive do
         Awards.create_award(%{game_id: socket.assigns.game.id, team: "red", card_id: String.to_integer(card_id)})
     end
     {:noreply, socket}
+  end
+
+  def handle_info({:create_award, event}, socket) do
+    {_, award} = event
+    {:noreply, update(socket, :awards, fn awards -> awards ++ [award] end)}
   end
 
 end
