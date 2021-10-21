@@ -114,4 +114,17 @@ defmodule DreamUp.Awards do
   def change_award(%Award{} = award, attrs \\ %{}) do
     Award.changeset(award, attrs)
   end
+
+  def exists(awards, game_id, team, card_id) do
+    awards_in_game = Enum.filter(awards, fn award ->
+      match?(%{game_id: ^game_id}, award)
+    end)
+    awards_for_team = Enum.filter(awards_in_game, fn award ->
+      match?(%{team: ^team}, award)
+    end)
+    chosen_awards = Enum.filter(awards_for_team, fn award ->
+      match?(%{card_id: ^card_id}, award)
+    end)
+    length(chosen_awards) !== 0
+  end
 end

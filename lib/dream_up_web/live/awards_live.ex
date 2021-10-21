@@ -20,9 +20,13 @@ defmodule DreamUpWeb.AwardsLive do
   def handle_event("award-click", %{"card-id" => card_id}, socket) do
     case socket.assigns.player.team do
       "red" ->
-        Awards.create_award(%{game_id: socket.assigns.game.id, team: "blue", card_id: String.to_integer(card_id)})
+        unless Awards.exists(socket.assigns.awards, socket.assigns.game.id, "blue", String.to_integer(card_id)) do
+          Awards.create_award(%{game_id: socket.assigns.game.id, team: "blue", card_id: String.to_integer(card_id)})
+        end
       "blue" ->
-        Awards.create_award(%{game_id: socket.assigns.game.id, team: "red", card_id: String.to_integer(card_id)})
+        unless Awards.exists(socket.assigns.awards, socket.assigns.game.id, "red", String.to_integer(card_id)) do
+          Awards.create_award(%{game_id: socket.assigns.game.id, team: "red", card_id: String.to_integer(card_id)})
+        end
     end
     {:noreply, socket}
   end
