@@ -41,9 +41,9 @@ defmodule DreamUpWeb.BoardLive do
 
   def handle_event("change-to-round-9", _, socket) do
     game = Map.delete(socket.assigns.game, :round_number)
-      |> Map.delete(:method_7_id)
-      |> Map.put(:round_number, 8)
-      |> Map.put(:method_7_id, socket.assigns.method_card.id)
+    |> Map.delete(:method_7_id)
+    |> Map.put(:round_number, 8)
+    |> Map.put(:method_7_id, socket.assigns.method_card.id)
     Games.broadcast(:round_over, game.id)
     Cards.start_spinner_state(game)
     {:noreply, socket}

@@ -11,6 +11,7 @@
             <h1 class="card-type">Design <%= card.type %></h1>
             <div class="font-bold"><%= card.header %></div>
             <p class="text-sm"><%= card.prompt %></p>
+            <button class="setup-select-button text-sm" phx-click="remove-award" phx-value-card-id="<%= award.id %>">Remove</button>
           </div>
         <% end %>
       <% end %>
@@ -29,6 +30,7 @@
             <h1 class="card-type">Design <%= card.type %></h1>
             <div class="font-bold"><%= card.header %></div>
             <p class="text-sm"><%= card.prompt %></p>
+            <button class="setup-select-button text-sm" phx-click="remove-award" phx-value-award-id="<%= award.id %>">Remove</button>
           </div>
         <% end %>
       <% end %>

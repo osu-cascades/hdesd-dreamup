@@ -100,6 +100,7 @@ defmodule DreamUp.Awards do
   """
   def delete_award(%Award{} = award) do
     Repo.delete(award)
+    |> broadcast(:delete_award)
   end
 
   @doc """
