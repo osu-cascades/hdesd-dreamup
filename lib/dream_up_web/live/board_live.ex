@@ -6,6 +6,8 @@ defmodule DreamUpWeb.BoardLive do
   alias DreamUp.Players
   alias DreamUp.Cards
 
+  alias DreamUp.Redirector
+
   def mount(_params, _session, socket) do
     socket = assign(socket, timer: nil, method: nil, method_card: nil, method_cards: [], game: %{round_state: "GAME_START"})
     {:ok, socket}
@@ -26,15 +28,15 @@ defmodule DreamUpWeb.BoardLive do
     if game.round_number === 0 do
       socket = assign(socket, player: player, game: game, method_card: nil)
       if player.game_admin do
-        {:noreply, countdown(socket)}
+        {:noreply, countdown(Redirector.validate_game_phase(game, player, "BOARD", socket))}
       else
-        {:noreply, socket}
+        {:noreply, Redirector.validate_game_phase(game, player, "BOARD", socket)}
       end
     else
       if player.game_admin do
-        {:noreply, countdown(assign(socket, player: player, game: game, method_card: Cards.get_card!(Enum.at(Games.get_method_card_list(game), game.round_number - 1)), method_cards: method_cards))}
+        {:noreply, countdown(assign(Redirector.validate_game_phase(game, player, "BOARD", socket), player: player, game: game, method_card: Cards.get_card!(Enum.at(Games.get_method_card_list(game), game.round_number - 1)), method_cards: method_cards))}
       else
-        {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(Enum.at(Games.get_method_card_list(game), game.round_number - 1)), method_cards: method_cards)}
+        {:noreply, assign(Redirector.validate_game_phase(game, player, "BOARD", socket), player: player, game: game, method_card: Cards.get_card!(Enum.at(Games.get_method_card_list(game), game.round_number - 1)), method_cards: method_cards)}
       end
     end
   end
@@ -56,6 +58,7 @@ defmodule DreamUpWeb.BoardLive do
 
   def handle_event("skip-discussion", _, socket) do
     if socket.assigns.game.round_number === 9 do
+      Games.change_game_phase(socket.assigns.game_id, "AWARD")
       Games.broadcast(:finish_game, socket.assigns.game.id)
     else
       Games.broadcast(:round_over, socket.assigns.game.id)

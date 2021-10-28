@@ -39,7 +39,7 @@ defmodule DreamUp.Games do
         generate_game_code()
       false ->
         create_game(%{code: code, name: "why", time_left: ~T[00:00:00], red_add_time_token: true, blue_add_time_token: true, round_state: "GAME_START",
-          red_pivot_token: true, blue_pivot_token: true, round_number: 0})
+          red_pivot_token: true, blue_pivot_token: true, round_number: 0, phase: "LOBBY"})
     end
     code
   end
@@ -174,6 +174,10 @@ defmodule DreamUp.Games do
     end
   end
 
+  def change_game_phase(game_id, phase) do
+    update_game(get_game!(game_id), %{phase: phase})
+  end
+
   def add_time(game, team) do
     case team do
        "blue" ->
@@ -194,6 +198,7 @@ defmodule DreamUp.Games do
           update_game(game, %{round_state: "DISCUSSION", time_left: method_card.discussion_time})
         "DISCUSSION" ->
           if game.round_number === 9 do
+            change_game_phase(game.id, "AWARD")
             broadcast(:finish_game, game.id)
           else
             broadcast(:round_over, game.id)

@@ -6,6 +6,7 @@ defmodule DreamUpWeb.AwardsLive do
   alias DreamUp.Players
   alias DreamUp.Cards
   alias DreamUp.Awards
+  alias DreamUp.Redirector
 
   def mount(_params, _session, socket) do
     socket = assign(socket, cards: Cards.list_cards(), awards: Awards.list_awards())
@@ -14,7 +15,9 @@ defmodule DreamUpWeb.AwardsLive do
 
   def handle_params(params, _url, socket) do
     if connected?(socket), do: Awards.subscribe()
-    {:noreply, assign(socket, game: Games.get_game!(params["game_id"]), player: Players.get_player!(params["player_id"]))}
+    game = Games.get_game!(params["game_id"])
+    player = Players.get_player!(params["player_id"])
+    {:noreply, assign(Redirector.validate_game_phase(game, player, "AWARD", socket), game: game, player: player)}
   end
 
   def handle_event("award-click", %{"card-id" => card_id}, socket) do

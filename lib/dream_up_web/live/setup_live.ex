@@ -5,6 +5,7 @@ defmodule DreamUpWeb.SetupLive do
   alias DreamUp.Cards
   alias DreamUp.Games
   alias DreamUp.Players
+  alias DreamUp.Redirector
 
 
   def mount(_params, _session, socket) do
@@ -27,7 +28,7 @@ defmodule DreamUpWeb.SetupLive do
         )
       ) === 0
     )
-    {:noreply, socket}
+    {:noreply, Redirector.validate_game_phase(Games.get_game!(params["game_id"]), player, "SETUP", socket)}
   end
 
   def handle_event("challenge-click", %{"card-id" => card_id}, socket) do
@@ -37,6 +38,7 @@ defmodule DreamUpWeb.SetupLive do
 
   def handle_event("finish-setup", _, socket) do
     Games.broadcast(:finish_setup, String.to_integer(socket.assigns.game_id))
+    Games.change_game_phase(socket.assigns.game_id, "BOARD")
     {:noreply, socket}
   end
 

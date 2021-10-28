@@ -5,6 +5,7 @@ defmodule DreamUpWeb.LobbyLive do
   alias DreamUp.Players
   alias DreamUp.Players.Player
   alias DreamUp.Games
+  alias DreamUp.Redirector
 
   def mount(_params, _session, socket) do
     if connected?(socket), do: Players.subscribe()
@@ -21,12 +22,21 @@ defmodule DreamUpWeb.LobbyLive do
       {:noreply, redirect(socket, to: Routes.home_path(socket, :index, %{error: "code"}))}
     else
       if connected?(socket), do: Games.subscribe(game_id)
-      {:noreply, assign(socket,
+      if params["player_id"] do
+        {:noreply, assign(Redirector.validate_game_phase(Games.get_game!(game_id), Players.get_player!(params["player_id"]), "LOBBY", socket),
         game_id: game_id,
         code: params["code"],
         players: Players.list_players_in_game(game_id),
         url: url
       )}
+      else
+        {:noreply, assign(socket,
+        game_id: game_id,
+        code: params["code"],
+        players: Players.list_players_in_game(game_id),
+        url: url
+      )}
+      end
     end
   end
 
@@ -97,6 +107,7 @@ defmodule DreamUpWeb.LobbyLive do
 
   def handle_event("begin-setup", _, socket) do
     Games.broadcast(:begin_setup, socket.assigns.game_id)
+    Games.change_game_phase(socket.assigns.game_id, "SETUP")
     current_player = get_current_player(socket)
     case current_player.team do
       "blue" ->
