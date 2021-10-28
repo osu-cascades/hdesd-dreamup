@@ -5,7 +5,7 @@ defmodule DreamUpWeb.SetupLive do
   alias DreamUp.Cards
   alias DreamUp.Games
   alias DreamUp.Players
-  alias DreamUp.Redirector
+  # alias DreamUp.Redirector
 
 
   def mount(_params, _session, socket) do
@@ -28,7 +28,25 @@ defmodule DreamUpWeb.SetupLive do
         )
       ) === 0
     )
-    {:noreply, Redirector.validate_game_phase(Games.get_game!(params["game_id"]), player, "SETUP", socket)}
+    game = Games.get_game!(params["game_id"])
+    if game.phase !== "SETUP" do
+      IO.inspect("INCORRECT PHASE")
+      case game.phase do
+        "LOBBY" ->
+          {:noreply, redirect(socket, to: Routes.live_path(socket, DreamUpWeb.LobbyLive, %{code: game.code}))}
+        "SETUP" ->
+          {:noreply, redirect(socket, to: Routes.live_path(socket, DreamUpWeb.SetupLive, %{game_id: game.id, player_id: player.id}))}
+        "BOARD" ->
+          {:noreply, redirect(socket, to: Routes.live_path(socket, DreamUpWeb.BoardLive, %{game_id: game.id, player_id: player.id}))}
+        "AWARD" ->
+          {:noreply, redirect(socket, to: Routes.live_path(socket, DreamUpWeb.AwardsLive, %{game_id: game.id, player_id: player.id}))}
+      end
+    else
+      IO.inspect("VALID PHASE")
+      {:noreply, socket}
+    end
+    # new_socket = Redirector.validate_game_phase(game, player, "SETUP", socket)
+    # {:noreply, new_socket}
   end
 
   def handle_event("challenge-click", %{"card-id" => card_id}, socket) do

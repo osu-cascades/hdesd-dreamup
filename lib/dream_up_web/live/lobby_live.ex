@@ -40,6 +40,7 @@ defmodule DreamUpWeb.LobbyLive do
     end
   end
 
+  # TODO: after creating player, check for redirect with game
   def handle_event("save", %{"player" => player_params}, socket) do
     params = %{name: player_params["name"], game_id: socket.assigns.game_id, team: player_params["team"], character: player_params["character"]}
     case Players.create_player(params) do
