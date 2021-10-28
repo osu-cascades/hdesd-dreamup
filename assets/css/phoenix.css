@@ -198,12 +198,20 @@ select {
   transform: scale(-1, 1);
 }
 
-#red-team {
-  background-color: #F1385D;
+.red-team {
+  border: solid #F1385D 2px;
 }
 
-#blue-team {
-  background-color: #0DB2E7;
+.blue-team {
+  border: solid #0DB2E7 2px;
+}
+
+.team-box {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  margin: 20px;
+  padding: 10px;
 }
 
 #blue-team, #red-team {
@@ -220,6 +228,7 @@ select {
   width: 200px;
   height: 250px;
   border-radius: 5%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
 } .card-type {
   background-color: #58595B;
   color: white;
@@ -435,31 +444,6 @@ select {
   }
 }
 
-/* .card-logo {
-  width: 70%;
-  margin: auto;
-}
-
-.method-card-content {
-  position: relative;
-  top: 50%;
-  left: 50%;
-  width: 100%;
-  transform: translate(-50%, -50%);
-}
-
-.method-card-content > div {
-  font-size: 1.6vw;
-}
-
-.method-cards {
-  height: 16vh;
-  max-height: 16vw;
-  width: 10vw;
-  max-width: 10vh;
-  transform: translate(-50%, -50%);
-} */
-
 .game-prompt {
   border: 2px solid black;
   margin-bottom: 1%;
@@ -543,4 +527,9 @@ select {
 
 .right-board-column {
   min-width: 169px;
+}
+
+/* awards */
+.red-team-awards {
+  background-color: red;
 }

@@ -29,7 +29,7 @@
   <% end %>
 >
   <%= if !@is_single_team_game || @player.team === "red" do %>
-    <div id="red-team">
+    <div class="red-team team-box">
       <p>
         <%= if @is_single_team_game do %>
           Your
@@ -57,7 +57,7 @@
     </div>
   <% end %>
   <%= if !@is_single_team_game || @player.team === "blue" do %>
-    <div id="blue-team">
+    <div class="blue-team team-box">
       <p>
         <%= if @is_single_team_game do %>
           Your

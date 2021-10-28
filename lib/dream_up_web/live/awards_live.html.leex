@@ -1,41 +1,49 @@
 <h2>Discuss with your team which awards you would like to give to the other team, then have the team leader select them.</h2>
 
-<h3>Red Team's Awards</h3>
-<div class="grid sm:grid-cols-3 lg:grid-cols-5 gap-4">
-  <%= for award <- @awards do %>
-    <%= if award.game_id === @game.id && award.team === "red" do %>
-      <%= for card <- @cards do %>
-        <%= if award.card_id === card.id do %>
-          <div class="card award">
-            <img class="award-icon" src="/images/award_icon.png">
-            <h1 class="card-type">Design <%= card.type %></h1>
-            <div class="font-bold"><%= card.header %></div>
-            <p class="text-sm"><%= card.prompt %></p>
-            <button class="setup-select-button text-sm" phx-click="remove-award" phx-value-card-id="<%= award.id %>">Remove</button>
-          </div>
+<div class="red-team team-box">
+  <h3>Red Team's Awards</h3>
+  <div class="grid sm:grid-cols-3 lg:grid-cols-5 gap-4">
+    <%= for award <- @awards do %>
+      <%= if award.game_id === @game.id && award.team === "red" do %>
+        <%= for card <- @cards do %>
+          <%= if award.card_id === card.id do %>
+            <div class="card award">
+              <img class="award-icon" src="/images/award_icon.png">
+              <h1 class="card-type">Design <%= card.type %></h1>
+              <div class="font-bold"><%= card.header %></div>
+              <p class="text-sm"><%= card.prompt %></p>
+              <%= if @player.team === "blue" do %>
+                <button class="setup-select-button text-sm" phx-click="remove-award" phx-value-award-id="<%= award.id %>">Remove</button>
+              <% end %>
+            </div>
+          <% end %>
         <% end %>
       <% end %>
     <% end %>
-  <% end %>
+  </div>
 </div>
 
-<h3>Blue Team's Awards</h3>
-<div class="grid sm:grid-cols-3 lg:grid-cols-5 gap-4">
-  <%= for award <- @awards do %>
-    <%= if award.game_id === @game.id && award.team === "blue" do %>
-      <%= for card <- @cards do %>
-        <%= if award.card_id === card.id do %>
-          <div class="card award">
-            <img class="award-icon" src="/images/award_icon.png">
-            <h1 class="card-type">Design <%= card.type %></h1>
-            <div class="font-bold"><%= card.header %></div>
-            <p class="text-sm"><%= card.prompt %></p>
-            <button class="setup-select-button text-sm" phx-click="remove-award" phx-value-award-id="<%= award.id %>">Remove</button>
-          </div>
+<div class="blue-team team-box">
+  <h3>Blue Team's Awards</h3>
+  <div class="grid sm:grid-cols-3 lg:grid-cols-5 gap-4">
+    <%= for award <- @awards do %>
+      <%= if award.game_id === @game.id && award.team === "blue" do %>
+        <%= for card <- @cards do %>
+          <%= if award.card_id === card.id do %>
+            <div class="card award">
+              <img class="award-icon" src="/images/award_icon.png">
+              <h1 class="card-type">Design <%= card.type %></h1>
+              <div class="font-bold"><%= card.header %></div>
+              <p class="text-sm"><%= card.prompt %></p>
+              <%= if @player.team === "red" do %>
+                <button class="setup-select-button text-sm" phx-click="remove-award" phx-value-award-id="<%= award.id %>">Remove</button>
+              <% end %>
+            </div>
+          <% end %>
         <% end %>
       <% end %>
     <% end %>
-  <% end %>
+  </div>
 </div>
 
 <div class="grid sm:grid-cols-3 lg:grid-cols-5 gap-4">
