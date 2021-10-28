@@ -220,6 +220,7 @@ select {
 }
 
 .card {
+  position: relative;
   margin: auto;
   text-align: center;
   color: black;
@@ -234,7 +235,18 @@ select {
   color: white;
   font-weight: 650;
   letter-spacing: 0.08rem;
-  padding: 0.75em 0em;;
+  padding: 0.75em 0em;
+}
+
+.non-padded-card-type {
+  padding: 0;
+}
+
+.card-tip {
+  position: absolute;
+  bottom: 0;
+  padding: 4px;
+  font-style: italic;
 }
 
 .card-back {
