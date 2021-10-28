@@ -1,7 +1,18 @@
+<%= unless @is_single_team_game do %>
 <h2>Discuss with your team which awards you would like to give to the other team, then have the team leader select them.</h2>
-
+<% else %>
+<h2>You are the only team, give yourselves some awards!</h2>
+<% end %>
+<%= if !@is_single_team_game || @player.team === "red" do %>
 <div class="red-team team-box">
-  <h3>Red Team's Awards</h3>
+  <h3>
+    <%= if @is_single_team_game do %>
+      Your
+    <% else %>
+      Red Team's
+    <% end %>
+    Awards
+  </h3>
   <div class="grid sm:grid-cols-3 lg:grid-cols-5 gap-4">
     <%= for award <- @awards do %>
       <%= if award.game_id === @game.id && award.team === "red" do %>
@@ -12,7 +23,7 @@
               <h1 class="card-type">Design <%= card.type %></h1>
               <div class="font-bold"><%= card.header %></div>
               <p class="text-sm"><%= card.prompt %></p>
-              <%= if @player.team === "blue" do %>
+              <%= if @player.team === "blue" || @is_single_team_game do %>
                 <button class="setup-select-button text-sm" phx-click="remove-award" phx-value-award-id="<%= award.id %>">Remove</button>
               <% end %>
             </div>
@@ -22,9 +33,17 @@
     <% end %>
   </div>
 </div>
-
+<% end %>
+<%= if !@is_single_team_game || @player.team === "blue" do %>
 <div class="blue-team team-box">
-  <h3>Blue Team's Awards</h3>
+  <h3>
+    <%= if @is_single_team_game do %>
+      Your
+    <% else %>
+      Blue Team's
+    <% end %>
+    Awards
+  </h3>
   <div class="grid sm:grid-cols-3 lg:grid-cols-5 gap-4">
     <%= for award <- @awards do %>
       <%= if award.game_id === @game.id && award.team === "blue" do %>
@@ -35,7 +54,7 @@
               <h1 class="card-type">Design <%= card.type %></h1>
               <div class="font-bold"><%= card.header %></div>
               <p class="text-sm"><%= card.prompt %></p>
-              <%= if @player.team === "red" do %>
+              <%= if @player.team === "red" || @is_single_team_game do %>
                 <button class="setup-select-button text-sm" phx-click="remove-award" phx-value-award-id="<%= award.id %>">Remove</button>
               <% end %>
             </div>
@@ -45,7 +64,7 @@
     <% end %>
   </div>
 </div>
-
+<% end %>
 <div class="grid sm:grid-cols-3 lg:grid-cols-5 gap-4">
   <%= for card <- @cards do %>
     <%= if card.type == "Award" do %>

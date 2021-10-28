@@ -14,19 +14,40 @@ defmodule DreamUpWeb.AwardsLive do
 
   def handle_params(params, _url, socket) do
     if connected?(socket), do: Awards.subscribe()
-    {:noreply, assign(socket, game: Games.get_game!(params["game_id"]), player: Players.get_player!(params["player_id"]))}
+    {:noreply, assign(socket, game: Games.get_game!(params["game_id"]), player: Players.get_player!(params["player_id"]), is_single_team_game: length(
+      Players.list_players_in_team(
+        "red", params["game_id"]
+       )
+     ) === 0 || length(
+       Players.list_players_in_team(
+         "blue", params["game_id"]
+       )
+     ) === 0)}
   end
 
   def handle_event("award-click", %{"card-id" => card_id}, socket) do
-    case socket.assigns.player.team do
-      "red" ->
-        unless Awards.exists(socket.assigns.awards, socket.assigns.game.id, "blue", String.to_integer(card_id)) do
-          Awards.create_award(%{game_id: socket.assigns.game.id, team: "blue", card_id: String.to_integer(card_id)})
-        end
-      "blue" ->
-        unless Awards.exists(socket.assigns.awards, socket.assigns.game.id, "red", String.to_integer(card_id)) do
-          Awards.create_award(%{game_id: socket.assigns.game.id, team: "red", card_id: String.to_integer(card_id)})
-        end
+    unless socket.assigns.is_single_team_game do
+      case socket.assigns.player.team do
+        "red" ->
+          unless Awards.exists(socket.assigns.awards, socket.assigns.game.id, "blue", String.to_integer(card_id)) do
+            Awards.create_award(%{game_id: socket.assigns.game.id, team: "blue", card_id: String.to_integer(card_id)})
+          end
+        "blue" ->
+          unless Awards.exists(socket.assigns.awards, socket.assigns.game.id, "red", String.to_integer(card_id)) do
+            Awards.create_award(%{game_id: socket.assigns.game.id, team: "red", card_id: String.to_integer(card_id)})
+          end
+      end
+    else
+      case socket.assigns.player.team do
+        "blue" ->
+          unless Awards.exists(socket.assigns.awards, socket.assigns.game.id, "blue", String.to_integer(card_id)) do
+            Awards.create_award(%{game_id: socket.assigns.game.id, team: "blue", card_id: String.to_integer(card_id)})
+          end
+        "red" ->
+          unless Awards.exists(socket.assigns.awards, socket.assigns.game.id, "red", String.to_integer(card_id)) do
+            Awards.create_award(%{game_id: socket.assigns.game.id, team: "red", card_id: String.to_integer(card_id)})
+          end
+      end
     end
     {:noreply, socket}
   end
