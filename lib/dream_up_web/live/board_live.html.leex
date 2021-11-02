@@ -188,13 +188,13 @@
             "card tell flip-card"
         <% end %>
       >
-        <h1 class="text-sm card-type flipped-card-text non-padded-card-type"><%= @method_card.type %></h1>
-        <h1 class="text-xl2 card-type flipped-card-text non-padded-card-type"><%= @method_card.title %></h1>
-        <h1 class="text-lg card-type flipped-card-text non-padded-card-type"><%= @method_card.sub_title %></h1>
+        <h1 class="text-sm card-type flipped-card-text non-padded-card-type"><%= method_card.type %></h1>
+        <h1 class="text-xl2 card-type flipped-card-text non-padded-card-type"><%= method_card.title %></h1>
+        <h1 class="text-lg card-type flipped-card-text non-padded-card-type"><%= method_card.sub_title %></h1>
         <p class="text-sm flipped-card-text">
-          <%= if @method_card do %>
-            <%= @method_card.prompt %>
-            <div class="card-tip"><p class="flipped-card-text text-sm"><%= @method_card.tip %></p></div>
+          <%= if method_card do %>
+            <%= method_card.prompt %>
+            <div class="card-tip"><p class="flipped-card-text text-sm"><%= method_card.tip %></p></div>
           <% end %>
         </p>
       </div>

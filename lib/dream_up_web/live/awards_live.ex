@@ -73,13 +73,11 @@ defmodule DreamUpWeb.AwardsLive do
 
   def handle_info({:delete_award, event}, socket) do
     {_, deleted_award} = event
-    # TODO: Change deleted_award's metadata to say it is :loaded so that it can be matched and deleted from the list of awards in the socket. Right now, we're just getting the list of values from the db again.
+    deleted_award_id = deleted_award.id
 
-    # award_to_delete = Map.delete(deleted_award, :__meta__)
-    # |> Map.put(:__meta__, %Ecto.Schema.Metadata{:loaded, "awards"})
-    # awards = List.delete(socket.assigns.awards, award_to_delete)
-
-    awards = Awards.list_awards()
+    awards = Enum.reject(socket.assigns.awards, fn award ->
+      match?(%{id: ^deleted_award_id}, award)
+    end)
 
     {:noreply, assign(socket, awards: awards)}
   end
