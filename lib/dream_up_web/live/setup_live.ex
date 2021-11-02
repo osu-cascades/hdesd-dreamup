@@ -29,7 +29,7 @@ defmodule DreamUpWeb.SetupLive do
       ) === 0
     )
     game = Games.get_game!(params["game_id"])
-    {status, route} = Redirector.validate_game_phase(game, player, "SETUP", socket)
+    {status, route} = Redirector.validate_game_phase(game, player.id, "SETUP", socket)
     if status !== :ok do
       IO.inspect("NOT :ok status")
       {:noreply, redirect(socket, to: route)}

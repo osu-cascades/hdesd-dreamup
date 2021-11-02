@@ -25,7 +25,7 @@ defmodule DreamUpWeb.BoardLive do
     end), & !is_nil(&1))
     method_cards = List.delete_at(all_method_cards, length(all_method_cards) - 1)
 
-    {status, route} = Redirector.validate_game_phase(game, player, "BOARD", socket)
+    {status, route} = Redirector.validate_game_phase(game, player.id, "BOARD", socket)
     if status !== :ok do
       {:noreply, redirect(socket, to: route)}
     else
@@ -63,7 +63,7 @@ defmodule DreamUpWeb.BoardLive do
 
   def handle_event("skip-discussion", _, socket) do
     if socket.assigns.game.round_number === 9 do
-      Games.change_game_phase(socket.assigns.game_id, "AWARD")
+      Games.change_game_phase(socket.assigns.game.id, "AWARD")
       Games.broadcast(:finish_game, socket.assigns.game.id)
     else
       Games.broadcast(:round_over, socket.assigns.game.id)

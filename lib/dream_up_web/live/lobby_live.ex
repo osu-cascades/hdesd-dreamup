@@ -28,7 +28,7 @@ defmodule DreamUpWeb.LobbyLive do
         if connected?(socket), do: Games.subscribe(game_id)
         if params["player_id"] do
           if params["game_id"] do
-            {status, route} = Redirector.validate_game_phase(Games.get_game!(params["game_id"]), Players.get_player!(params["player_id"]), "SETUP", socket)
+            {status, route} = Redirector.validate_game_phase(Games.get_game!(params["game_id"]), params["player_id"], "LOBBY", socket)
             if status !== :ok do
               {:noreply, redirect(socket, to: route)}
             else
@@ -62,8 +62,12 @@ defmodule DreamUpWeb.LobbyLive do
 
         changeset = Players.change_player(%Player{})
         socket = assign(socket, changest: changeset, id: player.id)
-        {:noreply, socket}
-
+        {status, route} = Redirector.validate_game_phase(Games.get_game!(socket.assigns.game_id), player.id, "LOBBY", socket)
+        if status !== :ok do
+          {:noreply, redirect(socket, to: route)}
+        else
+          {:noreply, socket}
+        end
       {:error, %Ecto.Changeset{} = changeset} ->
         socket = assign(socket, changest: changeset)
         {:noreply, socket}
