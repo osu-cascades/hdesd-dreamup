@@ -6,6 +6,8 @@ defmodule DreamUpWeb.BoardLive do
   alias DreamUp.Players
   alias DreamUp.Cards
 
+  alias DreamUp.Redirector
+
   def mount(_params, _session, socket) do
     socket = assign(socket, timer: nil, method: nil, method_card: nil, method_cards: [], game: %{round_state: "GAME_START"})
     {:ok, socket}
@@ -23,18 +25,23 @@ defmodule DreamUpWeb.BoardLive do
     end), & !is_nil(&1))
     method_cards = List.delete_at(all_method_cards, length(all_method_cards) - 1)
 
-    if game.round_number === 0 do
-      socket = assign(socket, player: player, game: game, method_card: nil)
-      if player.game_admin do
-        {:noreply, countdown(socket)}
-      else
-        {:noreply, socket}
-      end
+    {status, route} = Redirector.validate_game_phase(game, player.id, "BOARD", socket)
+    if status !== :ok do
+      {:noreply, redirect(socket, to: route)}
     else
-      if player.game_admin do
-        {:noreply, countdown(assign(socket, player: player, game: game, method_card: Cards.get_card!(Enum.at(Games.get_method_card_list(game), game.round_number - 1)), method_cards: method_cards))}
+      if game.round_number === 0 do
+        socket = assign(socket, player: player, game: game, method_card: nil)
+        if player.game_admin do
+          {:noreply, countdown(socket)}
+        else
+          {:noreply, socket}
+        end
       else
-        {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(Enum.at(Games.get_method_card_list(game), game.round_number - 1)), method_cards: method_cards)}
+        if player.game_admin do
+          {:noreply, countdown(assign(socket, player: player, game: game, method_card: Cards.get_card!(Enum.at(Games.get_method_card_list(game), game.round_number - 1)), method_cards: method_cards))}
+        else
+          {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(Enum.at(Games.get_method_card_list(game), game.round_number - 1)), method_cards: method_cards)}
+        end
       end
     end
   end
@@ -56,6 +63,7 @@ defmodule DreamUpWeb.BoardLive do
 
   def handle_event("skip-discussion", _, socket) do
     if socket.assigns.game.round_number === 9 do
+      Games.change_game_phase(socket.assigns.game.id, "AWARD")
       Games.broadcast(:finish_game, socket.assigns.game.id)
     else
       Games.broadcast(:round_over, socket.assigns.game.id)

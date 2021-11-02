@@ -5,6 +5,7 @@ defmodule DreamUpWeb.LobbyLive do
   alias DreamUp.Players
   alias DreamUp.Players.Player
   alias DreamUp.Games
+  alias DreamUp.Redirector
 
   def mount(_params, _session, socket) do
     if connected?(socket), do: Players.subscribe()
@@ -15,21 +16,44 @@ defmodule DreamUpWeb.LobbyLive do
     {:ok, socket}
   end
 
+  # TODO - Can probably clean this up?
   def handle_params(params, url, socket) do
-    game_id = Games.get_game_id_from_code(params["code"])
-    if game_id === -1 do
+    unless params["code"] do
       {:noreply, redirect(socket, to: Routes.home_path(socket, :index, %{error: "code"}))}
     else
-      if connected?(socket), do: Games.subscribe(game_id)
-      {:noreply, assign(socket,
-        game_id: game_id,
-        code: params["code"],
-        players: Players.list_players_in_game(game_id),
-        url: url
-      )}
+      game_id = Games.get_game_id_from_code(params["code"])
+      if game_id === -1 do
+        {:noreply, redirect(socket, to: Routes.home_path(socket, :index, %{error: "code"}))}
+      else
+        if connected?(socket), do: Games.subscribe(game_id)
+        if params["player_id"] do
+          if params["game_id"] do
+            {status, route} = Redirector.validate_game_phase(Games.get_game!(params["game_id"]), params["player_id"], "LOBBY", socket)
+            if status !== :ok do
+              {:noreply, redirect(socket, to: route)}
+            else
+              add_params_to_socket(socket, game_id, params["code"], url)
+            end
+          else
+            add_params_to_socket(socket, game_id, params["code"], url)
+          end
+        else
+          add_params_to_socket(socket, game_id, params["code"], url)
+        end
+      end
     end
   end
 
+  def add_params_to_socket(socket, game_id, code, url) do
+    {:noreply, assign(socket,
+        game_id: game_id,
+        code: code,
+        players: Players.list_players_in_game(game_id),
+        url: url
+      )}
+  end
+
+  # TODO: after creating player, check for redirect with game
   def handle_event("save", %{"player" => player_params}, socket) do
     params = %{name: player_params["name"], game_id: socket.assigns.game_id, team: player_params["team"], character: player_params["character"]}
     case Players.create_player(params) do
@@ -38,8 +62,12 @@ defmodule DreamUpWeb.LobbyLive do
 
         changeset = Players.change_player(%Player{})
         socket = assign(socket, changest: changeset, id: player.id)
-        {:noreply, socket}
-
+        {status, route} = Redirector.validate_game_phase(Games.get_game!(socket.assigns.game_id), player.id, "LOBBY", socket)
+        if status !== :ok do
+          {:noreply, redirect(socket, to: route)}
+        else
+          {:noreply, socket}
+        end
       {:error, %Ecto.Changeset{} = changeset} ->
         socket = assign(socket, changest: changeset)
         {:noreply, socket}
@@ -97,6 +125,7 @@ defmodule DreamUpWeb.LobbyLive do
 
   def handle_event("begin-setup", _, socket) do
     Games.broadcast(:begin_setup, socket.assigns.game_id)
+    Games.change_game_phase(socket.assigns.game_id, "SETUP")
     current_player = get_current_player(socket)
     case current_player.team do
       "blue" ->
