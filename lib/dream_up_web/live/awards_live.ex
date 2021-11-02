@@ -17,7 +17,12 @@ defmodule DreamUpWeb.AwardsLive do
     if connected?(socket), do: Awards.subscribe()
     game = Games.get_game!(params["game_id"])
     player = Players.get_player!(params["player_id"])
-    {:noreply, assign(Redirector.validate_game_phase(game, player, "AWARD", socket), game: game, player: player)}
+    {status, route} = Redirector.validate_game_phase(game, player, "AWARD", socket)
+    if status !== :ok do
+      {:noreply, redirect(socket, to: route)}
+    else
+      {:noreply, assign(socket, game: game, player: player)}
+    end
   end
 
   def handle_event("award-click", %{"card-id" => card_id}, socket) do

@@ -16,28 +16,41 @@ defmodule DreamUpWeb.LobbyLive do
     {:ok, socket}
   end
 
+  # TODO - Can probably clean this up?
   def handle_params(params, url, socket) do
-    game_id = Games.get_game_id_from_code(params["code"])
-    if game_id === -1 do
+    unless params["code"] do
       {:noreply, redirect(socket, to: Routes.home_path(socket, :index, %{error: "code"}))}
     else
-      if connected?(socket), do: Games.subscribe(game_id)
-      if params["player_id"] do
-        {:noreply, assign(Redirector.validate_game_phase(Games.get_game!(game_id), Players.get_player!(params["player_id"]), "LOBBY", socket),
-        game_id: game_id,
-        code: params["code"],
-        players: Players.list_players_in_game(game_id),
-        url: url
-      )}
+      game_id = Games.get_game_id_from_code(params["code"])
+      if game_id === -1 do
+        {:noreply, redirect(socket, to: Routes.home_path(socket, :index, %{error: "code"}))}
       else
-        {:noreply, assign(socket,
-        game_id: game_id,
-        code: params["code"],
-        players: Players.list_players_in_game(game_id),
-        url: url
-      )}
+        if connected?(socket), do: Games.subscribe(game_id)
+        if params["player_id"] do
+          if params["game_id"] do
+            {status, route} = Redirector.validate_game_phase(Games.get_game!(params["game_id"]), Players.get_player!(params["player_id"]), "SETUP", socket)
+            if status !== :ok do
+              {:noreply, redirect(socket, to: route)}
+            else
+              add_params_to_socket(socket, game_id, params["code"], url)
+            end
+          else
+            add_params_to_socket(socket, game_id, params["code"], url)
+          end
+        else
+          add_params_to_socket(socket, game_id, params["code"], url)
+        end
       end
     end
+  end
+
+  def add_params_to_socket(socket, game_id, code, url) do
+    {:noreply, assign(socket,
+        game_id: game_id,
+        code: code,
+        players: Players.list_players_in_game(game_id),
+        url: url
+      )}
   end
 
   # TODO: after creating player, check for redirect with game

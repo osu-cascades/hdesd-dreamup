@@ -25,18 +25,23 @@ defmodule DreamUpWeb.BoardLive do
     end), & !is_nil(&1))
     method_cards = List.delete_at(all_method_cards, length(all_method_cards) - 1)
 
-    if game.round_number === 0 do
-      socket = assign(socket, player: player, game: game, method_card: nil)
-      if player.game_admin do
-        {:noreply, countdown(Redirector.validate_game_phase(game, player, "BOARD", socket))}
-      else
-        {:noreply, Redirector.validate_game_phase(game, player, "BOARD", socket)}
-      end
+    {status, route} = Redirector.validate_game_phase(game, player, "BOARD", socket)
+    if status !== :ok do
+      {:noreply, redirect(socket, to: route)}
     else
-      if player.game_admin do
-        {:noreply, countdown(assign(Redirector.validate_game_phase(game, player, "BOARD", socket), player: player, game: game, method_card: Cards.get_card!(Enum.at(Games.get_method_card_list(game), game.round_number - 1)), method_cards: method_cards))}
+      if game.round_number === 0 do
+        socket = assign(socket, player: player, game: game, method_card: nil)
+        if player.game_admin do
+          {:noreply, countdown(socket)}
+        else
+          {:noreply, socket}
+        end
       else
-        {:noreply, assign(Redirector.validate_game_phase(game, player, "BOARD", socket), player: player, game: game, method_card: Cards.get_card!(Enum.at(Games.get_method_card_list(game), game.round_number - 1)), method_cards: method_cards)}
+        if player.game_admin do
+          {:noreply, countdown(assign(socket, player: player, game: game, method_card: Cards.get_card!(Enum.at(Games.get_method_card_list(game), game.round_number - 1)), method_cards: method_cards))}
+        else
+          {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(Enum.at(Games.get_method_card_list(game), game.round_number - 1)), method_cards: method_cards)}
+        end
       end
     end
   end
