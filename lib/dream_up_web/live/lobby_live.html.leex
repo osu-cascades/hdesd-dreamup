@@ -82,8 +82,23 @@
     </div>
     <% end %>
     <%= unless @id do%>
+         <%#instructions - pre join %>
+        <div class="lobby-instructions-container">
+            <div class="lobby-instructions">
+                <h1>Instructions:</h1>
+                <p>
+                Enter your name.
+                </p>
+                <p>
+                If you know which color team you want to join, select that color. If you do not, pick a random color. Once everyone has joined, teams can be rebalanced as needed.
+                </p>
+                <p>
+                Pick a Character card that you feel best expresses your personality, working style, or skills.
+                </p>
+            </div>
+        </div>
         <%# character image grid %>
-        <div class="grid gap-4 md:grid-cols-3 lg:grid-cols-6 ">
+        <div class="grid gap-4 md:grid-cols-3">
             <div class="character">
                 <img src="/images/characters/maker.png">
                 <p>The Maker</p>
@@ -121,25 +136,26 @@
                 <p>The Storyteller</p>
             </div>
         </div>
-        <%# instructions %>
-        <div class="lobby-instructions">
-            <h1>PRE-Instructions: </h1>
-            <p>Enter your name.</p>
-            <p>If you know which color team you want to join, select that color. If you do not, pick a random color. Once everyone has joined, teams can be rebalanced as needed.</p>
-            <p>Pick a “character” card that you feel best expresses your personality, working style, or skills.</p>
-        </div>
     <% else %>
-        <div class="lobby-instructions">
-            <h1>POST-Instructions:</h1>
-            <p>
-            As the two teams are formed, you will see the members of the teams listed including the character they selected. The team leaders' names will be in bold. 
-            </p>
-            <p>
-            If you know which color team you want to join, select that color. If you do not, pick a random color. Once everyone has joined, teams can be rebalanced as needed.
-            </p>
-            <p>
-            Pick a “character” card that you feel best expresses your personality, working style, or skills.
-            </p>
+        <%# instructions - post join %>
+        <div class="lobby-instructions-container">
+            <div class="lobby-instructions">
+                <h1>Instructions:</h1>
+                <p>
+                As the two teams are formed, you will see the members of the teams listed including the character they selected. The team leaders' names will be in bold. 
+                </p>
+                <p>
+                Check to see if teams need to be rebalanced (in terms of numbers of people and characters selected). 
+                </p>
+                <p>
+                Try to mix people who identify as introverted and extroverted; who are more analytical and who are more expressive; who are more linear and exploratory. When relevant, try to make teams with differing professional experiences (doctor, engineer and chef; artist, accountant and teacher). Also look for a diversity of skills: those who frequently create or make things, those who love to tell stories and share their thoughts in public forums, those who love meeting new people and make connections. Try to create a team with diverse life experiences -- think about age, where you grew up, where you have lived, changes or transitions in work, school or life, etc.
+                </p>
+                When teams are balanced properly, continue to the next page.
+                </p>
+                </p>
+                Or...  Instead of the above approach, split teams up randomly. Have each person draw a role card and then take on that role, whether it comes naturally to them or not! 
+                </p>
+            </div>
         </div>
     <% end %>
 </div>

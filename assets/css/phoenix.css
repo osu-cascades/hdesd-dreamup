@@ -219,6 +219,7 @@ select {
   width: 200px;
   height: 225px;
   border: solid #2b327b 2px;
+  border-radius: 5%;
 }
 
 .character > p {
@@ -230,7 +231,14 @@ select {
 .lobby-instructions {
   margin: auto;
   padding: 10px;
-  color: blue;
+  width: 50%;
+  border: 2px solid black;
+  border-radius: 5px;
+}
+
+.lobby-instructions-container {
+  margin: auto;
+  padding: 10px;
 }
 
 /* cards */
