@@ -2,7 +2,7 @@
     <h1 class="text-blue-900 text-5xl font-bold text-center">Game Code: <%= @code %></h1>
     <h1 class="text-blue-900 text-2xl font-bold text-center">URL: <a><%= @url %></a></h1>
     <div class=" m-auto max-w-xl p-8">
-        <%= if !@id do %>
+        <%= unless @id do %>
             <%= f = form_for @changeset, "#",
                             phx_submit: "save" %>
                 <div class="bg-white max-w-lg m-auto my-8">
@@ -81,47 +81,65 @@
         <button class="defaultButton mt-12 text-blue-900 border-2 px-8 text-center" phx-click="begin-setup">Start Game</button>
     </div>
     <% end %>
-    <%# character image grid %>
-    <div class="grid grid-cols-3 gap-4">
-        <div class="character">
-            <img src="/images/characters/maker.png">
-            <p>The Maker</p>
+    <%= unless @id do%>
+        <%# character image grid %>
+        <div class="grid gap-4 md:grid-cols-3 lg:grid-cols-6 ">
+            <div class="character">
+                <img src="/images/characters/maker.png">
+                <p>The Maker</p>
+            </div>
+            <div class="character">
+                <img src="/images/characters/rebel.png">
+                <p>The Rebel</p>
+            </div>
+            <div class="character">
+                <img src="/images/characters/dreamer.png">
+                <p>The Dreamer</p>
+            </div>
+            <div class="character">
+                <img src="/images/characters/writer.png">
+                <p>The Writer</p>
+            </div>
+            <div class="character">
+                <img src="/images/characters/planner.png">
+                <p>The Planner</p>
+            </div>
+            <div class="character">
+                <img src="/images/characters/listener.png">
+                <p>The Listener</p>
+            </div>
+            <div class="character">
+                <img src="/images/characters/artist.png">
+                <p>The Artist</p>
+            </div>
+            <div class="character">
+                <img src="/images/characters/thinker.png">
+                <p>The Thinker</p>
+            </div>
+            <div class="character">
+                <img src="/images/characters/storyteller.png">
+                <p>The Storyteller</p>
+            </div>
         </div>
-        <div class="character">
-            <img src="/images/characters/rebel.png">
-            <p>The Rebel</p>
+        <%# instructions %>
+        <div class="lobby-instructions">
+            <h1>PRE-Instructions: </h1>
+            <p>Enter your name.</p>
+            <p>If you know which color team you want to join, select that color. If you do not, pick a random color. Once everyone has joined, teams can be rebalanced as needed.</p>
+            <p>Pick a “character” card that you feel best expresses your personality, working style, or skills.</p>
         </div>
-        <div class="character">
-            <img src="/images/characters/dreamer.png">
-            <p>The Dreamer</p>
+    <% else %>
+        <div class="lobby-instructions">
+            <h1>POST-Instructions:</h1>
+            <p>
+            As the two teams are formed, you will see the members of the teams listed including the character they selected. The team leaders' names will be in bold. 
+            </p>
+            <p>
+            If you know which color team you want to join, select that color. If you do not, pick a random color. Once everyone has joined, teams can be rebalanced as needed.
+            </p>
+            <p>
+            Pick a “character” card that you feel best expresses your personality, working style, or skills.
+            </p>
         </div>
-        <div class="character">
-            <img src="/images/characters/writer.png">
-            <p>The Writer</p>
-        </div>
-        <div class="character">
-            <img src="/images/characters/planner.png">
-            <p>The Planner</p>
-        </div>
-        <div class="character">
-            <img src="/images/characters/listener.png">
-            <p>The Listener</p>
-        </div>
-        <div class="character">
-            <img src="/images/characters/artist.png">
-            <p>The Artist</p>
-        </div>
-        <div class="character">
-            <img src="/images/characters/thinker.png">
-            <p>The Thinker</p>
-        </div>
-        <div class="character">
-            <img src="/images/characters/storyteller.png">
-            <p>The Storyteller</p>
-        </div>
-    </div>
-
-    <div>
-
-    </div>
+    <% end %>
 </div>

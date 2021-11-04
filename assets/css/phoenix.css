@@ -224,6 +224,13 @@ select {
 .character > p {
   text-align: center;
   color: #2b327b;
+  border: solid #2b327b 2px;
+}
+
+.lobby-instructions {
+  margin: auto;
+  padding: 10px;
+  color: blue;
 }
 
 /* cards */
