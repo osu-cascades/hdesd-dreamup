@@ -123,12 +123,6 @@ body {
   padding: 0 2em;
 }
 
-/* .button button {
-  background-color: #B6CBF4;
-  width: 100%;
-  display: block;
-} */
-
 input[type=button], input[type=submit], input[type=reset] {
   color: #1E3A8A;
   background-color: rgba(129, 140, 248);
@@ -218,7 +212,21 @@ select {
   text-align: center;
   font-weight: 800;
 }
+/* lobby */
+.character {
+  margin: auto;
+  padding: 10px;
+  width: 200px;
+  height: 225px;
+  border: solid #2b327b 2px;
+}
 
+.character > p {
+  text-align: center;
+  color: #2b327b;
+}
+
+/* cards */
 .card {
   position: relative;
   margin: auto;
