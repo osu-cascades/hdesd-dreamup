@@ -17,7 +17,7 @@
                                     ["Red": "red", "Blue": "blue"],
                                     value: input_value(f, :team)
                     %>
-                    <label for="player_character"> Character </label>
+                    <%# <label for="player_character"> Character </label>
                     <%= select f, :character,
                                     ["Artist": "artist", "Storyteller": "storyteller", "Dreamer": "dreamer", "Planner": "planner", "Listener": "listener", "Maker": "maker", "Rebel": "rebel", "Writer": "writer", "Thinker": "thinker" ],
                                     value: input_value(f, :character)
@@ -92,13 +92,13 @@
                 <p>
                 If you know which color team you want to join, select that color. If you do not, pick a random color. Once everyone has joined, teams can be rebalanced as needed.
                 </p>
-                <p>
+                <%# <p>
                 Pick a Character card that you feel best expresses your personality, working style, or skills.
-                </p>
+                </p> %>
             </div>
         </div>
         <%# character image grid %>
-        <div class="grid gap-4 md:grid-cols-3">
+        <%# <div class="grid gap-4 md:grid-cols-3">
             <div class="character">
                 <img src="/images/characters/maker.png">
                 <p>The Maker</p>
@@ -135,14 +135,14 @@
                 <img src="/images/characters/storyteller.png">
                 <p>The Storyteller</p>
             </div>
-        </div>
+        </div> %>
     <% else %>
         <%# instructions - post join %>
         <div class="lobby-instructions-container">
             <div class="lobby-instructions">
                 <h1>Instructions:</h1>
                 <p>
-                As the two teams are formed, you will see the members of the teams listed including the character they selected. The team leaders' names will be in bold. 
+                As the two teams are formed, you will see the members of the teams listed. The team leaders' names will be in bold. 
                 </p>
                 <p>
                 Check to see if teams need to be rebalanced (in terms of numbers of people and characters selected). 
