@@ -335,6 +335,10 @@ select {
   height: 36px;
 }
 
+#game-over-image {
+  width: 100%;
+}
+
 .card-header {
   color: #d9217d;
 }
