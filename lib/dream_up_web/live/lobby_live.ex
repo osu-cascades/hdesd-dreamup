@@ -66,7 +66,7 @@ defmodule DreamUpWeb.LobbyLive do
         if status !== :ok do
           {:noreply, redirect(socket, to: route)}
         else
-          {:noreply, socket}
+          {:noreply, Players.push_header_event(socket, player)}
         end
       {:error, %Ecto.Changeset{} = changeset} ->
         socket = assign(socket, changest: changeset)
@@ -86,8 +86,7 @@ defmodule DreamUpWeb.LobbyLive do
 
     players = Players.list_players_in_game(socket.assigns.game_id)
 
-    socket = assign(socket, players: players, editing: false)
-    {:noreply, socket}
+    {:noreply, assign(Players.push_header_event(socket, Players.get_player!(socket.assigns.id)), players: players, editing: false)}
   end
 
   def handle_event("editing", %{"editing" => editing}, socket) do
@@ -119,8 +118,7 @@ defmodule DreamUpWeb.LobbyLive do
 
     players = Players.list_players_in_game(socket.assigns.game_id)
 
-    socket = assign(socket, players: players)
-    {:noreply, socket}
+    {:noreply, assign(Players.push_header_event(socket, Players.get_player!(id)), players: players)}
   end
 
   def handle_event("begin-setup", _, socket) do

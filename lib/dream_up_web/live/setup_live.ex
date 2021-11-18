@@ -34,7 +34,7 @@ defmodule DreamUpWeb.SetupLive do
       IO.inspect("NOT :ok status")
       {:noreply, redirect(socket, to: route)}
     else
-      {:noreply, socket}
+      {:noreply, Players.push_header_event(socket, player)}
     end
   end
 

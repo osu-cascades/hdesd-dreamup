@@ -545,3 +545,8 @@ select {
 .red-team-awards {
   background-color: red;
 }
+
+#player-info-text {
+  top: 16px;
+  right: 16px;
+}

@@ -5,6 +5,7 @@ defmodule DreamUp.Players do
 
   import Ecto.Query, warn: false
   alias DreamUp.Repo
+  import Phoenix.LiveView
 
   alias DreamUp.Players.Player
 
@@ -144,4 +145,9 @@ defmodule DreamUp.Players do
       -1
     end
   end
+
+  def push_header_event(socket, player) do
+    push_event(socket, "updateHeader", %{name: player.name, team: player.team, team_leader: player.team_leader, is_admin: player.game_admin})
+  end
+
 end

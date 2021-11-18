@@ -1,11 +1,14 @@
-<div>
-    <h1 class="text-blue-900 text-5xl font-bold text-center">Game Code: <%= @code %></h1>
-    <h1 class="text-blue-900 text-2xl font-bold text-center">URL: <a><%= @url %></a></h1>
-    <div class=" m-auto max-w-xl p-8">
+
+<div id="header" phx-hook="header">
+    <h1 class="text-blue-900 text-4xl font-bold text-center">Game Code</h1>
+    <h1 class="text-blue-900 text-4xl text-center">Join at <span class="font-bold"><%= String.replace(DreamUpWeb.Endpoint.url(), "https://", "") %></span> with: <span onclick="clicked('<%= @url %>')" class="text-5xl font-bold"><%= @code %></span></h1>
+    <br>
+    <h1 class="text-blue-900 text-4xl font-bold text-center">Join Game</h1>
+    <div class=" m-auto max-w-xl p-4">
         <%= if !@id do %>
             <%= f = form_for @changeset, "#",
                             phx_submit: "save" %>
-                <div class="bg-white max-w-lg m-auto my-8">
+                <div class="bg-white max-w-lg m-auto">
                     <label for="player_name"> Name </label>
                     <%= text_input  f, :name,
                                     placeholder: "Name",
@@ -31,50 +34,52 @@
             </form>
         <% end %>
     </div>
-    <h1 class="text-blue-900 text-5xl font-bold text-center">Players</h1>
-    <div id="players" class="border-t-4 border-l-4 border-r-4 border-indigo-400 max-w-4xl ml-auto mr-auto mb-4">
-        <%= for player <- @players do %>
-            <div id="container-0<%= player.id %>" class="<%= if player.__meta__.state == :deleted do %>hidden<% end %>
-                text-4xl py-2 font-bold max-w-full text-center max-w-lg bg-indigo-100 border-b-4 border-indigo-400">
-                <%= if player.game_admin do %>
-                    <p class="text-red-900"><%= player.name %></p>
-                <% else %>
-                    <p class="text-blue-900"><%= player.name %></p>
-                <% end %>
-                <p class="text-blue-900"><%= player.team %></p>
-                <p class="text-blue-900"><%= player.character %></p>
-                <%= if player.id == @id do %>
-                    <%= if @editing do %>
-                        <%= p = form_for @changeset, "#",
-                                    phx_submit: "edit-name" %>
-                            <div class="bg-white max-w-lg m-auto">
-                                <%= text_input p, :name,
-                                                placeholder: "Name",
-                                                autocomplete: "off" %>
-                            </div>
-                            <div class="text-blue-900 pt-4">
-                                <div class="m-auto max-w-lg">
-                                    <%= submit "Submit Edit", class: "text-blue-900 border-2 px-8 text-center", phx_disable_with: "Editing..."  %>
-                                </div>
-                            </div>
-                        </form>
-                        <button class="text-blue-900 text-lg px-8 border-2 border-indigo-600" phx-click="editing" phx-value-editing=false>
-                            Cancel Edit
-                        </button>
+    <h1 class="text-blue-900 text-4xl font-bold text-center">Players</h1>
+    <div class="p-4">
+        <div id="players" class="border-t-4 border-l-4 border-r-4 border-indigo-400 max-w-4xl ml-auto mr-auto mb-4">
+            <%= for player <- @players do %>
+                <div id="container-0<%= player.id %>" class="<%= if player.__meta__.state == :deleted do %>hidden<% end %>
+                    text-4xl py-2 font-bold max-w-full text-center max-w-lg bg-indigo-100 border-b-4 border-indigo-400">
+                    <%= if player.game_admin do %>
+                        <p class="text-red-900"><%= player.name %></p>
                     <% else %>
-                        <button class="text-blue-900 text-lg px-8 border-2 border-indigo-600" phx-click="editing" phx-value-editing=true>
-                            Edit Name
-                        </button>
-                        <button class="text-blue-900 text-lg px-8 border-2 border-indigo-600" phx-click="change-team" phx-value-id="<%= player.id %>">
-                            Change Team
-                        </button>
-                        <button class="text-blue-900 text-lg px-8 border-2 border-indigo-600" phx-click="delete-name" phx-value-id="<%= player.id %>">
-                            Delete Name
-                        </button>
+                        <p class="text-blue-900"><%= player.name %></p>
                     <% end %>
-                <% end %>
-            </div>
-        <% end %>
+                    <p class="text-blue-900"><%= player.team %></p>
+                    <p class="text-blue-900"><%= player.character %></p>
+                    <%= if player.id == @id do %>
+                        <%= if @editing do %>
+                            <%= p = form_for @changeset, "#",
+                                        phx_submit: "edit-name" %>
+                                <div class="bg-white max-w-lg m-auto">
+                                    <%= text_input p, :name,
+                                                    placeholder: "Name",
+                                                    autocomplete: "off" %>
+                                </div>
+                                <div class="text-blue-900 pt-4">
+                                    <div class="m-auto max-w-lg">
+                                        <%= submit "Submit Edit", class: "text-blue-900 border-2 px-8 text-center", phx_disable_with: "Editing..."  %>
+                                    </div>
+                                </div>
+                            </form>
+                            <button class="text-blue-900 text-lg px-8 border-2 border-indigo-600" phx-click="editing" phx-value-editing=false>
+                                Cancel Edit
+                            </button>
+                        <% else %>
+                            <button class="text-blue-900 text-lg px-8 border-2 border-indigo-600" phx-click="editing" phx-value-editing=true>
+                                Edit Name
+                            </button>
+                            <button class="text-blue-900 text-lg px-8 border-2 border-indigo-600" phx-click="change-team" phx-value-id="<%= player.id %>">
+                                Change Team
+                            </button>
+                            <button class="text-blue-900 text-lg px-8 border-2 border-indigo-600" phx-click="delete-name" phx-value-id="<%= player.id %>">
+                                Delete Name
+                            </button>
+                        <% end %>
+                    <% end %>
+                </div>
+            <% end %>
+        </div>
     </div>
     <%= if own_player_is_admin(@id, @players) do %>
     <div class="text-center">
@@ -82,3 +87,9 @@
     </div>
     <% end %>
 </div>
+
+<script>
+    function clicked(url) {
+        navigator.clipboard.writeText(url);
+    }
+</script>

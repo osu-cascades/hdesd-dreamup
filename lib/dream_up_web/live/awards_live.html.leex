@@ -65,7 +65,7 @@
   </div>
 </div>
 <% end %>
-<div class="grid sm:grid-cols-3 lg:grid-cols-5 gap-4">
+<div phx-hook="header" class="grid sm:grid-cols-3 lg:grid-cols-5 gap-4">
   <%= for card <- @cards do %>
     <%= if card.type == "Award" do %>
       <div class="card award">

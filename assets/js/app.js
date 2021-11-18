@@ -18,6 +18,24 @@ import topbar from "topbar"
 import {LiveSocket} from "phoenix_live_view"
 
 let Hooks = {}
+Hooks.header = {
+    mounted() {
+        this.handleEvent("updateHeader", (payload) => {
+            var playerInfo = document.getElementById("player-info");
+            var playerInfoText = document.getElementById("player-info-text");
+            playerInfo.className = "";
+            let team = payload.team.charAt(0).toUpperCase() + payload.team.slice(1);
+            let role = "Player";
+            if (payload.is_admin) {
+                role = "Game Admin";
+            } else if (payload.team_leader == "red" || payload.team_leader == "blue") {
+                role = "Team Leader";
+            }
+            playerInfoText.textContent = "Player: " + payload.name + " | Team: " + team + " | Role: " + role;
+        })
+    }
+}
+
 Hooks.Spinner = {
 
     beforeUpdate() {
@@ -36,7 +54,6 @@ let liveSocket = new LiveSocket("/live", Socket, {hooks: Hooks, params: {_csrf_t
 topbar.config({barColors: {0: "#29d"}, shadowColor: "rgba(0, 0, 0, .3)"})
 window.addEventListener("phx:page-loading-start", info => topbar.show())
 window.addEventListener("phx:page-loading-stop", info => topbar.hide())
-
 // connect if there are any LiveViews on the page
 liveSocket.connect()
 
