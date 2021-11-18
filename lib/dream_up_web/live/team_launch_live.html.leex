@@ -1,0 +1,7 @@
+<h1 phx-hook="header">Launch your team!</h1>
+
+<div class="text-center">
+  <%= if @player.game_admin do %>
+    <button class="defaultButton mt-12 text-blue-900 border-2 px-8 text-center" phx-click="finish-team-launch">Finish Team Launch</button>
+  <% end %>
+</div>

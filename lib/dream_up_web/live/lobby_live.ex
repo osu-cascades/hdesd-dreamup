@@ -121,9 +121,9 @@ defmodule DreamUpWeb.LobbyLive do
     {:noreply, assign(Players.push_header_event(socket, Players.get_player!(id)), players: players)}
   end
 
-  def handle_event("begin-setup", _, socket) do
-    Games.broadcast(:begin_setup, socket.assigns.game_id)
-    Games.change_game_phase(socket.assigns.game_id, "SETUP")
+  def handle_event("begin-team-launch", _, socket) do
+    Games.broadcast(:begin_team_launch, socket.assigns.game_id)
+    Games.change_game_phase(socket.assigns.game_id, "TEAM_LAUNCH")
     current_player = get_current_player(socket)
     case current_player.team do
       "blue" ->
@@ -163,10 +163,10 @@ defmodule DreamUpWeb.LobbyLive do
     {:noreply, socket}
   end
 
-  def handle_info({:begin_setup}, socket) do
+  def handle_info({:begin_team_launch}, socket) do
     game_id = socket.assigns.game_id
     player_id = socket.assigns.id
-    {:noreply, redirect(socket, to: Routes.live_path(socket, DreamUpWeb.SetupLive, %{game_id: game_id, player_id: player_id}))}
+    {:noreply, redirect(socket, to: Routes.live_path(socket, DreamUpWeb.TeamLaunchLive, %{game_id: game_id, player_id: player_id}))}
   end
 
   def own_player_is_admin(id, players) do
