@@ -1,0 +1,25 @@
+<h1 phx-hook="header">Launch your team!</h1>
+
+<center>
+  <img src="/images/team_launch_graphic.png" alt="Teammates" class="team-launch-graphic">
+</center>
+
+<p>Once Design Teams are picked, draw a Team Launch card and complete the activity.</p>
+
+<div class="card team-launch flip-card">
+  <h2 class="text-sm card-type flipped-card-text non-padded-card-type"><%= @team_launch_card.type %></h2>
+  <h2 class="text-xl2 card-type flipped-card-text non-padded-card-type"><%= @team_launch_card.title %></h2>
+  <h2 class="text-lg card-type flipped-card-text non-padded-card-type"><%= @team_launch_card.sub_title %></h2>
+  <p class="text-sm flipped-card-text">
+    <%= if @team_launch_card do %>
+      <%= @team_launch_card.prompt %>
+      <div class="card-tip"><p class="flipped-card-text text-sm"><%= @team_launch_card.tip %></p></div>
+    <% end %>
+  </p>
+</div>
+
+<div class="text-center">
+  <%= if @player.game_admin do %>
+    <button class="defaultButton mt-12 text-blue-900 border-2 px-8 text-center" phx-click="finish-team-launch">Finish Team Launch</button>
+  <% end %>
+</div>
