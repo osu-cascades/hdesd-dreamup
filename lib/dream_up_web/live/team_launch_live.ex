@@ -10,7 +10,7 @@ defmodule DreamUpWeb.TeamLaunchLive do
 
   def mount(_params, _session, socket) do
     cards = Cards.list_cards()
-    socket = assign(socket, cards: cards, blue_challenge_id: nil, red_challenge_id: nil)
+    socket = assign(socket, cards: cards, blue_challenge_id: nil, red_challenge_id: nil, team_launch_card: nil)
     {:ok, socket}
   end
 
@@ -18,7 +18,8 @@ defmodule DreamUpWeb.TeamLaunchLive do
     if connected?(socket), do: Games.subscribe(String.to_integer(params["game_id"]))
     player = Players.get_player!(params["player_id"])
     game = Games.get_game!(params["game_id"])
-    socket = assign(socket, game: game, player: player,
+    # TODO: Instead of getting this static example card to display on line 22, we need to pick an actual random team launch card.
+    socket = assign(socket, game: game, player: player, team_launch_card: Cards.get_card!(1),
      is_single_team_game: length(
        Players.list_players_in_team(
          "red", params["game_id"]

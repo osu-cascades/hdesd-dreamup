@@ -241,6 +241,12 @@ select {
   color: #0DB2E7;
 }
 
+/* team launch */
+
+.team-launch-graphic {
+  width: 40%;
+}
+
 /* cards */
 
 .card {
