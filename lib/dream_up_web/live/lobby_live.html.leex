@@ -7,7 +7,7 @@
                             phx_submit: "save" %>
                 <div class="bg-white max-w-lg m-auto my-8">
                     <label for="player_name"> Name </label>
-                    <%= text_input  f, :name,
+                    <%= text_input    f, :name,
                                     placeholder: "Name",
                                     autocomplete: "off",
                                     value: input_value(f, :name)
@@ -25,7 +25,7 @@
                 </div>
                 <div class="text-blue-900 pt-4">
                     <div class="m-auto max-w-lg">
-                        <%= submit "JOIN GAME", id: "joinGame", class: "text-blue-900 border-2 px-8 text-center bg-indigo-400", phx_disable_with: "JOINING..."  %>
+                        <%= submit "JOIN GAME", id: "joinGame", class: "text-blue-900 border-2 px-8 text-center bg-indigo-400", phx_disable_with: "JOINING..."    %>
                     </div>
                 </div>
             </form>
@@ -35,14 +35,18 @@
     <div id="players" class="border-t-4 border-l-4 border-r-4 border-indigo-400 max-w-4xl ml-auto mr-auto mb-4">
         <%= for player <- @players do %>
             <div id="container-0<%= player.id %>" class="<%= if player.__meta__.state == :deleted do %>hidden<% end %>
-                text-4xl py-2 font-bold max-w-full text-center max-w-lg bg-indigo-100 border-b-4 border-indigo-400">
-                <%= if player.game_admin do %>
-                    <p class="text-red-900"><%= player.name %></p>
-                <% else %>
-                    <p class="text-blue-900"><%= player.name %></p>
-                <% end %>
-                <p class="text-blue-900"><%= player.team %></p>
-                <p class="text-blue-900"><%= player.character %></p>
+                text-4xl py-2 font-bold max-w-full text-center max-w-lg bg-<%= player.team %>-100 border-b-4 border-indigo-400">
+                <span class="<%= player.team %>-color">
+                    <%= if player.game_admin do %>
+                        <img src="/images/crown.svg" alt="crown" class="role-icon">
+                    <% end %>
+                    <%= if player.team_leader === player.team do %>
+                        <img src="/images/<%= player.team %>_flag.svg" alt="<%= player.team %> flag" class="role-icon">
+                    <% end %>
+                    <%= player.name %>
+                </span>
+                <p class="<%= player.team %>-color"><%= player.team %> team</p>
+                <p class="<%= player.team %>-color"><%= player.character %></p>
                 <%= if player.id == @id do %>
                     <%= if @editing do %>
                         <%= p = form_for @changeset, "#",
@@ -54,7 +58,7 @@
                             </div>
                             <div class="text-blue-900 pt-4">
                                 <div class="m-auto max-w-lg">
-                                    <%= submit "Submit Edit", class: "text-blue-900 border-2 px-8 text-center", phx_disable_with: "Editing..."  %>
+                                    <%= submit "Submit Edit", class: "text-blue-900 border-2 px-8 text-center", phx_disable_with: "Editing..."    %>
                                 </div>
                             </div>
                         </form>
@@ -87,10 +91,10 @@
             <div class="lobby-instructions">
                 <h1>Instructions:</h1>
                 <p>
-                Enter your name.
+                    Enter your name.
                 </p>
                 <p>
-                If you know which color team you want to join, select that color. If you do not, pick a random color. Once everyone has joined, teams can be rebalanced as needed.
+                    If you know which color team you want to join, select that color. If you do not, pick a random color. Once everyone has joined, teams can be rebalanced as needed.
                 </p>
                 <%# <p>
                 Pick a Character card that you feel best expresses your personality, working style, or skills.
@@ -142,18 +146,18 @@
             <div class="lobby-instructions">
                 <h1>Instructions:</h1>
                 <p>
-                As the two teams are formed, you will see the members of the teams listed. The team leaders' names will be in bold. 
+                    As the two teams are formed, you will see the members of the teams listed. The team leaders' names will be in bold. 
                 </p>
                 <p>
-                Check to see if teams need to be rebalanced (in terms of numbers of people and characters selected). 
+                    Check to see if teams need to be rebalanced (in terms of numbers of people and characters selected). 
                 </p>
                 <p>
-                Try to mix people who identify as introverted and extroverted; who are more analytical and who are more expressive; who are more linear and exploratory. When relevant, try to make teams with differing professional experiences (doctor, engineer and chef; artist, accountant and teacher). Also look for a diversity of skills: those who frequently create or make things, those who love to tell stories and share their thoughts in public forums, those who love meeting new people and make connections. Try to create a team with diverse life experiences -- think about age, where you grew up, where you have lived, changes or transitions in work, school or life, etc.
+                    Try to mix people who identify as introverted and extroverted; who are more analytical and who are more expressive; who are more linear and exploratory. When relevant, try to make teams with differing professional experiences (doctor, engineer and chef; artist, accountant and teacher). Also look for a diversity of skills: those who frequently create or make things, those who love to tell stories and share their thoughts in public forums, those who love meeting new people and make connections. Try to create a team with diverse life experiences -- think about age, where you grew up, where you have lived, changes or transitions in work, school or life, etc.
                 </p>
-                When teams are balanced properly, continue to the next page.
+                    When teams are balanced properly, continue to the next page.
                 </p>
                 </p>
-                Or...  Instead of the above approach, split teams up randomly. Have each person draw a role card and then take on that role, whether it comes naturally to them or not! 
+                    Or...  Instead of the above approach, split teams up randomly. Have each person draw a role card and then take on that role, whether it comes naturally to them or not! 
                 </p>
             </div>
         </div>

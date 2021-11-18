@@ -61,7 +61,7 @@ The goal of this game is that your team will DreamUp a solution for the OTHER te
   <% end %>
   <%= if !@is_single_team_game || @player.team === "blue" do %>
     <div class="blue-team team-box">
-      <p>
+      <p class="text-blue-900 text-3xl font-bold mb-4">
         <%= if @is_single_team_game do %>
           Your
         <% else %>
