@@ -28,7 +28,7 @@ defmodule DreamUpWeb.AwardsLive do
     if status !== :ok do
       {:noreply, redirect(new_socket, to: route)}
     else
-      {:noreply, new_socket}
+      {:noreply, Players.push_header_event(new_socket, new_socket.assigns.player)}
     end
   end
 

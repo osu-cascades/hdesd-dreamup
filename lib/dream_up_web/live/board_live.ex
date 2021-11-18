@@ -30,7 +30,7 @@ defmodule DreamUpWeb.BoardLive do
       {:noreply, redirect(socket, to: route)}
     else
       if game.round_number === 0 do
-        socket = assign(socket, player: player, game: game, method_card: nil)
+        socket = assign(Players.push_header_event(socket, player), player: player, game: game, method_card: nil)
         if player.game_admin do
           {:noreply, countdown(socket)}
         else
@@ -38,9 +38,9 @@ defmodule DreamUpWeb.BoardLive do
         end
       else
         if player.game_admin do
-          {:noreply, countdown(assign(socket, player: player, game: game, method_card: Cards.get_card!(Enum.at(Games.get_method_card_list(game), game.round_number - 1)), method_cards: method_cards))}
+          {:noreply, countdown(assign(Players.push_header_event(socket, player), player: player, game: game, method_card: Cards.get_card!(Enum.at(Games.get_method_card_list(game), game.round_number - 1)), method_cards: method_cards))}
         else
-          {:noreply, assign(socket, player: player, game: game, method_card: Cards.get_card!(Enum.at(Games.get_method_card_list(game), game.round_number - 1)), method_cards: method_cards)}
+          {:noreply, assign(Players.push_header_event(socket, player), player: player, game: game, method_card: Cards.get_card!(Enum.at(Games.get_method_card_list(game), game.round_number - 1)), method_cards: method_cards)}
         end
       end
     end
