@@ -18,8 +18,9 @@ defmodule DreamUpWeb.TeamLaunchLive do
     if connected?(socket), do: Games.subscribe(String.to_integer(params["game_id"]))
     player = Players.get_player!(params["player_id"])
     game = Games.get_game!(params["game_id"])
-    # TODO: Instead of getting this static example card to display on line 22, we need to pick an actual random team launch card.
-    socket = assign(socket, game: game, player: player, team_launch_card: Cards.get_card!(1),
+    random_card = Cards.pick_random_team_launch_card()
+    IO.inspect(random_card)
+    socket = assign(socket, game: game, player: player, team_launch_card: random_card,
      is_single_team_game: length(
        Players.list_players_in_team(
          "red", params["game_id"]
