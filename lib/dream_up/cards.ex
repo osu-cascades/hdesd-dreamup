@@ -165,4 +165,10 @@ defmodule DreamUp.Cards do
       picked_card
     end
   end
+
+  def pick_random_team_launch_card() do
+    Enum.filter(list_cards(), fn card ->
+      match?(%{type: "Team Launch"}, card)
+    end) |> Enum.random()
+  end
 end
