@@ -24,6 +24,7 @@ defmodule DreamUpWeb.Router do
     live "/setup", SetupLive
     live "/board", BoardLive
     live "/awards", AwardsLive
+    live "/instructions", InstructionsLive
   end
 
   # Other scopes may use custom stacks.
