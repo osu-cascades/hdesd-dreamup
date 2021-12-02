@@ -524,12 +524,13 @@ select {
 }
 
 .big-container {
-  height: 60%;
+  height: 400px;
   background-color: #5AF2F0;
 }
 
 #challenge-card {
-  height: 400px;
+  /* height: 400px; */
+  padding-bottom: 20px;
   background-color: #4D0461;
 }
 
@@ -543,6 +544,12 @@ select {
 
 }
 /* Spinner classes, to be applied based on picked method card category */
+
+.spinner-stack img {
+  margin-left: auto;
+  margin-right: auto;
+  height: 380px;
+}
 
 .spinner-Ideate {
   transform: rotate(1800deg);
@@ -588,7 +595,7 @@ select {
 }
 
 .arrow-left {
-  position: absolute; top: 50%; right: 0;
+  position: absolute; top: 50%; right: 50px;
   width: 0;
   height: 0;
   border-top: 10px solid transparent;
@@ -609,4 +616,10 @@ select {
 #player-info-text {
   top: 16px;
   right: 16px;
+}
+
+.sticky-buttons {
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 20px;
 }

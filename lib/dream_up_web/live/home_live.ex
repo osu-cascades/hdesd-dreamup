@@ -27,4 +27,8 @@ defmodule DreamUpWeb.HomeLive do
     {:noreply, redirect(socket, to: Routes.live_path(socket, DreamUpWeb.LobbyLive, %{code: code}))}
   end
 
+  def handle_event("view-instructions", _, socket) do
+    {:noreply, redirect(socket, to: Routes.live_path(socket, DreamUpWeb.InstructionsLive))}
+  end
+
 end

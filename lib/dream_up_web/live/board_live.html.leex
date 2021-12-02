@@ -28,10 +28,10 @@
         <button class="defaultButton fill-width mb-3 text-blue-900 border-2 px-8 text-center" phx-click="skip-discussion">Skip Discussion</button>
       <% end %>
 
-      <div id="challenge-card" class="py-2 mb-2 text-center rounded grid grid-cols-2 gap-2">
+      <div id="challenge-card" class="py-2 mb-2 text-center rounded-xl grid xl:grid-cols-2 gap-2">
         <div>
-          <h1 class="text-white">Your Challenge for this game:</h1>
-
+          <h1 class="text-white font-bold">Your Challenge:</h1>
+          <br>
           <div class="card flip-card">
             <h1 class="card-type flipped-card-text">Design Challenge</h1>
             <h2 class="font-medium flipped-card-text">
@@ -55,8 +55,8 @@
         </div>
 
         <div>
-          <h1 class="text-white">The Other Team's Challenge for this game:</h1>
-
+          <h1 class="text-white">Other Team's Challenge:</h1>
+          <br>
           <div class="card flip-card">
             <h1 class="card-type flipped-card-text">Design Challenge</h1>
             <h2 class="font-medium flipped-card-text">
@@ -127,7 +127,7 @@
           </div>
         </div>
       </div>
-      <div class="game-prompt border-indigo-600 py-2 pl-2">
+      <div class="game-prompt border-indigo-600 py-2 pl-2 rounded-xl">
         <%= if @game.round_number == 9  do%>
           <h1>To wrap up the game, each Design Team shares their solution via the Tell method card they completed in Round 9.
           The other Design Team can ask questions and give feedback (I like, I wish, I wonder).
@@ -147,9 +147,10 @@
       </div>
 
       <!-- Current method card in play box -->
-      <div class="big-container py-2 mb-2 text-center border-2 border-indigo-600 rounded">
-        <h1>Current Method Card in Play</h1>
-
+      <div class="big-container py-2 mb-2 text-center border-2 border-indigo-600 rounded-xl">
+        <br>
+        <h1 class="text-center text-3xl font-semibold">Current Method Card in Play</h1>
+        <br>
         <%= if @game.round_state === "SPINNER" && Time.compare(@game.time_left, ~T[00:00:10]) === :gt && @game.round_number < 9 do %>
           <div class="spinner-stack">
             <img id="spinner"
@@ -202,36 +203,41 @@
     </div>
   </div>
   <!-- Used method cards at the bottom of the screen -->
-  <div class="grid sm:grid-cols-3 lg:grid-cols-5 gap-4" style="position: relative; top: 60px;">
-    <%= for method_card <- @method_cards do %>
-      <div class=
-        <%= case method_card.type do %>
-          <%= "Empathize" -> %>
-            "card empathize flip-card"
-          <% "Define" -> %>
-            "card define flip-card"
-          <% "Ideate" -> %>
-            "card ideate flip-card"
-          <% "Prototype" -> %>
-            "card prototype flip-card"
-          <% "Test" -> %>
-            "card test flip-card"
-          <% "Mindset" -> %>
-            "card mindset flip-card"
-          <% "Tell" -> %>
-            "card tell flip-card"
-        <% end %>
-      >
-        <h1 class="text-sm card-type flipped-card-text non-padded-card-type"><%= method_card.type %></h1>
-        <h1 class="text-xl2 card-type flipped-card-text non-padded-card-type"><%= method_card.title %></h1>
-        <h1 class="text-lg card-type flipped-card-text non-padded-card-type"><%= method_card.sub_title %></h1>
-        <p class="text-sm flipped-card-text">
-          <%= if method_card do %>
-            <%= method_card.prompt %>
-            <div class="card-tip"><p class="flipped-card-text text-sm"><%= method_card.tip %></p></div>
+  <div style="position: relative; top: 60px;">
+    <br>
+    <h1 class="text-center text-3xl font-semibold">Previous Method Cards</h1>
+    <br>
+    <div class="grid sm:grid-cols-3 lg:grid-cols-5 gap-4">
+      <%= for method_card <- @method_cards do %>
+        <div class=
+          <%= case method_card.type do %>
+            <%= "Empathize" -> %>
+              "card empathize flip-card"
+            <% "Define" -> %>
+              "card define flip-card"
+            <% "Ideate" -> %>
+              "card ideate flip-card"
+            <% "Prototype" -> %>
+              "card prototype flip-card"
+            <% "Test" -> %>
+              "card test flip-card"
+            <% "Mindset" -> %>
+              "card mindset flip-card"
+            <% "Tell" -> %>
+              "card tell flip-card"
           <% end %>
-        </p>
-      </div>
-    <% end %>
+        >
+          <h1 class="text-sm card-type flipped-card-text non-padded-card-type"><%= method_card.type %></h1>
+          <h1 class="text-xl2 card-type flipped-card-text non-padded-card-type"><%= method_card.title %></h1>
+          <h1 class="text-lg card-type flipped-card-text non-padded-card-type"><%= method_card.sub_title %></h1>
+          <p class="text-sm flipped-card-text">
+            <%= if method_card do %>
+              <%= method_card.prompt %>
+              <div class="card-tip"><p class="flipped-card-text text-sm"><%= method_card.tip %></p></div>
+            <% end %>
+          </p>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>
