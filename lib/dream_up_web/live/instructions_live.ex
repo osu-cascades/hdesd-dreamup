@@ -10,7 +10,7 @@ defmodule DreamUpWeb.InstructionsLive do
 
   def handle_event("back", _, socket) do
     if socket.assigns.step == 1 do
-      {:noreply, socket}
+      {:noreply, redirect(socket, to: Routes.home_path(socket, :index))}
     else
       {:noreply, assign(socket, step: socket.assigns.step - 1)}
     end
@@ -18,7 +18,7 @@ defmodule DreamUpWeb.InstructionsLive do
 
   def handle_event("next", _, socket) do
     if socket.assigns.step == @max_step do
-      {:noreply, socket}
+      {:noreply, redirect(socket, to: Routes.home_path(socket, :index))}
     else
       {:noreply, assign(socket, step: socket.assigns.step + 1)}
     end
