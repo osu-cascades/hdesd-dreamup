@@ -61,6 +61,7 @@ defmodule DreamUpWeb.LobbyLive do
         socket = update(socket, :players, fn players -> [ player | players ] end)
 
         changeset = Players.change_player(%Player{})
+        update_team_leader(socket)
         socket = assign(socket, changest: changeset, id: player.id)
         {status, route} = Redirector.validate_game_phase(Games.get_game!(socket.assigns.game_id), player.id, "LOBBY", socket)
         if status !== :ok do
@@ -72,7 +73,6 @@ defmodule DreamUpWeb.LobbyLive do
         socket = assign(socket, changest: changeset)
         {:noreply, socket}
     end
-
   end
 
   def handle_event("edit-name", %{"player" => params}, socket) do
@@ -119,6 +119,17 @@ defmodule DreamUpWeb.LobbyLive do
     players = Players.list_players_in_game(socket.assigns.game_id)
 
     {:noreply, assign(Players.push_header_event(socket, Players.get_player!(id)), players: players)}
+  end
+
+  def update_team_leader(socket) do
+    first_red_player = Players.find_first_player_on_team("red", socket.assigns.game_id)
+    if first_red_player !== -1 do
+      Players.update_player(first_red_player, %{team_leader: "red"})
+    end
+    first_blue_player = Players.find_first_player_on_team("blue", socket.assigns.game_id)
+    if first_blue_player !== -1 do
+      Players.update_player(first_blue_player, %{team_leader: "blue"})
+    end
   end
 
   def handle_event("begin-team-launch", _, socket) do
