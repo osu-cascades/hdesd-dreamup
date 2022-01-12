@@ -213,6 +213,12 @@ select {
   font-weight: 800;
 }
 
+/* home */
+
+.width-one-third {
+  width: 33.333333% !important;
+}
+
 /* lobby */
 
 .role-icon {
