@@ -19,6 +19,7 @@ defmodule DreamUpWeb.Router do
 
     # live "/", PageLive, :index
     live "/", HomeLive, :index
+    live "/start", StartLive
     live "/lobby", LobbyLive
     live "/team-launch", TeamLaunchLive
     live "/setup", SetupLive

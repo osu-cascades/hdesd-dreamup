@@ -19,11 +19,11 @@ defmodule DreamUpWeb.LobbyLive do
   # TODO - Can probably clean this up?
   def handle_params(params, url, socket) do
     unless params["code"] do
-      {:noreply, redirect(socket, to: Routes.home_path(socket, :index, %{error: "code"}))}
+      {:noreply, redirect(socket, to: Routes.live_path(socket, DreamUpWeb.StartLive, %{error: "code"}))}
     else
       game_id = Games.get_game_id_from_code(params["code"])
       if game_id === -1 do
-        {:noreply, redirect(socket, to: Routes.home_path(socket, :index, %{error: "code"}))}
+        {:noreply, redirect(socket, to: Routes.live_path(socket, DreamUpWeb.StartLive, %{error: "code"}))}
       else
         if connected?(socket), do: Games.subscribe(game_id)
         if params["player_id"] do

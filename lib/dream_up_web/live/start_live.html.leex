@@ -1,0 +1,30 @@
+<center>
+  <div id="header" phx-hook="header">
+    <div>
+      <h1 class="font-bold text-4xl mb-12">
+        Enter Game Code
+      </h1>
+      <form phx-submit="join-game">
+        <input type="text" name="game_code" placeholder="Enter Game Code" class="width-one-third">
+        <%= if @error == "code" do %>
+          <h6 class="text-red-400">Error: code not found</h6>
+        <% end %>
+        <p><button class="defaultButton mt-12 mb-24 text-blue-900 border-2 px-8" type="submit" value="Join Game">JOIN GAME</button></p>
+      </form>
+    </div>
+    <div>
+      <h1 class="font-bold mb-12 text-4xl">
+        Create New Game
+      </h1>
+      <button phx-click="create-game" class="defaultButton mb-36 text-blue-900 border-2 px-8">
+        NEW GAME
+      </button>
+    </div>
+  </div>
+  <div class="font-bold">
+    <h1 class="mb-12 text-4xl">Want to learn the game first?</h1>
+    <button phx-click="view-instructions" class="defaultButton text-blue-900 border-2 px-8">
+      VIEW INSTRUCTIONS
+    </button>
+  </div>
+</center>
