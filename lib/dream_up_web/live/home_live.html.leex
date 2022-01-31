@@ -1,15 +1,16 @@
 <center>
   <div id="header" phx-hook="header">
-    <img src="/images/homePageLogo.png" alt="DreamUp Logo" width="100" class="inline">
-    <h1 class="text-8xl font-extrabold" class="inline">Welcome to DreamUp!</h1>
-    <h2 class="text-4xl font-bold pb-20">A game of collaborative creativity</h2>
-    <img src="/images/homePageImage.png" alt="People Playing Cards" width="500" height="">
-    <button phx-click="start-playing" class="defaultButton text-blue-900 border-2 px-8">
+    <div class="welcome-prompt">
+      <img src="/images/homePageLogo.png" alt="DreamUp Logo" width="100" class="inline">
+      <h1 class="text-8xl font-extrabold inline home-title">Welcome to DreamUp!</h1>
+    </div>
+    <h2 class="text-5xl font-bold my-8">A game of collaborative creativity</h2>
+    <img class="my-12" src="/images/homePageImage.png" alt="People Playing Cards" width="500">
+    <div><button phx-click="start-playing" class="defaultButton text-blue-900 border-2 px-8 my-12">
       START PLAYING!
-    </button>
-    <br>
-    <button phx-click="view-instructions" class="defaultButton text-blue-900 border-2 px-8 my-8">
+    </button></div>
+    <div><button phx-click="view-instructions" class="defaultButton text-blue-900 border-2 px-8 my-4">
       VIEW INSTRUCTIONS
-    </button>
+    </button></div>
   </div>
 </center>

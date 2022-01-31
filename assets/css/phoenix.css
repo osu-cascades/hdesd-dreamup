@@ -215,6 +215,22 @@ select {
 
 /* home */
 
+.welcome-prompt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inline {
+  display: inline;
+}
+
+.home-title {
+  padding-left: 20px;
+}
+
+/* start */
+
 .width-one-third {
   width: 33.333333% !important;
 }
