@@ -645,3 +645,11 @@ select {
   position: sticky;
   bottom: 20px;
 }
+
+.instruction-fixed {
+  position: fixed; top: 10px; right: 10px;
+}
+
+.instruction-fixed button {
+  height: 38px !important;
+}
