@@ -5,7 +5,7 @@
         Enter Game Code
       </h1>
       <form phx-submit="join-game">
-        <input type="text" name="game_code" placeholder="Enter Game Code" class="width-one-third">
+        <input type="text" name="game_code" placeholder="Enter Existing Game Code" class="width-one-third">
         <%= if @error == "code" do %>
           <h6 class="text-red-400">Error: code not found</h6>
         <% end %>

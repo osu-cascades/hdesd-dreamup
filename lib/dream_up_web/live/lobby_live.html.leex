@@ -20,11 +20,6 @@
                   ["Red": "red", "Blue": "blue"],
                   value: input_value(f, :team)
           %>
-          <%# <label for="player_character"> Character </label>
-          <%= select f, :character,
-                  ["Artist": "artist", "Storyteller": "storyteller", "Dreamer": "dreamer", "Planner": "planner", "Listener": "listener", "Maker": "maker", "Rebel": "rebel", "Writer": "writer", "Thinker": "thinker" ],
-                  value: input_value(f, :character)
-          %>
         </div>
         <div class="text-blue-900 pt-4">
           <div class="m-auto max-w-lg">
@@ -101,68 +96,31 @@
         <p>
           If you know which color team you want to join, select that color. If you do not, pick a random color. Once everyone has joined, teams can be rebalanced as needed.
         </p>
-        <%# <p>
-        Pick a Character card that you feel best expresses your personality, working style, or skills.
-        </p> %>
       </div>
     </div>
-    <%# character image grid %>
-    <%# <div class="grid gap-4 md:grid-cols-3">
-      <div class="character">
-        <img src="/images/characters/maker.png">
-        <p>The Maker</p>
-      </div>
-      <div class="character">
-        <img src="/images/characters/rebel.png">
-        <p>The Rebel</p>
-      </div>
-      <div class="character">
-        <img src="/images/characters/dreamer.png">
-        <p>The Dreamer</p>
-      </div>
-      <div class="character">
-        <img src="/images/characters/writer.png">
-        <p>The Writer</p>
-      </div>
-      <div class="character">
-        <img src="/images/characters/planner.png">
-        <p>The Planner</p>
-      </div>
-      <div class="character">
-        <img src="/images/characters/listener.png">
-        <p>The Listener</p>
-      </div>
-      <div class="character">
-        <img src="/images/characters/artist.png">
-        <p>The Artist</p>
-      </div>
-      <div class="character">
-        <img src="/images/characters/thinker.png">
-        <p>The Thinker</p>
-      </div>
-      <div class="character">
-        <img src="/images/characters/storyteller.png">
-        <p>The Storyteller</p>
-      </div>
-    </div> %>
   <% else %>
     <%# instructions - post join %>
     <div class="lobby-instructions-container">
       <div class="lobby-instructions">
-        <h1>Instructions:</h1>
+        <h1 class="font-bold">Instructions:</h1>
         <p>
-          As the two teams are formed, you will see the members of the teams listed. The team leaders' names will be in bold. 
+          As the two teams are formed, you will see the members of the teams listed. The team leaders' names will be in bold.
         </p>
+        <br>
         <p>
-          Check to see if teams need to be rebalanced (in terms of numbers of people and characters selected). 
+          Check to see if teams need to be rebalanced (in terms of numbers of people and characters selected).
         </p>
+        <br>
         <p>
           Try to mix people who identify as introverted and extroverted; who are more analytical and who are more expressive; who are more linear and exploratory. When relevant, try to make teams with differing professional experiences (doctor, engineer and chef; artist, accountant and teacher). Also look for a diversity of skills: those who frequently create or make things, those who love to tell stories and share their thoughts in public forums, those who love meeting new people and make connections. Try to create a team with diverse life experiences -- think about age, where you grew up, where you have lived, changes or transitions in work, school or life, etc.
         </p>
+        <br>
+        <p>
           When teams are balanced properly, continue to the next page.
         </p>
+        <br>
         </p>
-          Or...  Instead of the above approach, split teams up randomly. Have each person draw a role card and then take on that role, whether it comes naturally to them or not! 
+          Or... Instead of the above approach, split teams up randomly. Have each person draw a role card and then take on that role, whether it comes naturally to them or not! 
         </p>
       </div>
     </div>
