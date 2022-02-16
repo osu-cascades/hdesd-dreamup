@@ -37,15 +37,14 @@
           text-4xl py-2 font-bold max-w-full text-center max-w-lg bg-<%= player.team %>-100 border-b-4 border-indigo-400">
           <span class="<%= player.team %>-color">
             <%= if player.game_admin do %>
-              <img src="/images/crown.svg" alt="crown" class="role-icon" style="padding-left: 4px">
+              <p class="player-title"><img style="display: inline !important;" src="/images/crown.svg" alt="crown" class="role-icon" style="padding-left: 4px"> Game Admin</p>
             <% end %>
             <%= if player.team_leader === player.team do %>
-              <img src="/images/<%= player.team %>_flag.svg" alt="<%= player.team %> flag" class="role-icon" style="padding-left: 4px">
+              <p class="player-title"><img style="display: inline !important;" src="/images/<%= player.team %>_flag.svg" alt="<%= player.team %> flag" class="role-icon" style="padding-left: 4px"> <%= String.capitalize(player.team)  %> Team Leader</p>
             <% end %>
-            <%= player.name %>
           </span>
-          <p class="<%= player.team %>-color"><%= player.team %> team</p>
-          <p class="<%= player.team %>-color"><%= player.character %></p>
+          <p class="<%= player.team %>-color"><%= player.name %> - <%= String.capitalize(player.team) %> Team</p>
+        
           <%= if player.id == @id do %>
             <%= if @editing do %>
               <%= p = form_for @changeset, "#",

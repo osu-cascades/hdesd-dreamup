@@ -654,3 +654,8 @@ select {
 .instruction-fixed button {
   height: 38px !important;
 }
+
+.player-title {
+  /* color: black !important; */
+  font-size: 13px !important;
+}
