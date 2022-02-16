@@ -29,8 +29,17 @@ defmodule DreamUpWeb.BoardLive do
     if status !== :ok do
       {:noreply, redirect(socket, to: route)}
     else
+      is_single_team_game = length(
+        Players.list_players_in_team(
+          "red", params["game_id"]
+        )
+      ) === 0 || length(
+        Players.list_players_in_team(
+          "blue", params["game_id"]
+        )
+      ) === 0
       if game.round_number === 0 do
-        socket = assign(Players.push_header_event(socket, player), player: player, game: game, method_card: nil)
+        socket = assign(Players.push_header_event(socket, player), player: player, game: game, method_card: nil, is_single_team_game: is_single_team_game)
         if player.game_admin do
           {:noreply, countdown(socket)}
         else
@@ -38,9 +47,9 @@ defmodule DreamUpWeb.BoardLive do
         end
       else
         if player.game_admin do
-          {:noreply, countdown(assign(Players.push_header_event(socket, player), player: player, game: game, method_card: Cards.get_card!(Enum.at(Games.get_method_card_list(game), game.round_number - 1)), method_cards: method_cards))}
+          {:noreply, countdown(assign(Players.push_header_event(socket, player), player: player, game: game, method_card: Cards.get_card!(Enum.at(Games.get_method_card_list(game), game.round_number - 1)), method_cards: method_cards, is_single_team_game: is_single_team_game))}
         else
-          {:noreply, assign(Players.push_header_event(socket, player), player: player, game: game, method_card: Cards.get_card!(Enum.at(Games.get_method_card_list(game), game.round_number - 1)), method_cards: method_cards)}
+          {:noreply, assign(Players.push_header_event(socket, player), player: player, game: game, method_card: Cards.get_card!(Enum.at(Games.get_method_card_list(game), game.round_number - 1)), method_cards: method_cards, is_single_team_game: is_single_team_game)}
         end
       end
     end

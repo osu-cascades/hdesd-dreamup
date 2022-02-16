@@ -51,30 +51,32 @@
           </div>
         </div>
 
-        <div>
-          <h1 class="text-white">Other Team's Challenge:</h1>
-          <br>
-          <div class="card flip-card">
-            <h1 class="card-type flipped-card-text">Design Challenge</h1>
-            <h2 class="font-medium flipped-card-text">
-              Dream up a better way to
-              <div class="card-header">
+        <%= unless @is_single_team_game do %>
+          <div>
+            <h1 class="text-white">Other Team's Challenge:</h1>
+            <br>
+            <div class="card flip-card">
+              <h1 class="card-type flipped-card-text">Design Challenge</h1>
+              <h2 class="font-medium flipped-card-text">
+                Dream up a better way to
+                <div class="card-header">
+                  <%= if @player.team === "red" do %>
+                    <%= DreamUpWeb.SetupLive.get_card_header(@game.blue_challenge_id) %>
+                  <% else %>
+                    <%= DreamUpWeb.SetupLive.get_card_header(@game.red_challenge_id) %>
+                  <% end %>
+                </div>
+              </h2>
+              <p class="text-sm flipped-card-text">
                 <%= if @player.team === "red" do %>
-                  <%= DreamUpWeb.SetupLive.get_card_header(@game.red_challenge_id) %>
+                  <%= DreamUpWeb.SetupLive.get_card_prompt(@game.blue_challenge_id) %>
                 <% else %>
-                  <%= DreamUpWeb.SetupLive.get_card_header(@game.blue_challenge_id) %>
+                  <%= DreamUpWeb.SetupLive.get_card_prompt(@game.red_challenge_id) %>
                 <% end %>
-              </div>
-            </h2>
-            <p class="text-sm flipped-card-text">
-              <%= if @player.team === "red" do %>
-                <%= DreamUpWeb.SetupLive.get_card_prompt(@game.red_challenge_id) %>
-              <% else %>
-                <%= DreamUpWeb.SetupLive.get_card_prompt(@game.blue_challenge_id) %>
-              <% end %>
-            </p>
+              </p>
+            </div>
           </div>
-        </div>
+        <% end %>
 
       </div>
     </div>

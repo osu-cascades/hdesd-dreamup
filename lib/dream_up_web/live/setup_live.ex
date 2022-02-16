@@ -18,9 +18,9 @@ defmodule DreamUpWeb.SetupLive do
     if connected?(socket), do: Games.subscribe(String.to_integer(params["game_id"]))
     player = Players.get_player!(params["player_id"])
     socket = assign(socket, game_id: params["game_id"], player: player,
-     is_single_team_game: length(
-       Players.list_players_in_team(
-         "red", params["game_id"]
+      is_single_team_game: length(
+        Players.list_players_in_team(
+          "red", params["game_id"]
         )
       ) === 0 || length(
         Players.list_players_in_team(
