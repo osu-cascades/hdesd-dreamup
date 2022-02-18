@@ -129,6 +129,22 @@ defmodule DreamUp.Players do
       "red" ->
         update_player(player, %{team: "blue"})
     end
+    update_team_leaders(player.game_id)
+  end
+
+  def update_team_leaders(game_id) do
+    for p <- list_players_in_game(game_id) do
+      update_player(p, %{team_leader: nil})
+    end
+
+    first_red_player = find_first_player_on_team("red", game_id)
+    if first_red_player !== -1 do
+      update_player(first_red_player, %{team_leader: "red"})
+    end
+    first_blue_player = find_first_player_on_team("blue", game_id)
+    if first_blue_player !== -1 do
+      update_player(first_blue_player, %{team_leader: "blue"})
+    end
   end
 
   def list_players_in_team(team, game_id) do
