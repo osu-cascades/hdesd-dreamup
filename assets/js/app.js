@@ -27,7 +27,7 @@ Hooks.header = {
             let team = payload.team.charAt(0).toUpperCase() + payload.team.slice(1);
             let role = "Player";
             if (payload.is_admin) {
-                role = "Game Admin";
+                role = "Game Host";
             } else if (payload.team_leader == "red" || payload.team_leader == "blue") {
                 role = "Team Leader";
             }

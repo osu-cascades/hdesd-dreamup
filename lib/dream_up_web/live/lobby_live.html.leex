@@ -37,7 +37,7 @@
           text-4xl py-2 font-bold max-w-full text-center max-w-lg bg-<%= player.team %>-100 border-b-4 border-indigo-400">
           <span class="<%= player.team %>-color">
             <%= if player.game_admin do %>
-              <p class="player-title"><img style="display: inline !important;" src="/images/crown.svg" alt="crown" class="role-icon" style="padding-left: 4px"> Game Admin</p>
+              <p class="player-title"><img style="display: inline !important;" src="/images/crown.svg" alt="crown" class="role-icon" style="padding-left: 4px"> Game Host</p>
             <% end %>
             <%= if player.team_leader === player.team do %>
               <p class="player-title"><img style="display: inline !important;" src="/images/<%= player.team %>_flag.svg" alt="<%= player.team %> flag" class="role-icon" style="padding-left: 4px"> <%= String.capitalize(player.team)  %> Team Leader</p>
