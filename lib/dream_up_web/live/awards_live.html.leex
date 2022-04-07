@@ -90,12 +90,8 @@ Complete the Awards Ceremony, give yourselves a round of applause and share your
     <% end %>
   <% end %>
 </div>
-<div id="game-over-image" class="bg-red">
-  <img src="/images/awardsPlaceHolder.png">
+<div class="text-center">
+  <%= if @player.game_admin do %>
+    <button class="defaultButton mt-12 text-blue-900 border-2 px-8 text-center" phx-click="finish-game">Finish Game</button>
+  <% end %>
 </div>
-<div id="social-media-links">
-    <p class="m-auto text-center"><a href="https://www.dreamupgame.com/">dreamupgame.com</a></p>
-    <p class="m-auto text-center"><a href="https://www.dreamupgame.com/">instagram</a></p>
-    <p class="m-auto text-center"><a href="https://www.dreamupgame.com/">facebook</a></p>
-    <p class="m-auto text-center"><a href="https://www.dreamupgame.com/">twitter</a></p>
-  </div>

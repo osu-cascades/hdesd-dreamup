@@ -15,6 +15,7 @@ defmodule DreamUpWeb.AwardsLive do
 
   def handle_params(params, _url, socket) do
     if connected?(socket), do: Awards.subscribe()
+    if connected?(socket), do: Games.subscribe(String.to_integer(params["game_id"]))
     new_socket = assign(socket, game: Games.get_game!(params["game_id"]), player: Players.get_player!(params["player_id"]), is_single_team_game: length(
       Players.list_players_in_team(
         "red", params["game_id"]
@@ -30,6 +31,12 @@ defmodule DreamUpWeb.AwardsLive do
     else
       {:noreply, Players.push_header_event(new_socket, new_socket.assigns.player)}
     end
+  end
+
+  def handle_event("finish-game", _, socket) do
+    Games.broadcast(:finish_game, socket.assigns.game.id)
+    IO.puts("REDIRECT")
+    {:noreply, socket}
   end
 
   def handle_event("award-click", %{"card-id" => card_id}, socket) do
@@ -64,6 +71,11 @@ defmodule DreamUpWeb.AwardsLive do
     |> Awards.get_award!()
     |> Awards.delete_award()
     {:noreply, socket}
+  end
+
+  def handle_info({:finish_game}, socket) do
+    IO.puts("REDIRECT")
+    {:noreply, redirect(socket, to: Routes.live_path(socket, DreamUpWeb.GameFinishLive))}
   end
 
   def handle_info({:create_award, event}, socket) do
