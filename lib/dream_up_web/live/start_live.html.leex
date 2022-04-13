@@ -9,22 +9,24 @@
         <%= if @error == "code" do %>
           <h6 class="text-red-400">Error: code not found</h6>
         <% end %>
-        <p><button class="defaultButton mt-12 mb-24 text-blue-900 border-2 px-8" type="submit" value="Join Game">JOIN GAME</button></p>
+        <p><button class="defaultButton mt-12 mb-16 text-blue-900 border-2 px-8" type="submit" value="Join Game">JOIN GAME</button></p>
       </form>
     </div>
     <div>
+      <h1 class="mb-4 text-4xl font-bold">Are you the first one here?</h1>
+      <h1 class="mb-4 text-4xl">If so, click Create New Game and then share the game code with your friends.</h1>
+      <h1 class="mb-4 text-4xl font-bold">Is someone else creating the game?</h1>
+      <h1 class="mb-4 text-4xl">Hold tight and wait for them to give you the game code and then enter it above.</h1>
       <h1 class="font-bold mb-12 text-4xl">
         Create New Game
       </h1>
-      <button phx-click="create-game" class="defaultButton mb-36 text-blue-900 border-2 px-8">
+      <button phx-click="create-game" class="defaultButton mb-16 text-blue-900 border-2 px-8">
         NEW GAME
       </button>
     </div>
   </div>
-  <div class="font-bold">
-    <h1 class="mb-12 text-4xl">Want to learn the game first?</h1>
-    <button phx-click="view-instructions" class="defaultButton text-blue-900 border-2 px-8">
-      VIEW INSTRUCTIONS
-    </button>
+  <div>
+    <h1 class="mb-4 text-4xl font-bold">Want to learn the game first?</h1>
+    <h1 class="mb-4 text-4xl">Click the View Instructions button!</h1>
   </div>
 </center>
