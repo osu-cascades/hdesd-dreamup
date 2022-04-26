@@ -44,7 +44,7 @@
             <% end %>
           </span>
           <p class="<%= player.team %>-color"><%= player.name %> - <%= String.capitalize(player.team) %> Team</p>
-        
+
           <%= if player.id == @id do %>
             <%= if @editing do %>
               <%= p = form_for @changeset, "#",
