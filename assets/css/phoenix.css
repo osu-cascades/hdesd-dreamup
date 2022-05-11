@@ -309,7 +309,7 @@ select {
 }
 
 .card-tip {
-  position: absolute;
+  /* position: absolute; */
   bottom: 0;
   padding: 4px;
   font-style: italic;
