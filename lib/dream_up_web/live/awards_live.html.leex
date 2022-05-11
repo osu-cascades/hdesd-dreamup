@@ -22,13 +22,13 @@ Complete the Awards Ceremony, give yourselves a round of applause and share your
         <%= for card <- @cards do %>
           <%= if award.card_id === card.id do %>
             <div class="card award">
-              <img class="award-icon" src="/images/award_icon.png">
               <h1 class="card-type">Design <%= card.type %></h1>
               <div class="font-bold"><%= card.header %></div>
               <p class="text-lg"><%= card.prompt %></p>
               <%= if @player.team === "blue" || @is_single_team_game do %>
                 <button class="setup-select-button text-sm" phx-click="remove-award" phx-value-award-id="<%= award.id %>">Remove</button>
               <% end %>
+              <img class="award-icon" src="/images/award_icon.png">
             </div>
           <% end %>
         <% end %>
@@ -53,13 +53,13 @@ Complete the Awards Ceremony, give yourselves a round of applause and share your
         <%= for card <- @cards do %>
           <%= if award.card_id === card.id do %>
             <div class="card award">
-              <img class="award-icon" src="/images/award_icon.png">
               <h1 class="card-type">Design <%= card.type %></h1>
               <div class="font-bold"><%= card.header %></div>
               <p class="text-lg"><%= card.prompt %></p>
               <%= if @player.team === "red" || @is_single_team_game do %>
                 <button class="setup-select-button text-sm" phx-click="remove-award" phx-value-award-id="<%= award.id %>">Remove</button>
               <% end %>
+              <img class="award-icon" src="/images/award_icon.png">
             </div>
           <% end %>
         <% end %>
