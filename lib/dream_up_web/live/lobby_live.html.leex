@@ -1,7 +1,9 @@
 
 <div id="header" phx-hook="header">
   <h1 class="text-blue-900 text-4xl font-bold text-center">Game Code</h1>
-  <h1 class="text-blue-900 text-4xl text-center">Join at <span class="font-bold"><%= String.replace(DreamUpWeb.Endpoint.url(), "https://", "") %></span> with: <span onclick="clicked('<%= @url %>')" class="text-5xl font-bold"><%= @code %></span></h1>
+  <h1 class="text-blue-900 text-4xl text-center">
+  Join in the <a href="">DreamUp</a> Lobby with: <span onclick="clicked('<%= @url %>')" class="text-5xl font-bold"><%= @code %></span>
+  </h1>
   <br>
   <h1 class="text-blue-900 text-4xl font-bold text-center">Join Game</h1>
   <div class=" m-auto max-w-xl p-4">
