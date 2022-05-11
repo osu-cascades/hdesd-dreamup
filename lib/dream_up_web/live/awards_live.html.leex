@@ -25,7 +25,7 @@ Complete the Awards Ceremony, give yourselves a round of applause and share your
               <img class="award-icon" src="/images/award_icon.png">
               <h1 class="card-type">Design <%= card.type %></h1>
               <div class="font-bold"><%= card.header %></div>
-              <p class="text-sm"><%= card.prompt %></p>
+              <p class="text-lg"><%= card.prompt %></p>
               <%= if @player.team === "blue" || @is_single_team_game do %>
                 <button class="setup-select-button text-sm" phx-click="remove-award" phx-value-award-id="<%= award.id %>">Remove</button>
               <% end %>
@@ -56,7 +56,7 @@ Complete the Awards Ceremony, give yourselves a round of applause and share your
               <img class="award-icon" src="/images/award_icon.png">
               <h1 class="card-type">Design <%= card.type %></h1>
               <div class="font-bold"><%= card.header %></div>
-              <p class="text-sm"><%= card.prompt %></p>
+              <p class="text-lg"><%= card.prompt %></p>
               <%= if @player.team === "red" || @is_single_team_game do %>
                 <button class="setup-select-button text-sm" phx-click="remove-award" phx-value-award-id="<%= award.id %>">Remove</button>
               <% end %>
@@ -75,7 +75,7 @@ Complete the Awards Ceremony, give yourselves a round of applause and share your
         <img class="award-icon" src="/images/award_icon.png">
         <h1 class="card-type">Design <%= card.type %></h1>
         <div class="font-bold"><%= card.header %></div>
-        <p class="text-sm"><%= card.prompt %></p>
+        <p class="text-lg"><%= card.prompt %></p>
         <%= if @player.team_leader == "red" || @player.team_leader == "blue" do %>
           <button class="setup-select-button text-sm" phx-click="award-click" phx-value-card-id="<%= card.id %>">Select</button>
         <% end %>

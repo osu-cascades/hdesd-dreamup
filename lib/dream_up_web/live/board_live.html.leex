@@ -41,7 +41,7 @@
                 <% end %>
               </div>
             </h2>
-            <p class="text-sm flipped-card-text">
+            <p class="text-lg flipped-card-text">
               <%= if @player.team === "red" do %>
                 <%= DreamUpWeb.SetupLive.get_card_prompt(@game.red_challenge_id) %>
               <% else %>
@@ -67,7 +67,7 @@
                   <% end %>
                 </div>
               </h2>
-              <p class="text-sm flipped-card-text">
+              <p class="text-lg flipped-card-text">
                 <%= if @player.team === "red" do %>
                   <%= DreamUpWeb.SetupLive.get_card_prompt(@game.blue_challenge_id) %>
                 <% else %>
@@ -186,10 +186,10 @@
                   "card tell flip-card"
               <% end %>
             >
-              <h1 class="text-sm card-type flipped-card-text non-padded-card-type"><%= @method_card.type %></h1>
+              <h1 class="text-lg card-type flipped-card-text non-padded-card-type"><%= @method_card.type %></h1>
               <h1 class="text-xl2 card-type flipped-card-text non-padded-card-type"><%= @method_card.title %></h1>
               <h1 class="text-lg card-type flipped-card-text non-padded-card-type"><%= @method_card.sub_title %></h1>
-              <p class="text-sm flipped-card-text">
+              <p class="text-lg flipped-card-text">
                 <%= if @method_card do %>
                   <%= @method_card.prompt %>
                   <div class="card-tip"><p class="flipped-card-text text-sm"><%= @method_card.tip %></p></div>
@@ -226,10 +226,10 @@
               "card tell flip-card"
           <% end %>
         >
-          <h1 class="text-sm card-type flipped-card-text non-padded-card-type"><%= method_card.type %></h1>
+          <h1 class="text-lg card-type flipped-card-text non-padded-card-type"><%= method_card.type %></h1>
           <h1 class="text-xl2 card-type flipped-card-text non-padded-card-type"><%= method_card.title %></h1>
           <h1 class="text-lg card-type flipped-card-text non-padded-card-type"><%= method_card.sub_title %></h1>
-          <p class="text-sm flipped-card-text">
+          <p class="text-lg flipped-card-text">
             <%= if method_card do %>
               <%= method_card.prompt %>
               <div class="card-tip"><p class="flipped-card-text text-sm"><%= method_card.tip %></p></div>

@@ -285,6 +285,7 @@ select {
 /* cards */
 
 .card {
+  overflow: scroll;
   position: relative;
   margin: auto;
   text-align: center;

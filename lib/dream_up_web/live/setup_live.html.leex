@@ -48,7 +48,7 @@ The goal of this game is that your team will DreamUp a solution for the OTHER te
             Dream up a better way to
             <div class="card-header"><%= get_card_header(@red_challenge_id) %></div>
           </h2>
-          <p class="text-sm flipped-card-text"><%= get_card_prompt(@red_challenge_id) %></p>
+          <p class="text-lg flipped-card-text"><%= get_card_prompt(@red_challenge_id) %></p>
         </div>
       <% else %>
         <div class="card card-back">
@@ -99,7 +99,7 @@ The goal of this game is that your team will DreamUp a solution for the OTHER te
             Dream up a better way to
             <div class="card-header"> <%= card.header %></div>
           </h2>
-          <p class="text-sm"><%= card.prompt %></p>
+          <p class="text-lg"><%= card.prompt %></p>
           <%= if @player.team_leader == "red" || @player.team_leader == "blue" do %>
             <button class="setup-select-button text-sm" phx-click="challenge-click" phx-value-card-id="<%= card.id %>">Select</button>
           <% end %>
