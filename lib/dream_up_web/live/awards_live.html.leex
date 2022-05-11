@@ -72,13 +72,13 @@ Complete the Awards Ceremony, give yourselves a round of applause and share your
   <%= for card <- @cards do %>
     <%= if card.type == "Award" do %>
       <div class="card award">
-        <img class="award-icon" src="/images/award_icon.png">
         <h1 class="card-type">Design <%= card.type %></h1>
         <div class="font-bold"><%= card.header %></div>
         <p class="text-lg"><%= card.prompt %></p>
         <%= if @player.team_leader == "red" || @player.team_leader == "blue" do %>
           <button class="setup-select-button text-sm" phx-click="award-click" phx-value-card-id="<%= card.id %>">Select</button>
         <% end %>
+        <img class="award-icon" src="/images/award_icon.png">
       </div>
       <%= if false do %>
         <div class="card card-back flip-card">
