@@ -8,11 +8,12 @@
 <br>
 <br>
 <div class="card team-launch">
-  <h2 class="card-type"><%= @team_launch_card.type %></h2>
+  <h2 class="card-type"><%= @team_launch_card.header %></h2>
+  <h2 class="card-type text-xl"><%= @team_launch_card.sub_title %></h2>
   <h2 class="font-medium">
     <%= if @team_launch_card do %>
       <%= @team_launch_card.prompt %>
-      <div class="card-tip"><p class="text-sm"><%= @team_launch_card.tip %></p></div>
+      <div class="card-tip"><p class="text-xl"><%= @team_launch_card.tip %></p></div>
     <% end %>
   </h2>
 </div>
