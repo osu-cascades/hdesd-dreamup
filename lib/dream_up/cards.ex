@@ -126,11 +126,11 @@ defmodule DreamUp.Cards do
     picked_card = pick_card(matched_cards, used_card_ids)
     case pivot_to_remove do
       "red" ->
-        Games.update_game(game, %{"time_left" => ~T[00:00:15], "round_state" => "SPINNER", "red_pivot_token" => false, "red_pivoted_method_id" => last_card.id, ("method_" <> Integer.to_string(game.round_number) <> "_id") => picked_card.id})
+        Games.update_game(game, %{"time_left" => ~T[00:00:30], "round_state" => "SPINNER", "red_pivot_token" => false, "red_pivoted_method_id" => last_card.id, ("method_" <> Integer.to_string(game.round_number) <> "_id") => picked_card.id})
       "blue" ->
-        Games.update_game(game, %{"time_left" => ~T[00:00:15], "round_state" => "SPINNER", "blue_pivot_token" => false, "blue_pivoted_method_id" => last_card.id, ("method_" <> Integer.to_string(game.round_number) <> "_id") => picked_card.id})
+        Games.update_game(game, %{"time_left" => ~T[00:00:30], "round_state" => "SPINNER", "blue_pivot_token" => false, "blue_pivoted_method_id" => last_card.id, ("method_" <> Integer.to_string(game.round_number) <> "_id") => picked_card.id})
       nil ->
-        Games.update_game(game, %{"time_left" => ~T[00:00:15], "round_state" => "SPINNER", "round_number" => game.round_number + 1, ("method_" <> Integer.to_string(game.round_number + 1) <> "_id") => picked_card.id})
+        Games.update_game(game, %{"time_left" => ~T[00:00:30], "round_state" => "SPINNER", "round_number" => game.round_number + 1, ("method_" <> Integer.to_string(game.round_number + 1) <> "_id") => picked_card.id})
     end
     Games.broadcast({:ok, picked_card}, :select_card, game.id)
   end

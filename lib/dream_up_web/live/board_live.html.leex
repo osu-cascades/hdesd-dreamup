@@ -12,7 +12,7 @@
         <% end %>
       </div>
 
-      <%= if (((@player.team_leader === "red" && @game.red_pivot_token) || (@player.team_leader === "blue" && @game.blue_pivot_token)) && @game.round_state === "SPINNER") && Time.compare(@game.time_left, ~T[00:00:11]) === :lt do %>
+      <%= if (((@player.team_leader === "red" && @game.red_pivot_token) || (@player.team_leader === "blue" && @game.blue_pivot_token)) && @game.round_state === "SPINNER") && Time.compare(@game.time_left, ~T[00:00:25]) === :lt do %>
         <button class="defaultButton fill-width mb-3 text-blue-900 border-2 px-8 text-center" phx-click="pivot">Pivot (1/1)</button>
       <% end %>
       <%= if ((@player.team_leader === "red" && @game.red_add_time_token) || (@player.team_leader === "blue" && @game.blue_add_time_token)) && @game.round_state === "GAMEPLAY" do %>
@@ -150,7 +150,7 @@
         <br>
         <h1 class="text-center text-3xl font-semibold">Current Method Card in Play</h1>
         <br>
-        <%= if @game.round_state === "SPINNER" && Time.compare(@game.time_left, ~T[00:00:10]) === :gt && @game.round_number < 9 do %>
+        <%= if @game.round_state === "SPINNER" && Time.compare(@game.time_left, ~T[00:00:25]) === :gt && @game.round_number < 9 do %>
           <div class="spinner-stack">
             <img id="spinner"
             <%= if @game.round_state !== "GAME_START" && @method_card do %>
